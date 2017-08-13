@@ -68,6 +68,7 @@ namespace ShinraCo.Rotations
         public override async Task<bool> Heal()
         {
             if (await Shinra.UsePotion()) return true;
+            if (await StopCasting()) return true;
             if (await EssentialDignity()) return true;
             if (await AspectedHelios()) return true;
             if (await Helios()) return true;
@@ -96,7 +97,8 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Pull()
         {
-            return await Combat();
+            if (await CombustII()) return true;
+            return await Combust();
         }
 
         #endregion

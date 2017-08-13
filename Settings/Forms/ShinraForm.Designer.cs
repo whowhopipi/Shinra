@@ -34,8 +34,15 @@
             this.ShinraClose = new ShinraCo.Settings.Forms.Design.NoSelectButton();
             this.tabSettings = new ShinraCo.Settings.Forms.Design.CustomTab();
             this.pgeMain = new System.Windows.Forms.TabPage();
+            this.RestGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.RestEnergyPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.RestHealthPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.RestEnergy = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.RestHealth = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ShinraDonate = new System.Windows.Forms.PictureBox();
             this.RotationGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
             this.RotationOverlay = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.RotationMessages = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.TankHotkey = new ShinraCo.Settings.Forms.Design.HotkeyBox();
             this.TankMode = new ShinraCo.Settings.Forms.Design.CustomCombo();
             this.RotationHotkey = new ShinraCo.Settings.Forms.Design.HotkeyBox();
@@ -56,7 +63,25 @@
             this.pgeCasters = new System.Windows.Forms.TabPage();
             this.tabCasters = new ShinraCo.Settings.Forms.Design.CustomTab();
             this.pgeBlackMage = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
+            this.BlackMageBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.BlackMageTriplecast = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageEnochian = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageSharpcast = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageLeyLines = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageConvert = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageRoleGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.BlackMageLucidDreamingPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.BlackMageDrainPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.BlackMageErase = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageSurecast = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageApocatastasis = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageManaShift = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageSwiftcast = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageLucidDreaming = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageDiversion = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageDrain = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.BlackMageBreak = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.BlackMageAddle = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.pgeRedMage = new System.Windows.Forms.TabPage();
             this.RedMageBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
             this.RedMageManafication = new ShinraCo.Settings.Forms.Design.CustomCheck();
@@ -88,6 +113,7 @@
             this.SummonerEnkindle = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerShadowFlare = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.SummonerAetherpact = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerSummonBahamut = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerDreadwyrmTrance = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerRouse = new ShinraCo.Settings.Forms.Design.CustomCheck();
@@ -95,7 +121,7 @@
             this.SummonerPhysickPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
             this.SummonerPhysick = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.SummonerPetGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
-            this.SummonerPet = new System.Windows.Forms.ComboBox();
+            this.SummonerPet = new ShinraCo.Settings.Forms.Design.CustomCombo();
             this.SummonerRoleGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
             this.SummonerLucidDreamingPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
             this.SummonerDrainPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
@@ -120,6 +146,8 @@
             this.AstrologianSleeveDraw = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.AstrologianDraw = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.AstrologianHealGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.AstrologianInterruptOverheal = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.AstrologianInterruptDamage = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.AstrologianAscend = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.AstrologianAspHeliosPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
             this.AstrologianHeliosPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
@@ -147,12 +175,54 @@
             this.AstrologianProtect = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.AstrologianBreak = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.pgeScholar = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
+            this.ScholarBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarEmergencyTactics = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarRouse = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarCooldownGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarChainStrategem = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarShadowFlare = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarPetGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarPet = new ShinraCo.Settings.Forms.Design.CustomCombo();
+            this.ScholarAoEGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarBane = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarHealGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarInterruptOverheal = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarInterruptDamage = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarIndomitabilityPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarSuccorPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarExcogitationPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarLustratePct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarAetherpactPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarAdloquiumPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarPhysickPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarAetherpact = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarResurrection = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarIndomitability = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarSuccor = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarExcogitation = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarLustrate = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarAdloquium = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarPhysick = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarPartyHeal = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarRoleGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.ScholarEsuna = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarClericStance = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarLucidDreamingPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.ScholarRescue = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.ScholarSurecast = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.ScholarLargesse = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.ScholarEyeForAnEye = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.ScholarSwiftcast = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarLucidDreaming = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarProtect = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.ScholarBreak = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.pgeWhiteMage = new System.Windows.Forms.TabPage();
             this.WhiteMageBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
             this.WhiteMagePresenceOfMind = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.WhiteMageThinAir = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.WhiteMageHealGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.WhiteMageInterruptOverheal = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.WhiteMageInterruptDamage = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.WhiteMageCurePct = new ShinraCo.Settings.Forms.Design.UserNumeric();
             this.WhiteMageCureIIPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
             this.WhiteMageTetragrammatonPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
@@ -246,7 +316,44 @@
             this.MonkArmsLength = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.MonkSecondWind = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.pgeNinja = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
+            this.NinjaNinjutsuGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.NinjaSuiton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaDoton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaHuton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaRaiton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaKaton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaFuma = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaDoTGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.NinjaShadowFangHP = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.NinjaShadowFang = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.NinjaTenChiJin = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaDuality = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaKassatsu = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaShadeShiftPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.NinjaShadeShift = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaCooldownGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.NinjaBhavacakra = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaHellfrogMedium = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaDreamWithin = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaJugulate = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaTrickAttack = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaMug = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaAssassinate = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaRoleGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.NinjaBloodbathPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.NinjaInvigoratePct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.NinjaSecondWindPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.NinjaTrueNorth = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaCrutch = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaFeint = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaGoad = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaBloodbath = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaInvigorate = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.NinjaDiversion = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaLegSweep = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaArmsLength = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.NinjaSecondWind = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.pgeSamurai = new System.Windows.Forms.TabPage();
             this.SamuraiBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
             this.SamuraiMeikyo = new ShinraCo.Settings.Forms.Design.CustomCheck();
@@ -295,7 +402,32 @@
             this.BardFootGraze = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.BardSecondWind = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.pgeMachinist = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
+            this.MachinistTurretGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.MachinistTurret = new ShinraCo.Settings.Forms.Design.CustomCombo();
+            this.MachinistBuffGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.MachinistHypercharge = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistGaussBarrel = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistRapidFire = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistReassemble = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistReload = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistCooldownGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.MachinistWildfireHP = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.MachinistRicochet = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistWildfire = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistRoleGroup = new ShinraCo.Settings.Forms.Design.CustomGroup();
+            this.MachinistTacticianPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.MachinistInvigoratePct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.MachinistSecondWindPct = new ShinraCo.Settings.Forms.Design.UserNumeric();
+            this.MachinistPalisade = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistArmGraze = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistHeadGraze = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistRefresh = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistTactician = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistInvigorate = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistPeloton = new ShinraCo.Settings.Forms.Design.CustomCheck();
+            this.MachinistLegGraze = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistFootGraze = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
+            this.MachinistSecondWind = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.pgeTanks = new System.Windows.Forms.TabPage();
             this.tabTanks = new ShinraCo.Settings.Forms.Design.CustomTab();
             this.pgeDarkKnight = new System.Windows.Forms.TabPage();
@@ -427,17 +559,20 @@
             this.WarriorProvoke = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.WarriorLowBlow = new ShinraCo.Settings.Forms.Design.CustomCheckDisabled();
             this.WarriorRampart = new ShinraCo.Settings.Forms.Design.CustomCheck();
-            this.SummonerAetherpact = new ShinraCo.Settings.Forms.Design.CustomCheck();
             this.ShinraContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ShinraBanner)).BeginInit();
             this.tabSettings.SuspendLayout();
             this.pgeMain.SuspendLayout();
+            this.RestGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ShinraDonate)).BeginInit();
             this.RotationGroup.SuspendLayout();
             this.ItemGroup.SuspendLayout();
             this.ChocoboGroup.SuspendLayout();
             this.pgeCasters.SuspendLayout();
             this.tabCasters.SuspendLayout();
             this.pgeBlackMage.SuspendLayout();
+            this.BlackMageBuffGroup.SuspendLayout();
+            this.BlackMageRoleGroup.SuspendLayout();
             this.pgeRedMage.SuspendLayout();
             this.RedMageBuffGroup.SuspendLayout();
             this.RedMageCooldownGroup.SuspendLayout();
@@ -459,6 +594,12 @@
             this.AstrologianHealGroup.SuspendLayout();
             this.AstrologianRoleGroup.SuspendLayout();
             this.pgeScholar.SuspendLayout();
+            this.ScholarBuffGroup.SuspendLayout();
+            this.ScholarCooldownGroup.SuspendLayout();
+            this.ScholarPetGroup.SuspendLayout();
+            this.ScholarAoEGroup.SuspendLayout();
+            this.ScholarHealGroup.SuspendLayout();
+            this.ScholarRoleGroup.SuspendLayout();
             this.pgeWhiteMage.SuspendLayout();
             this.WhiteMageBuffGroup.SuspendLayout();
             this.WhiteMageHealGroup.SuspendLayout();
@@ -476,6 +617,11 @@
             this.MonkBuffGroup.SuspendLayout();
             this.MonkRoleGroup.SuspendLayout();
             this.pgeNinja.SuspendLayout();
+            this.NinjaNinjutsuGroup.SuspendLayout();
+            this.NinjaDoTGroup.SuspendLayout();
+            this.NinjaBuffGroup.SuspendLayout();
+            this.NinjaCooldownGroup.SuspendLayout();
+            this.NinjaRoleGroup.SuspendLayout();
             this.pgeSamurai.SuspendLayout();
             this.SamuraiBuffGroup.SuspendLayout();
             this.SamuraiCooldownGroup.SuspendLayout();
@@ -488,6 +634,10 @@
             this.BardBuffGroup.SuspendLayout();
             this.BardRoleGroup.SuspendLayout();
             this.pgeMachinist.SuspendLayout();
+            this.MachinistTurretGroup.SuspendLayout();
+            this.MachinistBuffGroup.SuspendLayout();
+            this.MachinistCooldownGroup.SuspendLayout();
+            this.MachinistRoleGroup.SuspendLayout();
             this.pgeTanks.SuspendLayout();
             this.tabTanks.SuspendLayout();
             this.pgeDarkKnight.SuspendLayout();
@@ -584,6 +734,8 @@
             // pgeMain
             // 
             this.pgeMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pgeMain.Controls.Add(this.RestGroup);
+            this.pgeMain.Controls.Add(this.ShinraDonate);
             this.pgeMain.Controls.Add(this.RotationGroup);
             this.pgeMain.Controls.Add(this.ItemGroup);
             this.pgeMain.Controls.Add(this.ChocoboGroup);
@@ -595,9 +747,81 @@
             this.pgeMain.Text = "Main";
             this.pgeMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShinraForm_MouseDown);
             // 
+            // RestGroup
+            // 
+            this.RestGroup.Controls.Add(this.RestEnergyPct);
+            this.RestGroup.Controls.Add(this.RestHealthPct);
+            this.RestGroup.Controls.Add(this.RestEnergy);
+            this.RestGroup.Controls.Add(this.RestHealth);
+            this.RestGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.RestGroup.Location = new System.Drawing.Point(440, 56);
+            this.RestGroup.Name = "RestGroup";
+            this.RestGroup.Size = new System.Drawing.Size(191, 67);
+            this.RestGroup.TabIndex = 3;
+            this.RestGroup.TabStop = false;
+            this.RestGroup.Text = "Rest";
+            // 
+            // RestEnergyPct
+            // 
+            this.RestEnergyPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.RestEnergyPct.Location = new System.Drawing.Point(96, 39);
+            this.RestEnergyPct.Name = "RestEnergyPct";
+            this.RestEnergyPct.Size = new System.Drawing.Size(89, 22);
+            this.RestEnergyPct.TabIndex = 3;
+            this.RestEnergyPct.ValueChanged += new System.EventHandler(this.RestEnergyPct_ValueChanged);
+            // 
+            // RestHealthPct
+            // 
+            this.RestHealthPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.RestHealthPct.Location = new System.Drawing.Point(96, 16);
+            this.RestHealthPct.Name = "RestHealthPct";
+            this.RestHealthPct.Size = new System.Drawing.Size(89, 22);
+            this.RestHealthPct.TabIndex = 2;
+            this.RestHealthPct.ValueChanged += new System.EventHandler(this.RestHealthPct_ValueChanged);
+            // 
+            // RestEnergy
+            // 
+            this.RestEnergy.AutoSize = true;
+            this.RestEnergy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RestEnergy.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.RestEnergy.ForeColor = System.Drawing.Color.White;
+            this.RestEnergy.Location = new System.Drawing.Point(6, 39);
+            this.RestEnergy.Name = "RestEnergy";
+            this.RestEnergy.Size = new System.Drawing.Size(67, 17);
+            this.RestEnergy.TabIndex = 1;
+            this.RestEnergy.TabStop = false;
+            this.RestEnergy.Text = "Mana/TP";
+            this.RestEnergy.UseVisualStyleBackColor = true;
+            this.RestEnergy.CheckedChanged += new System.EventHandler(this.RestEnergy_CheckedChanged);
+            // 
+            // RestHealth
+            // 
+            this.RestHealth.AutoSize = true;
+            this.RestHealth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RestHealth.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.RestHealth.ForeColor = System.Drawing.Color.White;
+            this.RestHealth.Location = new System.Drawing.Point(6, 16);
+            this.RestHealth.Name = "RestHealth";
+            this.RestHealth.Size = new System.Drawing.Size(57, 17);
+            this.RestHealth.TabIndex = 0;
+            this.RestHealth.TabStop = false;
+            this.RestHealth.Text = "Health";
+            this.RestHealth.UseVisualStyleBackColor = true;
+            this.RestHealth.CheckedChanged += new System.EventHandler(this.RestHealth_CheckedChanged);
+            // 
+            // ShinraDonate
+            // 
+            this.ShinraDonate.Location = new System.Drawing.Point(13, 330);
+            this.ShinraDonate.Name = "ShinraDonate";
+            this.ShinraDonate.Size = new System.Drawing.Size(170, 60);
+            this.ShinraDonate.TabIndex = 2;
+            this.ShinraDonate.TabStop = false;
+            this.ShinraDonate.Click += new System.EventHandler(this.ShinraDonate_Click);
+            // 
             // RotationGroup
             // 
             this.RotationGroup.Controls.Add(this.RotationOverlay);
+            this.RotationGroup.Controls.Add(this.RotationMessages);
             this.RotationGroup.Controls.Add(this.TankHotkey);
             this.RotationGroup.Controls.Add(this.TankMode);
             this.RotationGroup.Controls.Add(this.RotationHotkey);
@@ -607,9 +831,9 @@
             this.RotationGroup.Controls.Add(this.RotationKeyLabel);
             this.RotationGroup.Controls.Add(this.RotationModeLabel);
             this.RotationGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.RotationGroup.Location = new System.Drawing.Point(218, 6);
+            this.RotationGroup.Location = new System.Drawing.Point(13, 6);
             this.RotationGroup.Name = "RotationGroup";
-            this.RotationGroup.Size = new System.Drawing.Size(216, 144);
+            this.RotationGroup.Size = new System.Drawing.Size(216, 167);
             this.RotationGroup.TabIndex = 2;
             this.RotationGroup.TabStop = false;
             this.RotationGroup.Text = "Rotation";
@@ -623,11 +847,26 @@
             this.RotationOverlay.Location = new System.Drawing.Point(6, 16);
             this.RotationOverlay.Name = "RotationOverlay";
             this.RotationOverlay.Size = new System.Drawing.Size(93, 17);
-            this.RotationOverlay.TabIndex = 6;
+            this.RotationOverlay.TabIndex = 11;
             this.RotationOverlay.TabStop = false;
             this.RotationOverlay.Text = "Show Overlay";
             this.RotationOverlay.UseVisualStyleBackColor = true;
             this.RotationOverlay.CheckedChanged += new System.EventHandler(this.RotationOverlay_CheckedChanged);
+            // 
+            // RotationMessages
+            // 
+            this.RotationMessages.AutoSize = true;
+            this.RotationMessages.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RotationMessages.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.RotationMessages.ForeColor = System.Drawing.Color.White;
+            this.RotationMessages.Location = new System.Drawing.Point(6, 39);
+            this.RotationMessages.Name = "RotationMessages";
+            this.RotationMessages.Size = new System.Drawing.Size(105, 17);
+            this.RotationMessages.TabIndex = 6;
+            this.RotationMessages.TabStop = false;
+            this.RotationMessages.Text = "Show Messages";
+            this.RotationMessages.UseVisualStyleBackColor = true;
+            this.RotationMessages.CheckedChanged += new System.EventHandler(this.RotationMessages_CheckedChanged);
             // 
             // TankHotkey
             // 
@@ -635,7 +874,7 @@
             this.TankHotkey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TankHotkey.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.TankHotkey.ForeColor = System.Drawing.Color.White;
-            this.TankHotkey.Location = new System.Drawing.Point(120, 117);
+            this.TankHotkey.Location = new System.Drawing.Point(120, 140);
             this.TankHotkey.Name = "TankHotkey";
             this.TankHotkey.ReadOnly = true;
             this.TankHotkey.Size = new System.Drawing.Size(90, 21);
@@ -653,7 +892,7 @@
             this.TankMode.Items.AddRange(new object[] {
             "DPS",
             "Enmity"});
-            this.TankMode.Location = new System.Drawing.Point(6, 117);
+            this.TankMode.Location = new System.Drawing.Point(6, 140);
             this.TankMode.Name = "TankMode";
             this.TankMode.Size = new System.Drawing.Size(108, 21);
             this.TankMode.TabIndex = 7;
@@ -666,7 +905,7 @@
             this.RotationHotkey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RotationHotkey.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.RotationHotkey.ForeColor = System.Drawing.Color.White;
-            this.RotationHotkey.Location = new System.Drawing.Point(120, 73);
+            this.RotationHotkey.Location = new System.Drawing.Point(120, 96);
             this.RotationHotkey.Name = "RotationHotkey";
             this.RotationHotkey.ReadOnly = true;
             this.RotationHotkey.Size = new System.Drawing.Size(90, 21);
@@ -685,7 +924,7 @@
             "Smart",
             "Single",
             "Multi"});
-            this.RotationMode.Location = new System.Drawing.Point(6, 73);
+            this.RotationMode.Location = new System.Drawing.Point(6, 96);
             this.RotationMode.Name = "RotationMode";
             this.RotationMode.Size = new System.Drawing.Size(108, 21);
             this.RotationMode.TabIndex = 0;
@@ -696,7 +935,7 @@
             // 
             this.TankHotkeyLabel.AutoSize = true;
             this.TankHotkeyLabel.ForeColor = System.Drawing.Color.White;
-            this.TankHotkeyLabel.Location = new System.Drawing.Point(120, 100);
+            this.TankHotkeyLabel.Location = new System.Drawing.Point(120, 123);
             this.TankHotkeyLabel.Name = "TankHotkeyLabel";
             this.TankHotkeyLabel.Size = new System.Drawing.Size(43, 13);
             this.TankHotkeyLabel.TabIndex = 10;
@@ -706,7 +945,7 @@
             // 
             this.TankModeLabel.AutoSize = true;
             this.TankModeLabel.ForeColor = System.Drawing.Color.White;
-            this.TankModeLabel.Location = new System.Drawing.Point(6, 100);
+            this.TankModeLabel.Location = new System.Drawing.Point(6, 123);
             this.TankModeLabel.Name = "TankModeLabel";
             this.TankModeLabel.Size = new System.Drawing.Size(63, 13);
             this.TankModeLabel.TabIndex = 8;
@@ -716,7 +955,7 @@
             // 
             this.RotationKeyLabel.AutoSize = true;
             this.RotationKeyLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationKeyLabel.Location = new System.Drawing.Point(120, 56);
+            this.RotationKeyLabel.Location = new System.Drawing.Point(120, 79);
             this.RotationKeyLabel.Name = "RotationKeyLabel";
             this.RotationKeyLabel.Size = new System.Drawing.Size(43, 13);
             this.RotationKeyLabel.TabIndex = 4;
@@ -726,7 +965,7 @@
             // 
             this.RotationModeLabel.AutoSize = true;
             this.RotationModeLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationModeLabel.Location = new System.Drawing.Point(6, 56);
+            this.RotationModeLabel.Location = new System.Drawing.Point(6, 79);
             this.RotationModeLabel.Name = "RotationModeLabel";
             this.RotationModeLabel.Size = new System.Drawing.Size(85, 13);
             this.RotationModeLabel.TabIndex = 3;
@@ -776,7 +1015,7 @@
             this.ChocoboGroup.Controls.Add(this.ChocoboStanceDance);
             this.ChocoboGroup.Controls.Add(this.ChocoboSummon);
             this.ChocoboGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.ChocoboGroup.Location = new System.Drawing.Point(13, 6);
+            this.ChocoboGroup.Location = new System.Drawing.Point(235, 6);
             this.ChocoboGroup.Name = "ChocoboGroup";
             this.ChocoboGroup.Size = new System.Drawing.Size(199, 123);
             this.ChocoboGroup.TabIndex = 0;
@@ -884,7 +1123,8 @@
             // pgeBlackMage
             // 
             this.pgeBlackMage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pgeBlackMage.Controls.Add(this.label1);
+            this.pgeBlackMage.Controls.Add(this.BlackMageBuffGroup);
+            this.pgeBlackMage.Controls.Add(this.BlackMageRoleGroup);
             this.pgeBlackMage.Location = new System.Drawing.Point(104, 4);
             this.pgeBlackMage.Name = "pgeBlackMage";
             this.pgeBlackMage.Padding = new System.Windows.Forms.Padding(3);
@@ -893,16 +1133,285 @@
             this.pgeBlackMage.Text = "Black Mage";
             this.pgeBlackMage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShinraForm_MouseDown);
             // 
-            // label1
+            // BlackMageBuffGroup
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 36F);
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(13, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 65);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "N/A";
+            this.BlackMageBuffGroup.Controls.Add(this.BlackMageTriplecast);
+            this.BlackMageBuffGroup.Controls.Add(this.BlackMageEnochian);
+            this.BlackMageBuffGroup.Controls.Add(this.BlackMageSharpcast);
+            this.BlackMageBuffGroup.Controls.Add(this.BlackMageLeyLines);
+            this.BlackMageBuffGroup.Controls.Add(this.BlackMageConvert);
+            this.BlackMageBuffGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageBuffGroup.Location = new System.Drawing.Point(229, 6);
+            this.BlackMageBuffGroup.Name = "BlackMageBuffGroup";
+            this.BlackMageBuffGroup.Size = new System.Drawing.Size(85, 135);
+            this.BlackMageBuffGroup.TabIndex = 1;
+            this.BlackMageBuffGroup.TabStop = false;
+            this.BlackMageBuffGroup.Text = "Buff";
+            // 
+            // BlackMageTriplecast
+            // 
+            this.BlackMageTriplecast.AutoSize = true;
+            this.BlackMageTriplecast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageTriplecast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageTriplecast.ForeColor = System.Drawing.Color.White;
+            this.BlackMageTriplecast.Location = new System.Drawing.Point(6, 108);
+            this.BlackMageTriplecast.Name = "BlackMageTriplecast";
+            this.BlackMageTriplecast.Size = new System.Drawing.Size(70, 17);
+            this.BlackMageTriplecast.TabIndex = 4;
+            this.BlackMageTriplecast.TabStop = false;
+            this.BlackMageTriplecast.Text = "Triplecast";
+            this.BlackMageTriplecast.UseVisualStyleBackColor = true;
+            this.BlackMageTriplecast.CheckedChanged += new System.EventHandler(this.BlackMageTriplecast_CheckedChanged);
+            // 
+            // BlackMageEnochian
+            // 
+            this.BlackMageEnochian.AutoSize = true;
+            this.BlackMageEnochian.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageEnochian.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageEnochian.ForeColor = System.Drawing.Color.White;
+            this.BlackMageEnochian.Location = new System.Drawing.Point(6, 85);
+            this.BlackMageEnochian.Name = "BlackMageEnochian";
+            this.BlackMageEnochian.Size = new System.Drawing.Size(71, 17);
+            this.BlackMageEnochian.TabIndex = 3;
+            this.BlackMageEnochian.TabStop = false;
+            this.BlackMageEnochian.Text = "Enochian";
+            this.BlackMageEnochian.UseVisualStyleBackColor = true;
+            this.BlackMageEnochian.CheckedChanged += new System.EventHandler(this.BlackMageEnochian_CheckedChanged);
+            // 
+            // BlackMageSharpcast
+            // 
+            this.BlackMageSharpcast.AutoSize = true;
+            this.BlackMageSharpcast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageSharpcast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageSharpcast.ForeColor = System.Drawing.Color.White;
+            this.BlackMageSharpcast.Location = new System.Drawing.Point(6, 62);
+            this.BlackMageSharpcast.Name = "BlackMageSharpcast";
+            this.BlackMageSharpcast.Size = new System.Drawing.Size(73, 17);
+            this.BlackMageSharpcast.TabIndex = 2;
+            this.BlackMageSharpcast.TabStop = false;
+            this.BlackMageSharpcast.Text = "Sharpcast";
+            this.BlackMageSharpcast.UseVisualStyleBackColor = true;
+            this.BlackMageSharpcast.CheckedChanged += new System.EventHandler(this.BlackMageSharpcast_CheckedChanged);
+            // 
+            // BlackMageLeyLines
+            // 
+            this.BlackMageLeyLines.AutoSize = true;
+            this.BlackMageLeyLines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageLeyLines.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageLeyLines.ForeColor = System.Drawing.Color.White;
+            this.BlackMageLeyLines.Location = new System.Drawing.Point(6, 39);
+            this.BlackMageLeyLines.Name = "BlackMageLeyLines";
+            this.BlackMageLeyLines.Size = new System.Drawing.Size(68, 17);
+            this.BlackMageLeyLines.TabIndex = 1;
+            this.BlackMageLeyLines.TabStop = false;
+            this.BlackMageLeyLines.Text = "Ley Lines";
+            this.BlackMageLeyLines.UseVisualStyleBackColor = true;
+            this.BlackMageLeyLines.CheckedChanged += new System.EventHandler(this.BlackMageLeyLines_CheckedChanged);
+            // 
+            // BlackMageConvert
+            // 
+            this.BlackMageConvert.AutoSize = true;
+            this.BlackMageConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageConvert.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageConvert.ForeColor = System.Drawing.Color.White;
+            this.BlackMageConvert.Location = new System.Drawing.Point(6, 16);
+            this.BlackMageConvert.Name = "BlackMageConvert";
+            this.BlackMageConvert.Size = new System.Drawing.Size(63, 17);
+            this.BlackMageConvert.TabIndex = 0;
+            this.BlackMageConvert.TabStop = false;
+            this.BlackMageConvert.Text = "Convert";
+            this.BlackMageConvert.UseVisualStyleBackColor = true;
+            this.BlackMageConvert.CheckedChanged += new System.EventHandler(this.BlackMageConvert_CheckedChanged);
+            // 
+            // BlackMageRoleGroup
+            // 
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageLucidDreamingPct);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageDrainPct);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageErase);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageSurecast);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageApocatastasis);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageManaShift);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageSwiftcast);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageLucidDreaming);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageDiversion);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageDrain);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageBreak);
+            this.BlackMageRoleGroup.Controls.Add(this.BlackMageAddle);
+            this.BlackMageRoleGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageRoleGroup.Location = new System.Drawing.Point(13, 6);
+            this.BlackMageRoleGroup.Name = "BlackMageRoleGroup";
+            this.BlackMageRoleGroup.Size = new System.Drawing.Size(210, 250);
+            this.BlackMageRoleGroup.TabIndex = 0;
+            this.BlackMageRoleGroup.TabStop = false;
+            this.BlackMageRoleGroup.Text = "Role";
+            // 
+            // BlackMageLucidDreamingPct
+            // 
+            this.BlackMageLucidDreamingPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.BlackMageLucidDreamingPct.Location = new System.Drawing.Point(115, 108);
+            this.BlackMageLucidDreamingPct.Name = "BlackMageLucidDreamingPct";
+            this.BlackMageLucidDreamingPct.Size = new System.Drawing.Size(89, 22);
+            this.BlackMageLucidDreamingPct.TabIndex = 23;
+            this.BlackMageLucidDreamingPct.ValueChanged += new System.EventHandler(this.BlackMageLucidDreamingPct_ValueChanged);
+            // 
+            // BlackMageDrainPct
+            // 
+            this.BlackMageDrainPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.BlackMageDrainPct.Location = new System.Drawing.Point(115, 62);
+            this.BlackMageDrainPct.Name = "BlackMageDrainPct";
+            this.BlackMageDrainPct.Size = new System.Drawing.Size(89, 22);
+            this.BlackMageDrainPct.TabIndex = 22;
+            this.BlackMageDrainPct.ValueChanged += new System.EventHandler(this.BlackMageDrainPct_ValueChanged);
+            // 
+            // BlackMageErase
+            // 
+            this.BlackMageErase.AutoCheck = false;
+            this.BlackMageErase.AutoSize = true;
+            this.BlackMageErase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageErase.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageErase.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageErase.Location = new System.Drawing.Point(6, 223);
+            this.BlackMageErase.Name = "BlackMageErase";
+            this.BlackMageErase.Size = new System.Drawing.Size(50, 17);
+            this.BlackMageErase.TabIndex = 21;
+            this.BlackMageErase.TabStop = false;
+            this.BlackMageErase.Text = "Erase";
+            this.BlackMageErase.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageSurecast
+            // 
+            this.BlackMageSurecast.AutoCheck = false;
+            this.BlackMageSurecast.AutoSize = true;
+            this.BlackMageSurecast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageSurecast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageSurecast.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageSurecast.Location = new System.Drawing.Point(6, 200);
+            this.BlackMageSurecast.Name = "BlackMageSurecast";
+            this.BlackMageSurecast.Size = new System.Drawing.Size(66, 17);
+            this.BlackMageSurecast.TabIndex = 20;
+            this.BlackMageSurecast.TabStop = false;
+            this.BlackMageSurecast.Text = "Surecast";
+            this.BlackMageSurecast.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageApocatastasis
+            // 
+            this.BlackMageApocatastasis.AutoCheck = false;
+            this.BlackMageApocatastasis.AutoSize = true;
+            this.BlackMageApocatastasis.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageApocatastasis.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageApocatastasis.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageApocatastasis.Location = new System.Drawing.Point(6, 177);
+            this.BlackMageApocatastasis.Name = "BlackMageApocatastasis";
+            this.BlackMageApocatastasis.Size = new System.Drawing.Size(93, 17);
+            this.BlackMageApocatastasis.TabIndex = 19;
+            this.BlackMageApocatastasis.TabStop = false;
+            this.BlackMageApocatastasis.Text = "Apocatastasis";
+            this.BlackMageApocatastasis.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageManaShift
+            // 
+            this.BlackMageManaShift.AutoCheck = false;
+            this.BlackMageManaShift.AutoSize = true;
+            this.BlackMageManaShift.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageManaShift.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageManaShift.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageManaShift.Location = new System.Drawing.Point(6, 154);
+            this.BlackMageManaShift.Name = "BlackMageManaShift";
+            this.BlackMageManaShift.Size = new System.Drawing.Size(79, 17);
+            this.BlackMageManaShift.TabIndex = 18;
+            this.BlackMageManaShift.TabStop = false;
+            this.BlackMageManaShift.Text = "Mana Shift";
+            this.BlackMageManaShift.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageSwiftcast
+            // 
+            this.BlackMageSwiftcast.AutoSize = true;
+            this.BlackMageSwiftcast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageSwiftcast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageSwiftcast.ForeColor = System.Drawing.Color.White;
+            this.BlackMageSwiftcast.Location = new System.Drawing.Point(6, 131);
+            this.BlackMageSwiftcast.Name = "BlackMageSwiftcast";
+            this.BlackMageSwiftcast.Size = new System.Drawing.Size(69, 17);
+            this.BlackMageSwiftcast.TabIndex = 17;
+            this.BlackMageSwiftcast.TabStop = false;
+            this.BlackMageSwiftcast.Text = "Swiftcast";
+            this.BlackMageSwiftcast.UseVisualStyleBackColor = true;
+            this.BlackMageSwiftcast.CheckedChanged += new System.EventHandler(this.BlackMageSwiftcast_CheckedChanged);
+            // 
+            // BlackMageLucidDreaming
+            // 
+            this.BlackMageLucidDreaming.AutoSize = true;
+            this.BlackMageLucidDreaming.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageLucidDreaming.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageLucidDreaming.ForeColor = System.Drawing.Color.White;
+            this.BlackMageLucidDreaming.Location = new System.Drawing.Point(6, 108);
+            this.BlackMageLucidDreaming.Name = "BlackMageLucidDreaming";
+            this.BlackMageLucidDreaming.Size = new System.Drawing.Size(103, 17);
+            this.BlackMageLucidDreaming.TabIndex = 16;
+            this.BlackMageLucidDreaming.TabStop = false;
+            this.BlackMageLucidDreaming.Text = "Lucid Dreaming";
+            this.BlackMageLucidDreaming.UseVisualStyleBackColor = true;
+            this.BlackMageLucidDreaming.CheckedChanged += new System.EventHandler(this.BlackMageLucidDreaming_CheckedChanged);
+            // 
+            // BlackMageDiversion
+            // 
+            this.BlackMageDiversion.AutoCheck = false;
+            this.BlackMageDiversion.AutoSize = true;
+            this.BlackMageDiversion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageDiversion.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageDiversion.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageDiversion.Location = new System.Drawing.Point(6, 85);
+            this.BlackMageDiversion.Name = "BlackMageDiversion";
+            this.BlackMageDiversion.Size = new System.Drawing.Size(71, 17);
+            this.BlackMageDiversion.TabIndex = 15;
+            this.BlackMageDiversion.TabStop = false;
+            this.BlackMageDiversion.Text = "Diversion";
+            this.BlackMageDiversion.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageDrain
+            // 
+            this.BlackMageDrain.AutoSize = true;
+            this.BlackMageDrain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageDrain.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageDrain.ForeColor = System.Drawing.Color.White;
+            this.BlackMageDrain.Location = new System.Drawing.Point(6, 62);
+            this.BlackMageDrain.Name = "BlackMageDrain";
+            this.BlackMageDrain.Size = new System.Drawing.Size(51, 17);
+            this.BlackMageDrain.TabIndex = 14;
+            this.BlackMageDrain.TabStop = false;
+            this.BlackMageDrain.Text = "Drain";
+            this.BlackMageDrain.UseVisualStyleBackColor = true;
+            this.BlackMageDrain.CheckedChanged += new System.EventHandler(this.BlackMageDrain_CheckedChanged);
+            // 
+            // BlackMageBreak
+            // 
+            this.BlackMageBreak.AutoCheck = false;
+            this.BlackMageBreak.AutoSize = true;
+            this.BlackMageBreak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageBreak.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageBreak.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageBreak.Location = new System.Drawing.Point(6, 39);
+            this.BlackMageBreak.Name = "BlackMageBreak";
+            this.BlackMageBreak.Size = new System.Drawing.Size(52, 17);
+            this.BlackMageBreak.TabIndex = 13;
+            this.BlackMageBreak.TabStop = false;
+            this.BlackMageBreak.Text = "Break";
+            this.BlackMageBreak.UseVisualStyleBackColor = true;
+            // 
+            // BlackMageAddle
+            // 
+            this.BlackMageAddle.AutoCheck = false;
+            this.BlackMageAddle.AutoSize = true;
+            this.BlackMageAddle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlackMageAddle.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BlackMageAddle.ForeColor = System.Drawing.Color.DimGray;
+            this.BlackMageAddle.Location = new System.Drawing.Point(6, 16);
+            this.BlackMageAddle.Name = "BlackMageAddle";
+            this.BlackMageAddle.Size = new System.Drawing.Size(53, 17);
+            this.BlackMageAddle.TabIndex = 12;
+            this.BlackMageAddle.TabStop = false;
+            this.BlackMageAddle.Text = "Addle";
+            this.BlackMageAddle.UseVisualStyleBackColor = true;
             // 
             // pgeRedMage
             // 
@@ -1344,6 +1853,21 @@
             this.SummonerBuffGroup.TabStop = false;
             this.SummonerBuffGroup.Text = "Buff";
             // 
+            // SummonerAetherpact
+            // 
+            this.SummonerAetherpact.AutoSize = true;
+            this.SummonerAetherpact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SummonerAetherpact.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.SummonerAetherpact.ForeColor = System.Drawing.Color.White;
+            this.SummonerAetherpact.Location = new System.Drawing.Point(6, 62);
+            this.SummonerAetherpact.Name = "SummonerAetherpact";
+            this.SummonerAetherpact.Size = new System.Drawing.Size(79, 17);
+            this.SummonerAetherpact.TabIndex = 2;
+            this.SummonerAetherpact.TabStop = false;
+            this.SummonerAetherpact.Text = "Aetherpact";
+            this.SummonerAetherpact.UseVisualStyleBackColor = true;
+            this.SummonerAetherpact.CheckedChanged += new System.EventHandler(this.SummonerAetherpact_CheckedChanged);
+            // 
             // SummonerSummonBahamut
             // 
             this.SummonerSummonBahamut.AutoSize = true;
@@ -1440,6 +1964,7 @@
             // 
             this.SummonerPet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.SummonerPet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SummonerPet.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.SummonerPet.ForeColor = System.Drawing.Color.White;
             this.SummonerPet.FormattingEnabled = true;
             this.SummonerPet.Items.AddRange(new object[] {
@@ -1451,6 +1976,7 @@
             this.SummonerPet.Name = "SummonerPet";
             this.SummonerPet.Size = new System.Drawing.Size(100, 21);
             this.SummonerPet.TabIndex = 0;
+            this.SummonerPet.TabStop = false;
             this.SummonerPet.SelectedValueChanged += new System.EventHandler(this.SummonerPet_SelectedValueChanged);
             // 
             // SummonerRoleGroup
@@ -1788,6 +2314,8 @@
             // 
             // AstrologianHealGroup
             // 
+            this.AstrologianHealGroup.Controls.Add(this.AstrologianInterruptOverheal);
+            this.AstrologianHealGroup.Controls.Add(this.AstrologianInterruptDamage);
             this.AstrologianHealGroup.Controls.Add(this.AstrologianAscend);
             this.AstrologianHealGroup.Controls.Add(this.AstrologianAspHeliosPct);
             this.AstrologianHealGroup.Controls.Add(this.AstrologianHeliosPct);
@@ -1805,10 +2333,40 @@
             this.AstrologianHealGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianHealGroup.Location = new System.Drawing.Point(229, 6);
             this.AstrologianHealGroup.Name = "AstrologianHealGroup";
-            this.AstrologianHealGroup.Size = new System.Drawing.Size(218, 204);
+            this.AstrologianHealGroup.Size = new System.Drawing.Size(218, 250);
             this.AstrologianHealGroup.TabIndex = 1;
             this.AstrologianHealGroup.TabStop = false;
             this.AstrologianHealGroup.Text = "Heal";
+            // 
+            // AstrologianInterruptOverheal
+            // 
+            this.AstrologianInterruptOverheal.AutoSize = true;
+            this.AstrologianInterruptOverheal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AstrologianInterruptOverheal.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.AstrologianInterruptOverheal.ForeColor = System.Drawing.Color.White;
+            this.AstrologianInterruptOverheal.Location = new System.Drawing.Point(6, 62);
+            this.AstrologianInterruptOverheal.Name = "AstrologianInterruptOverheal";
+            this.AstrologianInterruptOverheal.Size = new System.Drawing.Size(118, 17);
+            this.AstrologianInterruptOverheal.TabIndex = 15;
+            this.AstrologianInterruptOverheal.TabStop = false;
+            this.AstrologianInterruptOverheal.Text = "Interrupt Overheal";
+            this.AstrologianInterruptOverheal.UseVisualStyleBackColor = true;
+            this.AstrologianInterruptOverheal.CheckedChanged += new System.EventHandler(this.AstrologianInterruptOverheal_CheckedChanged);
+            // 
+            // AstrologianInterruptDamage
+            // 
+            this.AstrologianInterruptDamage.AutoSize = true;
+            this.AstrologianInterruptDamage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AstrologianInterruptDamage.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.AstrologianInterruptDamage.ForeColor = System.Drawing.Color.White;
+            this.AstrologianInterruptDamage.Location = new System.Drawing.Point(6, 39);
+            this.AstrologianInterruptDamage.Name = "AstrologianInterruptDamage";
+            this.AstrologianInterruptDamage.Size = new System.Drawing.Size(114, 17);
+            this.AstrologianInterruptDamage.TabIndex = 14;
+            this.AstrologianInterruptDamage.TabStop = false;
+            this.AstrologianInterruptDamage.Text = "Interrupt Damage";
+            this.AstrologianInterruptDamage.UseVisualStyleBackColor = true;
+            this.AstrologianInterruptDamage.CheckedChanged += new System.EventHandler(this.AstrologianInterruptDamage_CheckedChanged);
             // 
             // AstrologianAscend
             // 
@@ -1816,7 +2374,7 @@
             this.AstrologianAscend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianAscend.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianAscend.ForeColor = System.Drawing.Color.White;
-            this.AstrologianAscend.Location = new System.Drawing.Point(6, 177);
+            this.AstrologianAscend.Location = new System.Drawing.Point(6, 223);
             this.AstrologianAscend.Name = "AstrologianAscend";
             this.AstrologianAscend.Size = new System.Drawing.Size(60, 17);
             this.AstrologianAscend.TabIndex = 13;
@@ -1828,7 +2386,7 @@
             // AstrologianAspHeliosPct
             // 
             this.AstrologianAspHeliosPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianAspHeliosPct.Location = new System.Drawing.Point(123, 154);
+            this.AstrologianAspHeliosPct.Location = new System.Drawing.Point(123, 200);
             this.AstrologianAspHeliosPct.Name = "AstrologianAspHeliosPct";
             this.AstrologianAspHeliosPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianAspHeliosPct.TabIndex = 12;
@@ -1837,7 +2395,7 @@
             // AstrologianHeliosPct
             // 
             this.AstrologianHeliosPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianHeliosPct.Location = new System.Drawing.Point(123, 131);
+            this.AstrologianHeliosPct.Location = new System.Drawing.Point(123, 177);
             this.AstrologianHeliosPct.Name = "AstrologianHeliosPct";
             this.AstrologianHeliosPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianHeliosPct.TabIndex = 11;
@@ -1849,7 +2407,7 @@
             this.AstrologianAspHelios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianAspHelios.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianAspHelios.ForeColor = System.Drawing.Color.White;
-            this.AstrologianAspHelios.Location = new System.Drawing.Point(6, 154);
+            this.AstrologianAspHelios.Location = new System.Drawing.Point(6, 200);
             this.AstrologianAspHelios.Name = "AstrologianAspHelios";
             this.AstrologianAspHelios.Size = new System.Drawing.Size(105, 17);
             this.AstrologianAspHelios.TabIndex = 10;
@@ -1864,7 +2422,7 @@
             this.AstrologianHelios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianHelios.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianHelios.ForeColor = System.Drawing.Color.White;
-            this.AstrologianHelios.Location = new System.Drawing.Point(6, 131);
+            this.AstrologianHelios.Location = new System.Drawing.Point(6, 177);
             this.AstrologianHelios.Name = "AstrologianHelios";
             this.AstrologianHelios.Size = new System.Drawing.Size(55, 17);
             this.AstrologianHelios.TabIndex = 9;
@@ -1891,7 +2449,7 @@
             // AstrologianAspBeneficPct
             // 
             this.AstrologianAspBeneficPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianAspBeneficPct.Location = new System.Drawing.Point(123, 108);
+            this.AstrologianAspBeneficPct.Location = new System.Drawing.Point(123, 154);
             this.AstrologianAspBeneficPct.Name = "AstrologianAspBeneficPct";
             this.AstrologianAspBeneficPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianAspBeneficPct.TabIndex = 7;
@@ -1900,7 +2458,7 @@
             // AstrologianEssDignityPct
             // 
             this.AstrologianEssDignityPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianEssDignityPct.Location = new System.Drawing.Point(123, 85);
+            this.AstrologianEssDignityPct.Location = new System.Drawing.Point(123, 131);
             this.AstrologianEssDignityPct.Name = "AstrologianEssDignityPct";
             this.AstrologianEssDignityPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianEssDignityPct.TabIndex = 6;
@@ -1909,7 +2467,7 @@
             // AstrologianBeneficIIPct
             // 
             this.AstrologianBeneficIIPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianBeneficIIPct.Location = new System.Drawing.Point(123, 62);
+            this.AstrologianBeneficIIPct.Location = new System.Drawing.Point(123, 108);
             this.AstrologianBeneficIIPct.Name = "AstrologianBeneficIIPct";
             this.AstrologianBeneficIIPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianBeneficIIPct.TabIndex = 5;
@@ -1918,7 +2476,7 @@
             // AstrologianBeneficPct
             // 
             this.AstrologianBeneficPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.AstrologianBeneficPct.Location = new System.Drawing.Point(123, 39);
+            this.AstrologianBeneficPct.Location = new System.Drawing.Point(123, 85);
             this.AstrologianBeneficPct.Name = "AstrologianBeneficPct";
             this.AstrologianBeneficPct.Size = new System.Drawing.Size(89, 22);
             this.AstrologianBeneficPct.TabIndex = 4;
@@ -1930,7 +2488,7 @@
             this.AstrologianAspBenefic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianAspBenefic.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianAspBenefic.ForeColor = System.Drawing.Color.White;
-            this.AstrologianAspBenefic.Location = new System.Drawing.Point(6, 108);
+            this.AstrologianAspBenefic.Location = new System.Drawing.Point(6, 154);
             this.AstrologianAspBenefic.Name = "AstrologianAspBenefic";
             this.AstrologianAspBenefic.Size = new System.Drawing.Size(111, 17);
             this.AstrologianAspBenefic.TabIndex = 3;
@@ -1945,7 +2503,7 @@
             this.AstrologianEssDignity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianEssDignity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianEssDignity.ForeColor = System.Drawing.Color.White;
-            this.AstrologianEssDignity.Location = new System.Drawing.Point(6, 85);
+            this.AstrologianEssDignity.Location = new System.Drawing.Point(6, 131);
             this.AstrologianEssDignity.Name = "AstrologianEssDignity";
             this.AstrologianEssDignity.Size = new System.Drawing.Size(108, 17);
             this.AstrologianEssDignity.TabIndex = 2;
@@ -1960,7 +2518,7 @@
             this.AstrologianBeneficII.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianBeneficII.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianBeneficII.ForeColor = System.Drawing.Color.White;
-            this.AstrologianBeneficII.Location = new System.Drawing.Point(6, 62);
+            this.AstrologianBeneficII.Location = new System.Drawing.Point(6, 108);
             this.AstrologianBeneficII.Name = "AstrologianBeneficII";
             this.AstrologianBeneficII.Size = new System.Drawing.Size(70, 17);
             this.AstrologianBeneficII.TabIndex = 1;
@@ -1975,7 +2533,7 @@
             this.AstrologianBenefic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AstrologianBenefic.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.AstrologianBenefic.ForeColor = System.Drawing.Color.White;
-            this.AstrologianBenefic.Location = new System.Drawing.Point(6, 39);
+            this.AstrologianBenefic.Location = new System.Drawing.Point(6, 85);
             this.AstrologianBenefic.Name = "AstrologianBenefic";
             this.AstrologianBenefic.Size = new System.Drawing.Size(61, 17);
             this.AstrologianBenefic.TabIndex = 0;
@@ -2167,7 +2725,12 @@
             // pgeScholar
             // 
             this.pgeScholar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pgeScholar.Controls.Add(this.label3);
+            this.pgeScholar.Controls.Add(this.ScholarBuffGroup);
+            this.pgeScholar.Controls.Add(this.ScholarCooldownGroup);
+            this.pgeScholar.Controls.Add(this.ScholarPetGroup);
+            this.pgeScholar.Controls.Add(this.ScholarAoEGroup);
+            this.pgeScholar.Controls.Add(this.ScholarHealGroup);
+            this.pgeScholar.Controls.Add(this.ScholarRoleGroup);
             this.pgeScholar.Location = new System.Drawing.Point(104, 4);
             this.pgeScholar.Name = "pgeScholar";
             this.pgeScholar.Padding = new System.Windows.Forms.Padding(3);
@@ -2176,16 +2739,580 @@
             this.pgeScholar.Text = "Scholar";
             this.pgeScholar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShinraForm_MouseDown);
             // 
-            // label3
+            // ScholarBuffGroup
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 36F);
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(13, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(114, 65);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "N/A";
+            this.ScholarBuffGroup.Controls.Add(this.ScholarEmergencyTactics);
+            this.ScholarBuffGroup.Controls.Add(this.ScholarRouse);
+            this.ScholarBuffGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarBuffGroup.Location = new System.Drawing.Point(436, 127);
+            this.ScholarBuffGroup.Name = "ScholarBuffGroup";
+            this.ScholarBuffGroup.Size = new System.Drawing.Size(125, 66);
+            this.ScholarBuffGroup.TabIndex = 5;
+            this.ScholarBuffGroup.TabStop = false;
+            this.ScholarBuffGroup.Text = "Buff";
+            // 
+            // ScholarEmergencyTactics
+            // 
+            this.ScholarEmergencyTactics.AutoSize = true;
+            this.ScholarEmergencyTactics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarEmergencyTactics.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarEmergencyTactics.ForeColor = System.Drawing.Color.White;
+            this.ScholarEmergencyTactics.Location = new System.Drawing.Point(6, 39);
+            this.ScholarEmergencyTactics.Name = "ScholarEmergencyTactics";
+            this.ScholarEmergencyTactics.Size = new System.Drawing.Size(113, 17);
+            this.ScholarEmergencyTactics.TabIndex = 1;
+            this.ScholarEmergencyTactics.TabStop = false;
+            this.ScholarEmergencyTactics.Text = "Emergency Tactics";
+            this.ScholarEmergencyTactics.UseVisualStyleBackColor = true;
+            this.ScholarEmergencyTactics.CheckedChanged += new System.EventHandler(this.ScholarEmergencyTactics_CheckedChanged);
+            // 
+            // ScholarRouse
+            // 
+            this.ScholarRouse.AutoSize = true;
+            this.ScholarRouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarRouse.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarRouse.ForeColor = System.Drawing.Color.White;
+            this.ScholarRouse.Location = new System.Drawing.Point(6, 16);
+            this.ScholarRouse.Name = "ScholarRouse";
+            this.ScholarRouse.Size = new System.Drawing.Size(55, 17);
+            this.ScholarRouse.TabIndex = 0;
+            this.ScholarRouse.TabStop = false;
+            this.ScholarRouse.Text = "Rouse";
+            this.ScholarRouse.UseVisualStyleBackColor = true;
+            this.ScholarRouse.CheckedChanged += new System.EventHandler(this.ScholarRouse_CheckedChanged);
+            // 
+            // ScholarCooldownGroup
+            // 
+            this.ScholarCooldownGroup.Controls.Add(this.ScholarChainStrategem);
+            this.ScholarCooldownGroup.Controls.Add(this.ScholarShadowFlare);
+            this.ScholarCooldownGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarCooldownGroup.Location = new System.Drawing.Point(436, 55);
+            this.ScholarCooldownGroup.Name = "ScholarCooldownGroup";
+            this.ScholarCooldownGroup.Size = new System.Drawing.Size(125, 66);
+            this.ScholarCooldownGroup.TabIndex = 4;
+            this.ScholarCooldownGroup.TabStop = false;
+            this.ScholarCooldownGroup.Text = "Cooldown";
+            // 
+            // ScholarChainStrategem
+            // 
+            this.ScholarChainStrategem.AutoSize = true;
+            this.ScholarChainStrategem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarChainStrategem.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarChainStrategem.ForeColor = System.Drawing.Color.White;
+            this.ScholarChainStrategem.Location = new System.Drawing.Point(6, 39);
+            this.ScholarChainStrategem.Name = "ScholarChainStrategem";
+            this.ScholarChainStrategem.Size = new System.Drawing.Size(108, 17);
+            this.ScholarChainStrategem.TabIndex = 1;
+            this.ScholarChainStrategem.TabStop = false;
+            this.ScholarChainStrategem.Text = "Chain Strategem";
+            this.ScholarChainStrategem.UseVisualStyleBackColor = true;
+            this.ScholarChainStrategem.CheckedChanged += new System.EventHandler(this.ScholarChainStrategem_CheckedChanged);
+            // 
+            // ScholarShadowFlare
+            // 
+            this.ScholarShadowFlare.AutoSize = true;
+            this.ScholarShadowFlare.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarShadowFlare.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarShadowFlare.ForeColor = System.Drawing.Color.White;
+            this.ScholarShadowFlare.Location = new System.Drawing.Point(6, 16);
+            this.ScholarShadowFlare.Name = "ScholarShadowFlare";
+            this.ScholarShadowFlare.Size = new System.Drawing.Size(93, 17);
+            this.ScholarShadowFlare.TabIndex = 0;
+            this.ScholarShadowFlare.TabStop = false;
+            this.ScholarShadowFlare.Text = "Shadow Flare";
+            this.ScholarShadowFlare.UseVisualStyleBackColor = true;
+            this.ScholarShadowFlare.CheckedChanged += new System.EventHandler(this.ScholarShadowFlare_CheckedChanged);
+            // 
+            // ScholarPetGroup
+            // 
+            this.ScholarPetGroup.Controls.Add(this.ScholarPet);
+            this.ScholarPetGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarPetGroup.Location = new System.Drawing.Point(436, 199);
+            this.ScholarPetGroup.Name = "ScholarPetGroup";
+            this.ScholarPetGroup.Size = new System.Drawing.Size(102, 43);
+            this.ScholarPetGroup.TabIndex = 3;
+            this.ScholarPetGroup.TabStop = false;
+            this.ScholarPetGroup.Text = "Pet";
+            // 
+            // ScholarPet
+            // 
+            this.ScholarPet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarPet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarPet.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarPet.ForeColor = System.Drawing.Color.White;
+            this.ScholarPet.FormattingEnabled = true;
+            this.ScholarPet.Items.AddRange(new object[] {
+            "None",
+            "Eos",
+            "Selene"});
+            this.ScholarPet.Location = new System.Drawing.Point(6, 16);
+            this.ScholarPet.Name = "ScholarPet";
+            this.ScholarPet.Size = new System.Drawing.Size(90, 21);
+            this.ScholarPet.TabIndex = 0;
+            this.ScholarPet.TabStop = false;
+            this.ScholarPet.SelectedValueChanged += new System.EventHandler(this.ScholarPet_SelectedValueChanged);
+            // 
+            // ScholarAoEGroup
+            // 
+            this.ScholarAoEGroup.Controls.Add(this.ScholarBane);
+            this.ScholarAoEGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarAoEGroup.Location = new System.Drawing.Point(436, 6);
+            this.ScholarAoEGroup.Name = "ScholarAoEGroup";
+            this.ScholarAoEGroup.Size = new System.Drawing.Size(125, 43);
+            this.ScholarAoEGroup.TabIndex = 2;
+            this.ScholarAoEGroup.TabStop = false;
+            this.ScholarAoEGroup.Text = "AoE";
+            // 
+            // ScholarBane
+            // 
+            this.ScholarBane.AutoSize = true;
+            this.ScholarBane.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarBane.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarBane.ForeColor = System.Drawing.Color.White;
+            this.ScholarBane.Location = new System.Drawing.Point(6, 16);
+            this.ScholarBane.Name = "ScholarBane";
+            this.ScholarBane.Size = new System.Drawing.Size(49, 17);
+            this.ScholarBane.TabIndex = 0;
+            this.ScholarBane.TabStop = false;
+            this.ScholarBane.Text = "Bane";
+            this.ScholarBane.UseVisualStyleBackColor = true;
+            this.ScholarBane.CheckedChanged += new System.EventHandler(this.ScholarBane_CheckedChanged);
+            // 
+            // ScholarHealGroup
+            // 
+            this.ScholarHealGroup.Controls.Add(this.ScholarInterruptOverheal);
+            this.ScholarHealGroup.Controls.Add(this.ScholarInterruptDamage);
+            this.ScholarHealGroup.Controls.Add(this.ScholarIndomitabilityPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarSuccorPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarExcogitationPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarLustratePct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarAetherpactPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarAdloquiumPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarPhysickPct);
+            this.ScholarHealGroup.Controls.Add(this.ScholarAetherpact);
+            this.ScholarHealGroup.Controls.Add(this.ScholarResurrection);
+            this.ScholarHealGroup.Controls.Add(this.ScholarIndomitability);
+            this.ScholarHealGroup.Controls.Add(this.ScholarSuccor);
+            this.ScholarHealGroup.Controls.Add(this.ScholarExcogitation);
+            this.ScholarHealGroup.Controls.Add(this.ScholarLustrate);
+            this.ScholarHealGroup.Controls.Add(this.ScholarAdloquium);
+            this.ScholarHealGroup.Controls.Add(this.ScholarPhysick);
+            this.ScholarHealGroup.Controls.Add(this.ScholarPartyHeal);
+            this.ScholarHealGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarHealGroup.Location = new System.Drawing.Point(229, 6);
+            this.ScholarHealGroup.Name = "ScholarHealGroup";
+            this.ScholarHealGroup.Size = new System.Drawing.Size(201, 273);
+            this.ScholarHealGroup.TabIndex = 1;
+            this.ScholarHealGroup.TabStop = false;
+            this.ScholarHealGroup.Text = "Heal";
+            // 
+            // ScholarInterruptOverheal
+            // 
+            this.ScholarInterruptOverheal.AutoSize = true;
+            this.ScholarInterruptOverheal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarInterruptOverheal.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarInterruptOverheal.ForeColor = System.Drawing.Color.White;
+            this.ScholarInterruptOverheal.Location = new System.Drawing.Point(6, 62);
+            this.ScholarInterruptOverheal.Name = "ScholarInterruptOverheal";
+            this.ScholarInterruptOverheal.Size = new System.Drawing.Size(118, 17);
+            this.ScholarInterruptOverheal.TabIndex = 16;
+            this.ScholarInterruptOverheal.TabStop = false;
+            this.ScholarInterruptOverheal.Text = "Interrupt Overheal";
+            this.ScholarInterruptOverheal.UseVisualStyleBackColor = true;
+            this.ScholarInterruptOverheal.CheckedChanged += new System.EventHandler(this.ScholarInterruptOverheal_CheckedChanged);
+            // 
+            // ScholarInterruptDamage
+            // 
+            this.ScholarInterruptDamage.AutoSize = true;
+            this.ScholarInterruptDamage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarInterruptDamage.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarInterruptDamage.ForeColor = System.Drawing.Color.White;
+            this.ScholarInterruptDamage.Location = new System.Drawing.Point(6, 39);
+            this.ScholarInterruptDamage.Name = "ScholarInterruptDamage";
+            this.ScholarInterruptDamage.Size = new System.Drawing.Size(114, 17);
+            this.ScholarInterruptDamage.TabIndex = 15;
+            this.ScholarInterruptDamage.TabStop = false;
+            this.ScholarInterruptDamage.Text = "Interrupt Damage";
+            this.ScholarInterruptDamage.UseVisualStyleBackColor = true;
+            this.ScholarInterruptDamage.CheckedChanged += new System.EventHandler(this.ScholarInterruptDamage_CheckedChanged);
+            // 
+            // ScholarIndomitabilityPct
+            // 
+            this.ScholarIndomitabilityPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarIndomitabilityPct.Location = new System.Drawing.Point(106, 223);
+            this.ScholarIndomitabilityPct.Name = "ScholarIndomitabilityPct";
+            this.ScholarIndomitabilityPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarIndomitabilityPct.TabIndex = 14;
+            this.ScholarIndomitabilityPct.ValueChanged += new System.EventHandler(this.ScholarIndomitabilityPct_ValueChanged);
+            // 
+            // ScholarSuccorPct
+            // 
+            this.ScholarSuccorPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarSuccorPct.Location = new System.Drawing.Point(106, 200);
+            this.ScholarSuccorPct.Name = "ScholarSuccorPct";
+            this.ScholarSuccorPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarSuccorPct.TabIndex = 13;
+            this.ScholarSuccorPct.ValueChanged += new System.EventHandler(this.ScholarSuccorPct_ValueChanged);
+            // 
+            // ScholarExcogitationPct
+            // 
+            this.ScholarExcogitationPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarExcogitationPct.Location = new System.Drawing.Point(106, 177);
+            this.ScholarExcogitationPct.Name = "ScholarExcogitationPct";
+            this.ScholarExcogitationPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarExcogitationPct.TabIndex = 12;
+            this.ScholarExcogitationPct.ValueChanged += new System.EventHandler(this.ScholarExcogitationPct_ValueChanged);
+            // 
+            // ScholarLustratePct
+            // 
+            this.ScholarLustratePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarLustratePct.Location = new System.Drawing.Point(106, 154);
+            this.ScholarLustratePct.Name = "ScholarLustratePct";
+            this.ScholarLustratePct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarLustratePct.TabIndex = 11;
+            this.ScholarLustratePct.ValueChanged += new System.EventHandler(this.ScholarLustratePct_ValueChanged);
+            // 
+            // ScholarAetherpactPct
+            // 
+            this.ScholarAetherpactPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarAetherpactPct.Location = new System.Drawing.Point(106, 131);
+            this.ScholarAetherpactPct.Name = "ScholarAetherpactPct";
+            this.ScholarAetherpactPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarAetherpactPct.TabIndex = 10;
+            this.ScholarAetherpactPct.ValueChanged += new System.EventHandler(this.ScholarAetherpactPct_ValueChanged);
+            // 
+            // ScholarAdloquiumPct
+            // 
+            this.ScholarAdloquiumPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarAdloquiumPct.Location = new System.Drawing.Point(106, 108);
+            this.ScholarAdloquiumPct.Name = "ScholarAdloquiumPct";
+            this.ScholarAdloquiumPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarAdloquiumPct.TabIndex = 10;
+            this.ScholarAdloquiumPct.ValueChanged += new System.EventHandler(this.ScholarAdloquiumPct_ValueChanged);
+            // 
+            // ScholarPhysickPct
+            // 
+            this.ScholarPhysickPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarPhysickPct.Location = new System.Drawing.Point(106, 85);
+            this.ScholarPhysickPct.Name = "ScholarPhysickPct";
+            this.ScholarPhysickPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarPhysickPct.TabIndex = 9;
+            this.ScholarPhysickPct.ValueChanged += new System.EventHandler(this.ScholarPhysickPct_ValueChanged);
+            // 
+            // ScholarAetherpact
+            // 
+            this.ScholarAetherpact.AutoSize = true;
+            this.ScholarAetherpact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarAetherpact.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarAetherpact.ForeColor = System.Drawing.Color.White;
+            this.ScholarAetherpact.Location = new System.Drawing.Point(6, 131);
+            this.ScholarAetherpact.Name = "ScholarAetherpact";
+            this.ScholarAetherpact.Size = new System.Drawing.Size(79, 17);
+            this.ScholarAetherpact.TabIndex = 8;
+            this.ScholarAetherpact.TabStop = false;
+            this.ScholarAetherpact.Text = "Aetherpact";
+            this.ScholarAetherpact.UseVisualStyleBackColor = true;
+            this.ScholarAetherpact.CheckedChanged += new System.EventHandler(this.ScholarAetherpact_CheckedChanged);
+            // 
+            // ScholarResurrection
+            // 
+            this.ScholarResurrection.AutoSize = true;
+            this.ScholarResurrection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarResurrection.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarResurrection.ForeColor = System.Drawing.Color.White;
+            this.ScholarResurrection.Location = new System.Drawing.Point(6, 246);
+            this.ScholarResurrection.Name = "ScholarResurrection";
+            this.ScholarResurrection.Size = new System.Drawing.Size(88, 17);
+            this.ScholarResurrection.TabIndex = 7;
+            this.ScholarResurrection.TabStop = false;
+            this.ScholarResurrection.Text = "Resurrection";
+            this.ScholarResurrection.UseVisualStyleBackColor = true;
+            this.ScholarResurrection.CheckedChanged += new System.EventHandler(this.ScholarResurrection_CheckedChanged);
+            // 
+            // ScholarIndomitability
+            // 
+            this.ScholarIndomitability.AutoSize = true;
+            this.ScholarIndomitability.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarIndomitability.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarIndomitability.ForeColor = System.Drawing.Color.White;
+            this.ScholarIndomitability.Location = new System.Drawing.Point(6, 223);
+            this.ScholarIndomitability.Name = "ScholarIndomitability";
+            this.ScholarIndomitability.Size = new System.Drawing.Size(94, 17);
+            this.ScholarIndomitability.TabIndex = 6;
+            this.ScholarIndomitability.TabStop = false;
+            this.ScholarIndomitability.Text = "Indomitability";
+            this.ScholarIndomitability.UseVisualStyleBackColor = true;
+            this.ScholarIndomitability.CheckedChanged += new System.EventHandler(this.ScholarIndomitability_CheckedChanged);
+            // 
+            // ScholarSuccor
+            // 
+            this.ScholarSuccor.AutoSize = true;
+            this.ScholarSuccor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarSuccor.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarSuccor.ForeColor = System.Drawing.Color.White;
+            this.ScholarSuccor.Location = new System.Drawing.Point(6, 200);
+            this.ScholarSuccor.Name = "ScholarSuccor";
+            this.ScholarSuccor.Size = new System.Drawing.Size(57, 17);
+            this.ScholarSuccor.TabIndex = 5;
+            this.ScholarSuccor.TabStop = false;
+            this.ScholarSuccor.Text = "Succor";
+            this.ScholarSuccor.UseVisualStyleBackColor = true;
+            this.ScholarSuccor.CheckedChanged += new System.EventHandler(this.ScholarSuccor_CheckedChanged);
+            // 
+            // ScholarExcogitation
+            // 
+            this.ScholarExcogitation.AutoSize = true;
+            this.ScholarExcogitation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarExcogitation.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarExcogitation.ForeColor = System.Drawing.Color.White;
+            this.ScholarExcogitation.Location = new System.Drawing.Point(6, 177);
+            this.ScholarExcogitation.Name = "ScholarExcogitation";
+            this.ScholarExcogitation.Size = new System.Drawing.Size(87, 17);
+            this.ScholarExcogitation.TabIndex = 4;
+            this.ScholarExcogitation.TabStop = false;
+            this.ScholarExcogitation.Text = "Excogitation";
+            this.ScholarExcogitation.UseVisualStyleBackColor = true;
+            this.ScholarExcogitation.CheckedChanged += new System.EventHandler(this.ScholarExcogitation_CheckedChanged);
+            // 
+            // ScholarLustrate
+            // 
+            this.ScholarLustrate.AutoSize = true;
+            this.ScholarLustrate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarLustrate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarLustrate.ForeColor = System.Drawing.Color.White;
+            this.ScholarLustrate.Location = new System.Drawing.Point(6, 154);
+            this.ScholarLustrate.Name = "ScholarLustrate";
+            this.ScholarLustrate.Size = new System.Drawing.Size(64, 17);
+            this.ScholarLustrate.TabIndex = 3;
+            this.ScholarLustrate.TabStop = false;
+            this.ScholarLustrate.Text = "Lustrate";
+            this.ScholarLustrate.UseVisualStyleBackColor = true;
+            this.ScholarLustrate.CheckedChanged += new System.EventHandler(this.ScholarLustrate_CheckedChanged);
+            // 
+            // ScholarAdloquium
+            // 
+            this.ScholarAdloquium.AutoSize = true;
+            this.ScholarAdloquium.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarAdloquium.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarAdloquium.ForeColor = System.Drawing.Color.White;
+            this.ScholarAdloquium.Location = new System.Drawing.Point(6, 108);
+            this.ScholarAdloquium.Name = "ScholarAdloquium";
+            this.ScholarAdloquium.Size = new System.Drawing.Size(80, 17);
+            this.ScholarAdloquium.TabIndex = 2;
+            this.ScholarAdloquium.TabStop = false;
+            this.ScholarAdloquium.Text = "Adloquium";
+            this.ScholarAdloquium.UseVisualStyleBackColor = true;
+            this.ScholarAdloquium.CheckedChanged += new System.EventHandler(this.ScholarAdloquium_CheckedChanged);
+            // 
+            // ScholarPhysick
+            // 
+            this.ScholarPhysick.AutoSize = true;
+            this.ScholarPhysick.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarPhysick.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarPhysick.ForeColor = System.Drawing.Color.White;
+            this.ScholarPhysick.Location = new System.Drawing.Point(6, 85);
+            this.ScholarPhysick.Name = "ScholarPhysick";
+            this.ScholarPhysick.Size = new System.Drawing.Size(60, 17);
+            this.ScholarPhysick.TabIndex = 1;
+            this.ScholarPhysick.TabStop = false;
+            this.ScholarPhysick.Text = "Physick";
+            this.ScholarPhysick.UseVisualStyleBackColor = true;
+            this.ScholarPhysick.CheckedChanged += new System.EventHandler(this.ScholarPhysick_CheckedChanged);
+            // 
+            // ScholarPartyHeal
+            // 
+            this.ScholarPartyHeal.AutoSize = true;
+            this.ScholarPartyHeal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarPartyHeal.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarPartyHeal.ForeColor = System.Drawing.Color.White;
+            this.ScholarPartyHeal.Location = new System.Drawing.Point(6, 16);
+            this.ScholarPartyHeal.Name = "ScholarPartyHeal";
+            this.ScholarPartyHeal.Size = new System.Drawing.Size(91, 17);
+            this.ScholarPartyHeal.TabIndex = 0;
+            this.ScholarPartyHeal.TabStop = false;
+            this.ScholarPartyHeal.Text = "Party Healing";
+            this.ScholarPartyHeal.UseVisualStyleBackColor = true;
+            this.ScholarPartyHeal.CheckedChanged += new System.EventHandler(this.ScholarPartyHeal_CheckedChanged);
+            // 
+            // ScholarRoleGroup
+            // 
+            this.ScholarRoleGroup.Controls.Add(this.ScholarEsuna);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarClericStance);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarLucidDreamingPct);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarRescue);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarSurecast);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarLargesse);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarEyeForAnEye);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarSwiftcast);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarLucidDreaming);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarProtect);
+            this.ScholarRoleGroup.Controls.Add(this.ScholarBreak);
+            this.ScholarRoleGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarRoleGroup.Location = new System.Drawing.Point(13, 6);
+            this.ScholarRoleGroup.Name = "ScholarRoleGroup";
+            this.ScholarRoleGroup.Size = new System.Drawing.Size(210, 250);
+            this.ScholarRoleGroup.TabIndex = 0;
+            this.ScholarRoleGroup.TabStop = false;
+            this.ScholarRoleGroup.Text = "Role";
+            // 
+            // ScholarEsuna
+            // 
+            this.ScholarEsuna.AutoSize = true;
+            this.ScholarEsuna.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarEsuna.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarEsuna.ForeColor = System.Drawing.Color.White;
+            this.ScholarEsuna.Location = new System.Drawing.Point(6, 85);
+            this.ScholarEsuna.Name = "ScholarEsuna";
+            this.ScholarEsuna.Size = new System.Drawing.Size(54, 17);
+            this.ScholarEsuna.TabIndex = 23;
+            this.ScholarEsuna.TabStop = false;
+            this.ScholarEsuna.Text = "Esuna";
+            this.ScholarEsuna.UseVisualStyleBackColor = true;
+            this.ScholarEsuna.CheckedChanged += new System.EventHandler(this.ScholarEsuna_CheckedChanged);
+            // 
+            // ScholarClericStance
+            // 
+            this.ScholarClericStance.AutoSize = true;
+            this.ScholarClericStance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarClericStance.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarClericStance.ForeColor = System.Drawing.Color.White;
+            this.ScholarClericStance.Location = new System.Drawing.Point(6, 16);
+            this.ScholarClericStance.Name = "ScholarClericStance";
+            this.ScholarClericStance.Size = new System.Drawing.Size(88, 17);
+            this.ScholarClericStance.TabIndex = 22;
+            this.ScholarClericStance.TabStop = false;
+            this.ScholarClericStance.Text = "Cleric Stance";
+            this.ScholarClericStance.UseVisualStyleBackColor = true;
+            this.ScholarClericStance.CheckedChanged += new System.EventHandler(this.ScholarClericStance_CheckedChanged);
+            // 
+            // ScholarLucidDreamingPct
+            // 
+            this.ScholarLucidDreamingPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ScholarLucidDreamingPct.Location = new System.Drawing.Point(115, 108);
+            this.ScholarLucidDreamingPct.Name = "ScholarLucidDreamingPct";
+            this.ScholarLucidDreamingPct.Size = new System.Drawing.Size(89, 22);
+            this.ScholarLucidDreamingPct.TabIndex = 21;
+            this.ScholarLucidDreamingPct.ValueChanged += new System.EventHandler(this.ScholarLucidDreamingPct_ValueChanged);
+            // 
+            // ScholarRescue
+            // 
+            this.ScholarRescue.AutoCheck = false;
+            this.ScholarRescue.AutoSize = true;
+            this.ScholarRescue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarRescue.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarRescue.ForeColor = System.Drawing.Color.DimGray;
+            this.ScholarRescue.Location = new System.Drawing.Point(6, 223);
+            this.ScholarRescue.Name = "ScholarRescue";
+            this.ScholarRescue.Size = new System.Drawing.Size(59, 17);
+            this.ScholarRescue.TabIndex = 20;
+            this.ScholarRescue.TabStop = false;
+            this.ScholarRescue.Text = "Rescue";
+            this.ScholarRescue.UseVisualStyleBackColor = true;
+            // 
+            // ScholarSurecast
+            // 
+            this.ScholarSurecast.AutoCheck = false;
+            this.ScholarSurecast.AutoSize = true;
+            this.ScholarSurecast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarSurecast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarSurecast.ForeColor = System.Drawing.Color.DimGray;
+            this.ScholarSurecast.Location = new System.Drawing.Point(6, 200);
+            this.ScholarSurecast.Name = "ScholarSurecast";
+            this.ScholarSurecast.Size = new System.Drawing.Size(66, 17);
+            this.ScholarSurecast.TabIndex = 19;
+            this.ScholarSurecast.TabStop = false;
+            this.ScholarSurecast.Text = "Surecast";
+            this.ScholarSurecast.UseVisualStyleBackColor = true;
+            // 
+            // ScholarLargesse
+            // 
+            this.ScholarLargesse.AutoCheck = false;
+            this.ScholarLargesse.AutoSize = true;
+            this.ScholarLargesse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarLargesse.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarLargesse.ForeColor = System.Drawing.Color.DimGray;
+            this.ScholarLargesse.Location = new System.Drawing.Point(6, 177);
+            this.ScholarLargesse.Name = "ScholarLargesse";
+            this.ScholarLargesse.Size = new System.Drawing.Size(67, 17);
+            this.ScholarLargesse.TabIndex = 18;
+            this.ScholarLargesse.TabStop = false;
+            this.ScholarLargesse.Text = "Largesse";
+            this.ScholarLargesse.UseVisualStyleBackColor = true;
+            // 
+            // ScholarEyeForAnEye
+            // 
+            this.ScholarEyeForAnEye.AutoCheck = false;
+            this.ScholarEyeForAnEye.AutoSize = true;
+            this.ScholarEyeForAnEye.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarEyeForAnEye.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarEyeForAnEye.ForeColor = System.Drawing.Color.DimGray;
+            this.ScholarEyeForAnEye.Location = new System.Drawing.Point(6, 154);
+            this.ScholarEyeForAnEye.Name = "ScholarEyeForAnEye";
+            this.ScholarEyeForAnEye.Size = new System.Drawing.Size(94, 17);
+            this.ScholarEyeForAnEye.TabIndex = 17;
+            this.ScholarEyeForAnEye.TabStop = false;
+            this.ScholarEyeForAnEye.Text = "Eye for an Eye";
+            this.ScholarEyeForAnEye.UseVisualStyleBackColor = true;
+            // 
+            // ScholarSwiftcast
+            // 
+            this.ScholarSwiftcast.AutoSize = true;
+            this.ScholarSwiftcast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarSwiftcast.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarSwiftcast.ForeColor = System.Drawing.Color.White;
+            this.ScholarSwiftcast.Location = new System.Drawing.Point(6, 131);
+            this.ScholarSwiftcast.Name = "ScholarSwiftcast";
+            this.ScholarSwiftcast.Size = new System.Drawing.Size(69, 17);
+            this.ScholarSwiftcast.TabIndex = 16;
+            this.ScholarSwiftcast.TabStop = false;
+            this.ScholarSwiftcast.Text = "Swiftcast";
+            this.ScholarSwiftcast.UseVisualStyleBackColor = true;
+            this.ScholarSwiftcast.CheckedChanged += new System.EventHandler(this.ScholarSwiftcast_CheckedChanged);
+            // 
+            // ScholarLucidDreaming
+            // 
+            this.ScholarLucidDreaming.AutoSize = true;
+            this.ScholarLucidDreaming.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarLucidDreaming.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarLucidDreaming.ForeColor = System.Drawing.Color.White;
+            this.ScholarLucidDreaming.Location = new System.Drawing.Point(6, 108);
+            this.ScholarLucidDreaming.Name = "ScholarLucidDreaming";
+            this.ScholarLucidDreaming.Size = new System.Drawing.Size(103, 17);
+            this.ScholarLucidDreaming.TabIndex = 15;
+            this.ScholarLucidDreaming.TabStop = false;
+            this.ScholarLucidDreaming.Text = "Lucid Dreaming";
+            this.ScholarLucidDreaming.UseVisualStyleBackColor = true;
+            this.ScholarLucidDreaming.CheckedChanged += new System.EventHandler(this.ScholarLucidDreaming_CheckedChanged);
+            // 
+            // ScholarProtect
+            // 
+            this.ScholarProtect.AutoSize = true;
+            this.ScholarProtect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarProtect.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarProtect.ForeColor = System.Drawing.Color.White;
+            this.ScholarProtect.Location = new System.Drawing.Point(6, 62);
+            this.ScholarProtect.Name = "ScholarProtect";
+            this.ScholarProtect.Size = new System.Drawing.Size(59, 17);
+            this.ScholarProtect.TabIndex = 14;
+            this.ScholarProtect.TabStop = false;
+            this.ScholarProtect.Text = "Protect";
+            this.ScholarProtect.UseVisualStyleBackColor = true;
+            this.ScholarProtect.CheckedChanged += new System.EventHandler(this.ScholarProtect_CheckedChanged);
+            // 
+            // ScholarBreak
+            // 
+            this.ScholarBreak.AutoCheck = false;
+            this.ScholarBreak.AutoSize = true;
+            this.ScholarBreak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ScholarBreak.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ScholarBreak.ForeColor = System.Drawing.Color.DimGray;
+            this.ScholarBreak.Location = new System.Drawing.Point(6, 39);
+            this.ScholarBreak.Name = "ScholarBreak";
+            this.ScholarBreak.Size = new System.Drawing.Size(52, 17);
+            this.ScholarBreak.TabIndex = 13;
+            this.ScholarBreak.TabStop = false;
+            this.ScholarBreak.Text = "Break";
+            this.ScholarBreak.UseVisualStyleBackColor = true;
             // 
             // pgeWhiteMage
             // 
@@ -2245,6 +3372,8 @@
             // 
             // WhiteMageHealGroup
             // 
+            this.WhiteMageHealGroup.Controls.Add(this.WhiteMageInterruptOverheal);
+            this.WhiteMageHealGroup.Controls.Add(this.WhiteMageInterruptDamage);
             this.WhiteMageHealGroup.Controls.Add(this.WhiteMageCurePct);
             this.WhiteMageHealGroup.Controls.Add(this.WhiteMageCureIIPct);
             this.WhiteMageHealGroup.Controls.Add(this.WhiteMageTetragrammatonPct);
@@ -2268,15 +3397,45 @@
             this.WhiteMageHealGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageHealGroup.Location = new System.Drawing.Point(229, 6);
             this.WhiteMageHealGroup.Name = "WhiteMageHealGroup";
-            this.WhiteMageHealGroup.Size = new System.Drawing.Size(228, 273);
+            this.WhiteMageHealGroup.Size = new System.Drawing.Size(228, 319);
             this.WhiteMageHealGroup.TabIndex = 1;
             this.WhiteMageHealGroup.TabStop = false;
             this.WhiteMageHealGroup.Text = "Heal";
             // 
+            // WhiteMageInterruptOverheal
+            // 
+            this.WhiteMageInterruptOverheal.AutoSize = true;
+            this.WhiteMageInterruptOverheal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WhiteMageInterruptOverheal.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.WhiteMageInterruptOverheal.ForeColor = System.Drawing.Color.White;
+            this.WhiteMageInterruptOverheal.Location = new System.Drawing.Point(6, 62);
+            this.WhiteMageInterruptOverheal.Name = "WhiteMageInterruptOverheal";
+            this.WhiteMageInterruptOverheal.Size = new System.Drawing.Size(118, 17);
+            this.WhiteMageInterruptOverheal.TabIndex = 21;
+            this.WhiteMageInterruptOverheal.TabStop = false;
+            this.WhiteMageInterruptOverheal.Text = "Interrupt Overheal";
+            this.WhiteMageInterruptOverheal.UseVisualStyleBackColor = true;
+            this.WhiteMageInterruptOverheal.CheckedChanged += new System.EventHandler(this.WhiteMageInterruptOverheal_CheckedChanged);
+            // 
+            // WhiteMageInterruptDamage
+            // 
+            this.WhiteMageInterruptDamage.AutoSize = true;
+            this.WhiteMageInterruptDamage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WhiteMageInterruptDamage.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.WhiteMageInterruptDamage.ForeColor = System.Drawing.Color.White;
+            this.WhiteMageInterruptDamage.Location = new System.Drawing.Point(6, 39);
+            this.WhiteMageInterruptDamage.Name = "WhiteMageInterruptDamage";
+            this.WhiteMageInterruptDamage.Size = new System.Drawing.Size(114, 17);
+            this.WhiteMageInterruptDamage.TabIndex = 20;
+            this.WhiteMageInterruptDamage.TabStop = false;
+            this.WhiteMageInterruptDamage.Text = "Interrupt Damage";
+            this.WhiteMageInterruptDamage.UseVisualStyleBackColor = true;
+            this.WhiteMageInterruptDamage.CheckedChanged += new System.EventHandler(this.WhiteMageInterruptDamage_CheckedChanged);
+            // 
             // WhiteMageCurePct
             // 
             this.WhiteMageCurePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageCurePct.Location = new System.Drawing.Point(133, 39);
+            this.WhiteMageCurePct.Location = new System.Drawing.Point(133, 85);
             this.WhiteMageCurePct.Name = "WhiteMageCurePct";
             this.WhiteMageCurePct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageCurePct.TabIndex = 19;
@@ -2285,7 +3444,7 @@
             // WhiteMageCureIIPct
             // 
             this.WhiteMageCureIIPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageCureIIPct.Location = new System.Drawing.Point(133, 62);
+            this.WhiteMageCureIIPct.Location = new System.Drawing.Point(133, 108);
             this.WhiteMageCureIIPct.Name = "WhiteMageCureIIPct";
             this.WhiteMageCureIIPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageCureIIPct.TabIndex = 18;
@@ -2294,7 +3453,7 @@
             // WhiteMageTetragrammatonPct
             // 
             this.WhiteMageTetragrammatonPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageTetragrammatonPct.Location = new System.Drawing.Point(133, 85);
+            this.WhiteMageTetragrammatonPct.Location = new System.Drawing.Point(133, 131);
             this.WhiteMageTetragrammatonPct.Name = "WhiteMageTetragrammatonPct";
             this.WhiteMageTetragrammatonPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageTetragrammatonPct.TabIndex = 17;
@@ -2303,7 +3462,7 @@
             // WhiteMageBenedictionPct
             // 
             this.WhiteMageBenedictionPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageBenedictionPct.Location = new System.Drawing.Point(133, 108);
+            this.WhiteMageBenedictionPct.Location = new System.Drawing.Point(133, 154);
             this.WhiteMageBenedictionPct.Name = "WhiteMageBenedictionPct";
             this.WhiteMageBenedictionPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageBenedictionPct.TabIndex = 16;
@@ -2312,7 +3471,7 @@
             // WhiteMageRegenPct
             // 
             this.WhiteMageRegenPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageRegenPct.Location = new System.Drawing.Point(133, 131);
+            this.WhiteMageRegenPct.Location = new System.Drawing.Point(133, 177);
             this.WhiteMageRegenPct.Name = "WhiteMageRegenPct";
             this.WhiteMageRegenPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageRegenPct.TabIndex = 15;
@@ -2321,7 +3480,7 @@
             // WhiteMageMedicaPct
             // 
             this.WhiteMageMedicaPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageMedicaPct.Location = new System.Drawing.Point(133, 154);
+            this.WhiteMageMedicaPct.Location = new System.Drawing.Point(133, 200);
             this.WhiteMageMedicaPct.Name = "WhiteMageMedicaPct";
             this.WhiteMageMedicaPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageMedicaPct.TabIndex = 14;
@@ -2330,7 +3489,7 @@
             // WhiteMageMedicaIIPct
             // 
             this.WhiteMageMedicaIIPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageMedicaIIPct.Location = new System.Drawing.Point(133, 177);
+            this.WhiteMageMedicaIIPct.Location = new System.Drawing.Point(133, 223);
             this.WhiteMageMedicaIIPct.Name = "WhiteMageMedicaIIPct";
             this.WhiteMageMedicaIIPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageMedicaIIPct.TabIndex = 13;
@@ -2339,7 +3498,7 @@
             // WhiteMageAssizePct
             // 
             this.WhiteMageAssizePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMageAssizePct.Location = new System.Drawing.Point(133, 200);
+            this.WhiteMageAssizePct.Location = new System.Drawing.Point(133, 246);
             this.WhiteMageAssizePct.Name = "WhiteMageAssizePct";
             this.WhiteMageAssizePct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMageAssizePct.TabIndex = 12;
@@ -2348,7 +3507,7 @@
             // WhiteMagePlenaryPct
             // 
             this.WhiteMagePlenaryPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.WhiteMagePlenaryPct.Location = new System.Drawing.Point(133, 223);
+            this.WhiteMagePlenaryPct.Location = new System.Drawing.Point(133, 269);
             this.WhiteMagePlenaryPct.Name = "WhiteMagePlenaryPct";
             this.WhiteMagePlenaryPct.Size = new System.Drawing.Size(89, 22);
             this.WhiteMagePlenaryPct.TabIndex = 11;
@@ -2360,7 +3519,7 @@
             this.WhiteMageRaise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageRaise.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageRaise.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageRaise.Location = new System.Drawing.Point(6, 246);
+            this.WhiteMageRaise.Location = new System.Drawing.Point(6, 292);
             this.WhiteMageRaise.Name = "WhiteMageRaise";
             this.WhiteMageRaise.Size = new System.Drawing.Size(50, 17);
             this.WhiteMageRaise.TabIndex = 10;
@@ -2375,7 +3534,7 @@
             this.WhiteMagePlenary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMagePlenary.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMagePlenary.ForeColor = System.Drawing.Color.White;
-            this.WhiteMagePlenary.Location = new System.Drawing.Point(6, 223);
+            this.WhiteMagePlenary.Location = new System.Drawing.Point(6, 269);
             this.WhiteMagePlenary.Name = "WhiteMagePlenary";
             this.WhiteMagePlenary.Size = new System.Drawing.Size(121, 17);
             this.WhiteMagePlenary.TabIndex = 9;
@@ -2390,7 +3549,7 @@
             this.WhiteMageAssize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageAssize.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageAssize.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageAssize.Location = new System.Drawing.Point(6, 200);
+            this.WhiteMageAssize.Location = new System.Drawing.Point(6, 246);
             this.WhiteMageAssize.Name = "WhiteMageAssize";
             this.WhiteMageAssize.Size = new System.Drawing.Size(54, 17);
             this.WhiteMageAssize.TabIndex = 8;
@@ -2405,7 +3564,7 @@
             this.WhiteMageMedicaII.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageMedicaII.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageMedicaII.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageMedicaII.Location = new System.Drawing.Point(6, 177);
+            this.WhiteMageMedicaII.Location = new System.Drawing.Point(6, 223);
             this.WhiteMageMedicaII.Name = "WhiteMageMedicaII";
             this.WhiteMageMedicaII.Size = new System.Drawing.Size(69, 17);
             this.WhiteMageMedicaII.TabIndex = 7;
@@ -2420,7 +3579,7 @@
             this.WhiteMageMedica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageMedica.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageMedica.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageMedica.Location = new System.Drawing.Point(6, 154);
+            this.WhiteMageMedica.Location = new System.Drawing.Point(6, 200);
             this.WhiteMageMedica.Name = "WhiteMageMedica";
             this.WhiteMageMedica.Size = new System.Drawing.Size(60, 17);
             this.WhiteMageMedica.TabIndex = 6;
@@ -2435,7 +3594,7 @@
             this.WhiteMageRegen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageRegen.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageRegen.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageRegen.Location = new System.Drawing.Point(6, 131);
+            this.WhiteMageRegen.Location = new System.Drawing.Point(6, 177);
             this.WhiteMageRegen.Name = "WhiteMageRegen";
             this.WhiteMageRegen.Size = new System.Drawing.Size(56, 17);
             this.WhiteMageRegen.TabIndex = 5;
@@ -2450,7 +3609,7 @@
             this.WhiteMageBenediction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageBenediction.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageBenediction.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageBenediction.Location = new System.Drawing.Point(6, 108);
+            this.WhiteMageBenediction.Location = new System.Drawing.Point(6, 154);
             this.WhiteMageBenediction.Name = "WhiteMageBenediction";
             this.WhiteMageBenediction.Size = new System.Drawing.Size(85, 17);
             this.WhiteMageBenediction.TabIndex = 4;
@@ -2465,7 +3624,7 @@
             this.WhiteMageTetragrammaton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageTetragrammaton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageTetragrammaton.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageTetragrammaton.Location = new System.Drawing.Point(6, 85);
+            this.WhiteMageTetragrammaton.Location = new System.Drawing.Point(6, 131);
             this.WhiteMageTetragrammaton.Name = "WhiteMageTetragrammaton";
             this.WhiteMageTetragrammaton.Size = new System.Drawing.Size(106, 17);
             this.WhiteMageTetragrammaton.TabIndex = 3;
@@ -2480,7 +3639,7 @@
             this.WhiteMageCureII.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageCureII.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageCureII.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageCureII.Location = new System.Drawing.Point(6, 62);
+            this.WhiteMageCureII.Location = new System.Drawing.Point(6, 108);
             this.WhiteMageCureII.Name = "WhiteMageCureII";
             this.WhiteMageCureII.Size = new System.Drawing.Size(56, 17);
             this.WhiteMageCureII.TabIndex = 2;
@@ -2495,7 +3654,7 @@
             this.WhiteMageCure.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WhiteMageCure.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.WhiteMageCure.ForeColor = System.Drawing.Color.White;
-            this.WhiteMageCure.Location = new System.Drawing.Point(6, 39);
+            this.WhiteMageCure.Location = new System.Drawing.Point(6, 85);
             this.WhiteMageCure.Name = "WhiteMageCure";
             this.WhiteMageCure.Size = new System.Drawing.Size(47, 17);
             this.WhiteMageCure.TabIndex = 1;
@@ -3246,7 +4405,7 @@
             // 
             this.MonkDemolishHP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.MonkDemolishHP.Increment = new decimal(new int[] {
-            10000,
+            5000,
             0,
             0,
             0});
@@ -3584,7 +4743,11 @@
             // pgeNinja
             // 
             this.pgeNinja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pgeNinja.Controls.Add(this.label7);
+            this.pgeNinja.Controls.Add(this.NinjaNinjutsuGroup);
+            this.pgeNinja.Controls.Add(this.NinjaDoTGroup);
+            this.pgeNinja.Controls.Add(this.NinjaBuffGroup);
+            this.pgeNinja.Controls.Add(this.NinjaCooldownGroup);
+            this.pgeNinja.Controls.Add(this.NinjaRoleGroup);
             this.pgeNinja.Location = new System.Drawing.Point(104, 4);
             this.pgeNinja.Name = "pgeNinja";
             this.pgeNinja.Padding = new System.Windows.Forms.Padding(3);
@@ -3593,16 +4756,564 @@
             this.pgeNinja.Text = "Ninja";
             this.pgeNinja.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShinraForm_MouseDown);
             // 
-            // label7
+            // NinjaNinjutsuGroup
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 36F);
-            this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(13, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(114, 65);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "N/A";
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaSuiton);
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaDoton);
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaHuton);
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaRaiton);
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaKaton);
+            this.NinjaNinjutsuGroup.Controls.Add(this.NinjaFuma);
+            this.NinjaNinjutsuGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaNinjutsuGroup.Location = new System.Drawing.Point(356, 56);
+            this.NinjaNinjutsuGroup.Name = "NinjaNinjutsuGroup";
+            this.NinjaNinjutsuGroup.Size = new System.Drawing.Size(79, 158);
+            this.NinjaNinjutsuGroup.TabIndex = 4;
+            this.NinjaNinjutsuGroup.TabStop = false;
+            this.NinjaNinjutsuGroup.Text = "Ninjutsu";
+            // 
+            // NinjaSuiton
+            // 
+            this.NinjaSuiton.AutoSize = true;
+            this.NinjaSuiton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaSuiton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaSuiton.ForeColor = System.Drawing.Color.White;
+            this.NinjaSuiton.Location = new System.Drawing.Point(6, 131);
+            this.NinjaSuiton.Name = "NinjaSuiton";
+            this.NinjaSuiton.Size = new System.Drawing.Size(57, 17);
+            this.NinjaSuiton.TabIndex = 5;
+            this.NinjaSuiton.TabStop = false;
+            this.NinjaSuiton.Text = "Suiton";
+            this.NinjaSuiton.UseVisualStyleBackColor = true;
+            this.NinjaSuiton.CheckedChanged += new System.EventHandler(this.NinjaSuiton_CheckedChanged);
+            // 
+            // NinjaDoton
+            // 
+            this.NinjaDoton.AutoSize = true;
+            this.NinjaDoton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaDoton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaDoton.ForeColor = System.Drawing.Color.White;
+            this.NinjaDoton.Location = new System.Drawing.Point(6, 108);
+            this.NinjaDoton.Name = "NinjaDoton";
+            this.NinjaDoton.Size = new System.Drawing.Size(56, 17);
+            this.NinjaDoton.TabIndex = 4;
+            this.NinjaDoton.TabStop = false;
+            this.NinjaDoton.Text = "Doton";
+            this.NinjaDoton.UseVisualStyleBackColor = true;
+            this.NinjaDoton.CheckedChanged += new System.EventHandler(this.NinjaDoton_CheckedChanged);
+            // 
+            // NinjaHuton
+            // 
+            this.NinjaHuton.AutoSize = true;
+            this.NinjaHuton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaHuton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaHuton.ForeColor = System.Drawing.Color.White;
+            this.NinjaHuton.Location = new System.Drawing.Point(6, 85);
+            this.NinjaHuton.Name = "NinjaHuton";
+            this.NinjaHuton.Size = new System.Drawing.Size(56, 17);
+            this.NinjaHuton.TabIndex = 3;
+            this.NinjaHuton.TabStop = false;
+            this.NinjaHuton.Text = "Huton";
+            this.NinjaHuton.UseVisualStyleBackColor = true;
+            this.NinjaHuton.CheckedChanged += new System.EventHandler(this.NinjaHuton_CheckedChanged);
+            // 
+            // NinjaRaiton
+            // 
+            this.NinjaRaiton.AutoSize = true;
+            this.NinjaRaiton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaRaiton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaRaiton.ForeColor = System.Drawing.Color.White;
+            this.NinjaRaiton.Location = new System.Drawing.Point(6, 62);
+            this.NinjaRaiton.Name = "NinjaRaiton";
+            this.NinjaRaiton.Size = new System.Drawing.Size(57, 17);
+            this.NinjaRaiton.TabIndex = 2;
+            this.NinjaRaiton.TabStop = false;
+            this.NinjaRaiton.Text = "Raiton";
+            this.NinjaRaiton.UseVisualStyleBackColor = true;
+            this.NinjaRaiton.CheckedChanged += new System.EventHandler(this.NinjaRaiton_CheckedChanged);
+            // 
+            // NinjaKaton
+            // 
+            this.NinjaKaton.AutoSize = true;
+            this.NinjaKaton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaKaton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaKaton.ForeColor = System.Drawing.Color.White;
+            this.NinjaKaton.Location = new System.Drawing.Point(6, 39);
+            this.NinjaKaton.Name = "NinjaKaton";
+            this.NinjaKaton.Size = new System.Drawing.Size(53, 17);
+            this.NinjaKaton.TabIndex = 1;
+            this.NinjaKaton.TabStop = false;
+            this.NinjaKaton.Text = "Katon";
+            this.NinjaKaton.UseVisualStyleBackColor = true;
+            this.NinjaKaton.CheckedChanged += new System.EventHandler(this.NinjaKaton_CheckedChanged);
+            // 
+            // NinjaFuma
+            // 
+            this.NinjaFuma.AutoSize = true;
+            this.NinjaFuma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaFuma.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaFuma.ForeColor = System.Drawing.Color.White;
+            this.NinjaFuma.Location = new System.Drawing.Point(6, 16);
+            this.NinjaFuma.Name = "NinjaFuma";
+            this.NinjaFuma.Size = new System.Drawing.Size(51, 17);
+            this.NinjaFuma.TabIndex = 0;
+            this.NinjaFuma.TabStop = false;
+            this.NinjaFuma.Text = "Fuma";
+            this.NinjaFuma.UseVisualStyleBackColor = true;
+            this.NinjaFuma.CheckedChanged += new System.EventHandler(this.NinjaFuma_CheckedChanged);
+            // 
+            // NinjaDoTGroup
+            // 
+            this.NinjaDoTGroup.Controls.Add(this.NinjaShadowFangHP);
+            this.NinjaDoTGroup.Controls.Add(this.NinjaShadowFang);
+            this.NinjaDoTGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaDoTGroup.Location = new System.Drawing.Point(218, 6);
+            this.NinjaDoTGroup.Name = "NinjaDoTGroup";
+            this.NinjaDoTGroup.Size = new System.Drawing.Size(217, 44);
+            this.NinjaDoTGroup.TabIndex = 3;
+            this.NinjaDoTGroup.TabStop = false;
+            this.NinjaDoTGroup.Text = "DoT";
+            // 
+            // NinjaShadowFangHP
+            // 
+            this.NinjaShadowFangHP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.NinjaShadowFangHP.Increment = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.NinjaShadowFangHP.Location = new System.Drawing.Point(106, 16);
+            this.NinjaShadowFangHP.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.NinjaShadowFangHP.Name = "NinjaShadowFangHP";
+            this.NinjaShadowFangHP.ShowSymbol = false;
+            this.NinjaShadowFangHP.Size = new System.Drawing.Size(105, 22);
+            this.NinjaShadowFangHP.TabIndex = 1;
+            this.NinjaShadowFangHP.ValueChanged += new System.EventHandler(this.NinjaShadowFangHP_ValueChanged);
+            // 
+            // NinjaShadowFang
+            // 
+            this.NinjaShadowFang.AutoSize = true;
+            this.NinjaShadowFang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaShadowFang.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaShadowFang.ForeColor = System.Drawing.Color.White;
+            this.NinjaShadowFang.Location = new System.Drawing.Point(6, 16);
+            this.NinjaShadowFang.Name = "NinjaShadowFang";
+            this.NinjaShadowFang.Size = new System.Drawing.Size(94, 17);
+            this.NinjaShadowFang.TabIndex = 0;
+            this.NinjaShadowFang.TabStop = false;
+            this.NinjaShadowFang.Text = "Shadow Fang";
+            this.NinjaShadowFang.UseVisualStyleBackColor = true;
+            this.NinjaShadowFang.CheckedChanged += new System.EventHandler(this.NinjaShadowFang_CheckedChanged);
+            // 
+            // NinjaBuffGroup
+            // 
+            this.NinjaBuffGroup.Controls.Add(this.NinjaTenChiJin);
+            this.NinjaBuffGroup.Controls.Add(this.NinjaDuality);
+            this.NinjaBuffGroup.Controls.Add(this.NinjaKassatsu);
+            this.NinjaBuffGroup.Controls.Add(this.NinjaShadeShiftPct);
+            this.NinjaBuffGroup.Controls.Add(this.NinjaShadeShift);
+            this.NinjaBuffGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaBuffGroup.Location = new System.Drawing.Point(441, 6);
+            this.NinjaBuffGroup.Name = "NinjaBuffGroup";
+            this.NinjaBuffGroup.Size = new System.Drawing.Size(189, 112);
+            this.NinjaBuffGroup.TabIndex = 2;
+            this.NinjaBuffGroup.TabStop = false;
+            this.NinjaBuffGroup.Text = "Buff";
+            // 
+            // NinjaTenChiJin
+            // 
+            this.NinjaTenChiJin.AutoSize = true;
+            this.NinjaTenChiJin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaTenChiJin.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaTenChiJin.ForeColor = System.Drawing.Color.White;
+            this.NinjaTenChiJin.Location = new System.Drawing.Point(6, 85);
+            this.NinjaTenChiJin.Name = "NinjaTenChiJin";
+            this.NinjaTenChiJin.Size = new System.Drawing.Size(77, 17);
+            this.NinjaTenChiJin.TabIndex = 4;
+            this.NinjaTenChiJin.TabStop = false;
+            this.NinjaTenChiJin.Text = "Ten Chi Jin";
+            this.NinjaTenChiJin.UseVisualStyleBackColor = true;
+            this.NinjaTenChiJin.CheckedChanged += new System.EventHandler(this.NinjaTenChiJin_CheckedChanged);
+            // 
+            // NinjaDuality
+            // 
+            this.NinjaDuality.AutoSize = true;
+            this.NinjaDuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaDuality.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaDuality.ForeColor = System.Drawing.Color.White;
+            this.NinjaDuality.Location = new System.Drawing.Point(6, 62);
+            this.NinjaDuality.Name = "NinjaDuality";
+            this.NinjaDuality.Size = new System.Drawing.Size(59, 17);
+            this.NinjaDuality.TabIndex = 3;
+            this.NinjaDuality.TabStop = false;
+            this.NinjaDuality.Text = "Duality";
+            this.NinjaDuality.UseVisualStyleBackColor = true;
+            this.NinjaDuality.CheckedChanged += new System.EventHandler(this.NinjaDuality_CheckedChanged);
+            // 
+            // NinjaKassatsu
+            // 
+            this.NinjaKassatsu.AutoSize = true;
+            this.NinjaKassatsu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaKassatsu.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaKassatsu.ForeColor = System.Drawing.Color.White;
+            this.NinjaKassatsu.Location = new System.Drawing.Point(6, 39);
+            this.NinjaKassatsu.Name = "NinjaKassatsu";
+            this.NinjaKassatsu.Size = new System.Drawing.Size(67, 17);
+            this.NinjaKassatsu.TabIndex = 2;
+            this.NinjaKassatsu.TabStop = false;
+            this.NinjaKassatsu.Text = "Kassatsu";
+            this.NinjaKassatsu.UseVisualStyleBackColor = true;
+            this.NinjaKassatsu.CheckedChanged += new System.EventHandler(this.NinjaKassatsu_CheckedChanged);
+            // 
+            // NinjaShadeShiftPct
+            // 
+            this.NinjaShadeShiftPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.NinjaShadeShiftPct.Location = new System.Drawing.Point(94, 16);
+            this.NinjaShadeShiftPct.Name = "NinjaShadeShiftPct";
+            this.NinjaShadeShiftPct.Size = new System.Drawing.Size(89, 22);
+            this.NinjaShadeShiftPct.TabIndex = 1;
+            this.NinjaShadeShiftPct.ValueChanged += new System.EventHandler(this.NinjaShadeShiftPct_ValueChanged);
+            // 
+            // NinjaShadeShift
+            // 
+            this.NinjaShadeShift.AutoSize = true;
+            this.NinjaShadeShift.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaShadeShift.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaShadeShift.ForeColor = System.Drawing.Color.White;
+            this.NinjaShadeShift.Location = new System.Drawing.Point(6, 16);
+            this.NinjaShadeShift.Name = "NinjaShadeShift";
+            this.NinjaShadeShift.Size = new System.Drawing.Size(82, 17);
+            this.NinjaShadeShift.TabIndex = 0;
+            this.NinjaShadeShift.TabStop = false;
+            this.NinjaShadeShift.Text = "Shade Shift";
+            this.NinjaShadeShift.UseVisualStyleBackColor = true;
+            this.NinjaShadeShift.CheckedChanged += new System.EventHandler(this.NinjaShadeShift_CheckedChanged);
+            // 
+            // NinjaCooldownGroup
+            // 
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaBhavacakra);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaHellfrogMedium);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaDreamWithin);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaJugulate);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaTrickAttack);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaMug);
+            this.NinjaCooldownGroup.Controls.Add(this.NinjaAssassinate);
+            this.NinjaCooldownGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaCooldownGroup.Location = new System.Drawing.Point(218, 56);
+            this.NinjaCooldownGroup.Name = "NinjaCooldownGroup";
+            this.NinjaCooldownGroup.Size = new System.Drawing.Size(132, 181);
+            this.NinjaCooldownGroup.TabIndex = 1;
+            this.NinjaCooldownGroup.TabStop = false;
+            this.NinjaCooldownGroup.Text = "Cooldown";
+            // 
+            // NinjaBhavacakra
+            // 
+            this.NinjaBhavacakra.AutoSize = true;
+            this.NinjaBhavacakra.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaBhavacakra.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaBhavacakra.ForeColor = System.Drawing.Color.White;
+            this.NinjaBhavacakra.Location = new System.Drawing.Point(6, 154);
+            this.NinjaBhavacakra.Name = "NinjaBhavacakra";
+            this.NinjaBhavacakra.Size = new System.Drawing.Size(81, 17);
+            this.NinjaBhavacakra.TabIndex = 6;
+            this.NinjaBhavacakra.TabStop = false;
+            this.NinjaBhavacakra.Text = "Bhavacakra";
+            this.NinjaBhavacakra.UseVisualStyleBackColor = true;
+            this.NinjaBhavacakra.CheckedChanged += new System.EventHandler(this.NinjaBhavacakra_CheckedChanged);
+            // 
+            // NinjaHellfrogMedium
+            // 
+            this.NinjaHellfrogMedium.AutoSize = true;
+            this.NinjaHellfrogMedium.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaHellfrogMedium.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaHellfrogMedium.ForeColor = System.Drawing.Color.White;
+            this.NinjaHellfrogMedium.Location = new System.Drawing.Point(6, 131);
+            this.NinjaHellfrogMedium.Name = "NinjaHellfrogMedium";
+            this.NinjaHellfrogMedium.Size = new System.Drawing.Size(110, 17);
+            this.NinjaHellfrogMedium.TabIndex = 5;
+            this.NinjaHellfrogMedium.TabStop = false;
+            this.NinjaHellfrogMedium.Text = "Hellfrog Medium";
+            this.NinjaHellfrogMedium.UseVisualStyleBackColor = true;
+            this.NinjaHellfrogMedium.CheckedChanged += new System.EventHandler(this.NinjaHellfrogMedium_CheckedChanged);
+            // 
+            // NinjaDreamWithin
+            // 
+            this.NinjaDreamWithin.AutoSize = true;
+            this.NinjaDreamWithin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaDreamWithin.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaDreamWithin.ForeColor = System.Drawing.Color.White;
+            this.NinjaDreamWithin.Location = new System.Drawing.Point(6, 108);
+            this.NinjaDreamWithin.Name = "NinjaDreamWithin";
+            this.NinjaDreamWithin.Size = new System.Drawing.Size(94, 17);
+            this.NinjaDreamWithin.TabIndex = 4;
+            this.NinjaDreamWithin.TabStop = false;
+            this.NinjaDreamWithin.Text = "Dream Within";
+            this.NinjaDreamWithin.UseVisualStyleBackColor = true;
+            this.NinjaDreamWithin.CheckedChanged += new System.EventHandler(this.NinjaDreamWithin_CheckedChanged);
+            // 
+            // NinjaJugulate
+            // 
+            this.NinjaJugulate.AutoSize = true;
+            this.NinjaJugulate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaJugulate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaJugulate.ForeColor = System.Drawing.Color.White;
+            this.NinjaJugulate.Location = new System.Drawing.Point(6, 85);
+            this.NinjaJugulate.Name = "NinjaJugulate";
+            this.NinjaJugulate.Size = new System.Drawing.Size(67, 17);
+            this.NinjaJugulate.TabIndex = 3;
+            this.NinjaJugulate.TabStop = false;
+            this.NinjaJugulate.Text = "Jugulate";
+            this.NinjaJugulate.UseVisualStyleBackColor = true;
+            this.NinjaJugulate.CheckedChanged += new System.EventHandler(this.NinjaJugulate_CheckedChanged);
+            // 
+            // NinjaTrickAttack
+            // 
+            this.NinjaTrickAttack.AutoSize = true;
+            this.NinjaTrickAttack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaTrickAttack.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaTrickAttack.ForeColor = System.Drawing.Color.White;
+            this.NinjaTrickAttack.Location = new System.Drawing.Point(6, 62);
+            this.NinjaTrickAttack.Name = "NinjaTrickAttack";
+            this.NinjaTrickAttack.Size = new System.Drawing.Size(80, 17);
+            this.NinjaTrickAttack.TabIndex = 2;
+            this.NinjaTrickAttack.TabStop = false;
+            this.NinjaTrickAttack.Text = "Trick Attack";
+            this.NinjaTrickAttack.UseVisualStyleBackColor = true;
+            this.NinjaTrickAttack.CheckedChanged += new System.EventHandler(this.NinjaTrickAttack_CheckedChanged);
+            // 
+            // NinjaMug
+            // 
+            this.NinjaMug.AutoSize = true;
+            this.NinjaMug.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaMug.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaMug.ForeColor = System.Drawing.Color.White;
+            this.NinjaMug.Location = new System.Drawing.Point(6, 39);
+            this.NinjaMug.Name = "NinjaMug";
+            this.NinjaMug.Size = new System.Drawing.Size(47, 17);
+            this.NinjaMug.TabIndex = 1;
+            this.NinjaMug.TabStop = false;
+            this.NinjaMug.Text = "Mug";
+            this.NinjaMug.UseVisualStyleBackColor = true;
+            this.NinjaMug.CheckedChanged += new System.EventHandler(this.NinjaMug_CheckedChanged);
+            // 
+            // NinjaAssassinate
+            // 
+            this.NinjaAssassinate.AutoSize = true;
+            this.NinjaAssassinate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaAssassinate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaAssassinate.ForeColor = System.Drawing.Color.White;
+            this.NinjaAssassinate.Location = new System.Drawing.Point(6, 16);
+            this.NinjaAssassinate.Name = "NinjaAssassinate";
+            this.NinjaAssassinate.Size = new System.Drawing.Size(82, 17);
+            this.NinjaAssassinate.TabIndex = 0;
+            this.NinjaAssassinate.TabStop = false;
+            this.NinjaAssassinate.Text = "Assassinate";
+            this.NinjaAssassinate.UseVisualStyleBackColor = true;
+            this.NinjaAssassinate.CheckedChanged += new System.EventHandler(this.NinjaAssassinate_CheckedChanged);
+            // 
+            // NinjaRoleGroup
+            // 
+            this.NinjaRoleGroup.Controls.Add(this.NinjaBloodbathPct);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaInvigoratePct);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaSecondWindPct);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaTrueNorth);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaCrutch);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaFeint);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaGoad);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaBloodbath);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaInvigorate);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaDiversion);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaLegSweep);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaArmsLength);
+            this.NinjaRoleGroup.Controls.Add(this.NinjaSecondWind);
+            this.NinjaRoleGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaRoleGroup.Location = new System.Drawing.Point(13, 6);
+            this.NinjaRoleGroup.Name = "NinjaRoleGroup";
+            this.NinjaRoleGroup.Size = new System.Drawing.Size(199, 250);
+            this.NinjaRoleGroup.TabIndex = 0;
+            this.NinjaRoleGroup.TabStop = false;
+            this.NinjaRoleGroup.Text = "Role";
+            // 
+            // NinjaBloodbathPct
+            // 
+            this.NinjaBloodbathPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.NinjaBloodbathPct.Location = new System.Drawing.Point(104, 131);
+            this.NinjaBloodbathPct.Name = "NinjaBloodbathPct";
+            this.NinjaBloodbathPct.Size = new System.Drawing.Size(89, 22);
+            this.NinjaBloodbathPct.TabIndex = 48;
+            this.NinjaBloodbathPct.ValueChanged += new System.EventHandler(this.NinjaBloodbathPct_ValueChanged);
+            // 
+            // NinjaInvigoratePct
+            // 
+            this.NinjaInvigoratePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.NinjaInvigoratePct.Location = new System.Drawing.Point(104, 108);
+            this.NinjaInvigoratePct.Name = "NinjaInvigoratePct";
+            this.NinjaInvigoratePct.Size = new System.Drawing.Size(89, 22);
+            this.NinjaInvigoratePct.TabIndex = 47;
+            this.NinjaInvigoratePct.ValueChanged += new System.EventHandler(this.NinjaInvigoratePct_ValueChanged);
+            // 
+            // NinjaSecondWindPct
+            // 
+            this.NinjaSecondWindPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.NinjaSecondWindPct.Location = new System.Drawing.Point(104, 16);
+            this.NinjaSecondWindPct.Name = "NinjaSecondWindPct";
+            this.NinjaSecondWindPct.Size = new System.Drawing.Size(89, 22);
+            this.NinjaSecondWindPct.TabIndex = 46;
+            this.NinjaSecondWindPct.ValueChanged += new System.EventHandler(this.NinjaSecondWindPct_ValueChanged);
+            // 
+            // NinjaTrueNorth
+            // 
+            this.NinjaTrueNorth.AutoSize = true;
+            this.NinjaTrueNorth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaTrueNorth.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaTrueNorth.ForeColor = System.Drawing.Color.White;
+            this.NinjaTrueNorth.Location = new System.Drawing.Point(6, 223);
+            this.NinjaTrueNorth.Name = "NinjaTrueNorth";
+            this.NinjaTrueNorth.Size = new System.Drawing.Size(77, 17);
+            this.NinjaTrueNorth.TabIndex = 45;
+            this.NinjaTrueNorth.TabStop = false;
+            this.NinjaTrueNorth.Text = "True North";
+            this.NinjaTrueNorth.UseVisualStyleBackColor = true;
+            this.NinjaTrueNorth.CheckedChanged += new System.EventHandler(this.NinjaTrueNorth_CheckedChanged);
+            // 
+            // NinjaCrutch
+            // 
+            this.NinjaCrutch.AutoCheck = false;
+            this.NinjaCrutch.AutoSize = true;
+            this.NinjaCrutch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaCrutch.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaCrutch.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaCrutch.Location = new System.Drawing.Point(6, 200);
+            this.NinjaCrutch.Name = "NinjaCrutch";
+            this.NinjaCrutch.Size = new System.Drawing.Size(57, 17);
+            this.NinjaCrutch.TabIndex = 44;
+            this.NinjaCrutch.TabStop = false;
+            this.NinjaCrutch.Text = "Crutch";
+            this.NinjaCrutch.UseVisualStyleBackColor = true;
+            // 
+            // NinjaFeint
+            // 
+            this.NinjaFeint.AutoCheck = false;
+            this.NinjaFeint.AutoSize = true;
+            this.NinjaFeint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaFeint.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaFeint.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaFeint.Location = new System.Drawing.Point(6, 177);
+            this.NinjaFeint.Name = "NinjaFeint";
+            this.NinjaFeint.Size = new System.Drawing.Size(49, 17);
+            this.NinjaFeint.TabIndex = 43;
+            this.NinjaFeint.TabStop = false;
+            this.NinjaFeint.Text = "Feint";
+            this.NinjaFeint.UseVisualStyleBackColor = true;
+            // 
+            // NinjaGoad
+            // 
+            this.NinjaGoad.AutoCheck = false;
+            this.NinjaGoad.AutoSize = true;
+            this.NinjaGoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaGoad.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaGoad.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaGoad.Location = new System.Drawing.Point(6, 154);
+            this.NinjaGoad.Name = "NinjaGoad";
+            this.NinjaGoad.Size = new System.Drawing.Size(51, 17);
+            this.NinjaGoad.TabIndex = 42;
+            this.NinjaGoad.TabStop = false;
+            this.NinjaGoad.Text = "Goad";
+            this.NinjaGoad.UseVisualStyleBackColor = true;
+            // 
+            // NinjaBloodbath
+            // 
+            this.NinjaBloodbath.AutoSize = true;
+            this.NinjaBloodbath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaBloodbath.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaBloodbath.ForeColor = System.Drawing.Color.White;
+            this.NinjaBloodbath.Location = new System.Drawing.Point(6, 131);
+            this.NinjaBloodbath.Name = "NinjaBloodbath";
+            this.NinjaBloodbath.Size = new System.Drawing.Size(78, 17);
+            this.NinjaBloodbath.TabIndex = 41;
+            this.NinjaBloodbath.TabStop = false;
+            this.NinjaBloodbath.Text = "Bloodbath";
+            this.NinjaBloodbath.UseVisualStyleBackColor = true;
+            this.NinjaBloodbath.CheckedChanged += new System.EventHandler(this.NinjaBloodbath_CheckedChanged);
+            // 
+            // NinjaInvigorate
+            // 
+            this.NinjaInvigorate.AutoSize = true;
+            this.NinjaInvigorate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaInvigorate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaInvigorate.ForeColor = System.Drawing.Color.White;
+            this.NinjaInvigorate.Location = new System.Drawing.Point(6, 108);
+            this.NinjaInvigorate.Name = "NinjaInvigorate";
+            this.NinjaInvigorate.Size = new System.Drawing.Size(75, 17);
+            this.NinjaInvigorate.TabIndex = 40;
+            this.NinjaInvigorate.TabStop = false;
+            this.NinjaInvigorate.Text = "Invigorate";
+            this.NinjaInvigorate.UseVisualStyleBackColor = true;
+            this.NinjaInvigorate.CheckedChanged += new System.EventHandler(this.NinjaInvigorate_CheckedChanged);
+            // 
+            // NinjaDiversion
+            // 
+            this.NinjaDiversion.AutoCheck = false;
+            this.NinjaDiversion.AutoSize = true;
+            this.NinjaDiversion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaDiversion.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaDiversion.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaDiversion.Location = new System.Drawing.Point(6, 85);
+            this.NinjaDiversion.Name = "NinjaDiversion";
+            this.NinjaDiversion.Size = new System.Drawing.Size(71, 17);
+            this.NinjaDiversion.TabIndex = 39;
+            this.NinjaDiversion.TabStop = false;
+            this.NinjaDiversion.Text = "Diversion";
+            this.NinjaDiversion.UseVisualStyleBackColor = true;
+            // 
+            // NinjaLegSweep
+            // 
+            this.NinjaLegSweep.AutoCheck = false;
+            this.NinjaLegSweep.AutoSize = true;
+            this.NinjaLegSweep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaLegSweep.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaLegSweep.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaLegSweep.Location = new System.Drawing.Point(6, 62);
+            this.NinjaLegSweep.Name = "NinjaLegSweep";
+            this.NinjaLegSweep.Size = new System.Drawing.Size(78, 17);
+            this.NinjaLegSweep.TabIndex = 38;
+            this.NinjaLegSweep.TabStop = false;
+            this.NinjaLegSweep.Text = "Leg Sweep";
+            this.NinjaLegSweep.UseVisualStyleBackColor = true;
+            // 
+            // NinjaArmsLength
+            // 
+            this.NinjaArmsLength.AutoCheck = false;
+            this.NinjaArmsLength.AutoSize = true;
+            this.NinjaArmsLength.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaArmsLength.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaArmsLength.ForeColor = System.Drawing.Color.DimGray;
+            this.NinjaArmsLength.Location = new System.Drawing.Point(6, 39);
+            this.NinjaArmsLength.Name = "NinjaArmsLength";
+            this.NinjaArmsLength.Size = new System.Drawing.Size(90, 17);
+            this.NinjaArmsLength.TabIndex = 37;
+            this.NinjaArmsLength.TabStop = false;
+            this.NinjaArmsLength.Text = "Arm\'s Length";
+            this.NinjaArmsLength.UseVisualStyleBackColor = true;
+            // 
+            // NinjaSecondWind
+            // 
+            this.NinjaSecondWind.AutoSize = true;
+            this.NinjaSecondWind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NinjaSecondWind.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.NinjaSecondWind.ForeColor = System.Drawing.Color.White;
+            this.NinjaSecondWind.Location = new System.Drawing.Point(6, 16);
+            this.NinjaSecondWind.Name = "NinjaSecondWind";
+            this.NinjaSecondWind.Size = new System.Drawing.Size(92, 17);
+            this.NinjaSecondWind.TabIndex = 36;
+            this.NinjaSecondWind.TabStop = false;
+            this.NinjaSecondWind.Text = "Second Wind";
+            this.NinjaSecondWind.UseVisualStyleBackColor = true;
+            this.NinjaSecondWind.CheckedChanged += new System.EventHandler(this.NinjaSecondWind_CheckedChanged);
             // 
             // pgeSamurai
             // 
@@ -4280,7 +5991,10 @@
             // pgeMachinist
             // 
             this.pgeMachinist.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pgeMachinist.Controls.Add(this.label8);
+            this.pgeMachinist.Controls.Add(this.MachinistTurretGroup);
+            this.pgeMachinist.Controls.Add(this.MachinistBuffGroup);
+            this.pgeMachinist.Controls.Add(this.MachinistCooldownGroup);
+            this.pgeMachinist.Controls.Add(this.MachinistRoleGroup);
             this.pgeMachinist.Location = new System.Drawing.Point(104, 4);
             this.pgeMachinist.Name = "pgeMachinist";
             this.pgeMachinist.Padding = new System.Windows.Forms.Padding(3);
@@ -4289,16 +6003,387 @@
             this.pgeMachinist.Text = "Machinist";
             this.pgeMachinist.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShinraForm_MouseDown);
             // 
-            // label8
+            // MachinistTurretGroup
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 36F);
-            this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(13, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(114, 65);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "N/A";
+            this.MachinistTurretGroup.Controls.Add(this.MachinistTurret);
+            this.MachinistTurretGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistTurretGroup.Location = new System.Drawing.Point(218, 219);
+            this.MachinistTurretGroup.Name = "MachinistTurretGroup";
+            this.MachinistTurretGroup.Size = new System.Drawing.Size(102, 43);
+            this.MachinistTurretGroup.TabIndex = 3;
+            this.MachinistTurretGroup.TabStop = false;
+            this.MachinistTurretGroup.Text = "Turret";
+            // 
+            // MachinistTurret
+            // 
+            this.MachinistTurret.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.MachinistTurret.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistTurret.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistTurret.ForeColor = System.Drawing.Color.White;
+            this.MachinistTurret.FormattingEnabled = true;
+            this.MachinistTurret.Items.AddRange(new object[] {
+            "None",
+            "Rook",
+            "Bishop"});
+            this.MachinistTurret.Location = new System.Drawing.Point(6, 16);
+            this.MachinistTurret.Name = "MachinistTurret";
+            this.MachinistTurret.Size = new System.Drawing.Size(90, 21);
+            this.MachinistTurret.TabIndex = 0;
+            this.MachinistTurret.TabStop = false;
+            this.MachinistTurret.SelectedValueChanged += new System.EventHandler(this.MachinistTurret_SelectedValueChanged);
+            // 
+            // MachinistBuffGroup
+            // 
+            this.MachinistBuffGroup.Controls.Add(this.MachinistHypercharge);
+            this.MachinistBuffGroup.Controls.Add(this.MachinistGaussBarrel);
+            this.MachinistBuffGroup.Controls.Add(this.MachinistRapidFire);
+            this.MachinistBuffGroup.Controls.Add(this.MachinistReassemble);
+            this.MachinistBuffGroup.Controls.Add(this.MachinistReload);
+            this.MachinistBuffGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistBuffGroup.Location = new System.Drawing.Point(218, 78);
+            this.MachinistBuffGroup.Name = "MachinistBuffGroup";
+            this.MachinistBuffGroup.Size = new System.Drawing.Size(102, 135);
+            this.MachinistBuffGroup.TabIndex = 2;
+            this.MachinistBuffGroup.TabStop = false;
+            this.MachinistBuffGroup.Text = "Buff";
+            // 
+            // MachinistHypercharge
+            // 
+            this.MachinistHypercharge.AutoSize = true;
+            this.MachinistHypercharge.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistHypercharge.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistHypercharge.ForeColor = System.Drawing.Color.White;
+            this.MachinistHypercharge.Location = new System.Drawing.Point(6, 108);
+            this.MachinistHypercharge.Name = "MachinistHypercharge";
+            this.MachinistHypercharge.Size = new System.Drawing.Size(88, 17);
+            this.MachinistHypercharge.TabIndex = 4;
+            this.MachinistHypercharge.TabStop = false;
+            this.MachinistHypercharge.Text = "Hypercharge";
+            this.MachinistHypercharge.UseVisualStyleBackColor = true;
+            this.MachinistHypercharge.CheckedChanged += new System.EventHandler(this.MachinistHypercharge_CheckedChanged);
+            // 
+            // MachinistGaussBarrel
+            // 
+            this.MachinistGaussBarrel.AutoSize = true;
+            this.MachinistGaussBarrel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistGaussBarrel.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistGaussBarrel.ForeColor = System.Drawing.Color.White;
+            this.MachinistGaussBarrel.Location = new System.Drawing.Point(6, 85);
+            this.MachinistGaussBarrel.Name = "MachinistGaussBarrel";
+            this.MachinistGaussBarrel.Size = new System.Drawing.Size(87, 17);
+            this.MachinistGaussBarrel.TabIndex = 3;
+            this.MachinistGaussBarrel.TabStop = false;
+            this.MachinistGaussBarrel.Text = "Gauss Barrel";
+            this.MachinistGaussBarrel.UseVisualStyleBackColor = true;
+            this.MachinistGaussBarrel.CheckedChanged += new System.EventHandler(this.MachinistGaussBarrel_CheckedChanged);
+            // 
+            // MachinistRapidFire
+            // 
+            this.MachinistRapidFire.AutoSize = true;
+            this.MachinistRapidFire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistRapidFire.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistRapidFire.ForeColor = System.Drawing.Color.White;
+            this.MachinistRapidFire.Location = new System.Drawing.Point(6, 62);
+            this.MachinistRapidFire.Name = "MachinistRapidFire";
+            this.MachinistRapidFire.Size = new System.Drawing.Size(75, 17);
+            this.MachinistRapidFire.TabIndex = 2;
+            this.MachinistRapidFire.TabStop = false;
+            this.MachinistRapidFire.Text = "Rapid Fire";
+            this.MachinistRapidFire.UseVisualStyleBackColor = true;
+            this.MachinistRapidFire.CheckedChanged += new System.EventHandler(this.MachinistRapidFire_CheckedChanged);
+            // 
+            // MachinistReassemble
+            // 
+            this.MachinistReassemble.AutoSize = true;
+            this.MachinistReassemble.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistReassemble.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistReassemble.ForeColor = System.Drawing.Color.White;
+            this.MachinistReassemble.Location = new System.Drawing.Point(6, 39);
+            this.MachinistReassemble.Name = "MachinistReassemble";
+            this.MachinistReassemble.Size = new System.Drawing.Size(83, 17);
+            this.MachinistReassemble.TabIndex = 1;
+            this.MachinistReassemble.TabStop = false;
+            this.MachinistReassemble.Text = "Reassemble";
+            this.MachinistReassemble.UseVisualStyleBackColor = true;
+            this.MachinistReassemble.CheckedChanged += new System.EventHandler(this.MachinistReassemble_CheckedChanged);
+            // 
+            // MachinistReload
+            // 
+            this.MachinistReload.AutoSize = true;
+            this.MachinistReload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistReload.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistReload.ForeColor = System.Drawing.Color.White;
+            this.MachinistReload.Location = new System.Drawing.Point(6, 16);
+            this.MachinistReload.Name = "MachinistReload";
+            this.MachinistReload.Size = new System.Drawing.Size(59, 17);
+            this.MachinistReload.TabIndex = 0;
+            this.MachinistReload.TabStop = false;
+            this.MachinistReload.Text = "Reload";
+            this.MachinistReload.UseVisualStyleBackColor = true;
+            this.MachinistReload.CheckedChanged += new System.EventHandler(this.MachinistReload_CheckedChanged);
+            // 
+            // MachinistCooldownGroup
+            // 
+            this.MachinistCooldownGroup.Controls.Add(this.MachinistWildfireHP);
+            this.MachinistCooldownGroup.Controls.Add(this.MachinistRicochet);
+            this.MachinistCooldownGroup.Controls.Add(this.MachinistWildfire);
+            this.MachinistCooldownGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistCooldownGroup.Location = new System.Drawing.Point(218, 6);
+            this.MachinistCooldownGroup.Name = "MachinistCooldownGroup";
+            this.MachinistCooldownGroup.Size = new System.Drawing.Size(187, 66);
+            this.MachinistCooldownGroup.TabIndex = 1;
+            this.MachinistCooldownGroup.TabStop = false;
+            this.MachinistCooldownGroup.Text = "Cooldown";
+            // 
+            // MachinistWildfireHP
+            // 
+            this.MachinistWildfireHP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.MachinistWildfireHP.Increment = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.MachinistWildfireHP.Location = new System.Drawing.Point(76, 16);
+            this.MachinistWildfireHP.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.MachinistWildfireHP.Name = "MachinistWildfireHP";
+            this.MachinistWildfireHP.ShowSymbol = false;
+            this.MachinistWildfireHP.Size = new System.Drawing.Size(105, 22);
+            this.MachinistWildfireHP.TabIndex = 2;
+            this.MachinistWildfireHP.ValueChanged += new System.EventHandler(this.MachinistWildfireHP_ValueChanged);
+            // 
+            // MachinistRicochet
+            // 
+            this.MachinistRicochet.AutoSize = true;
+            this.MachinistRicochet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistRicochet.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistRicochet.ForeColor = System.Drawing.Color.White;
+            this.MachinistRicochet.Location = new System.Drawing.Point(6, 39);
+            this.MachinistRicochet.Name = "MachinistRicochet";
+            this.MachinistRicochet.Size = new System.Drawing.Size(67, 17);
+            this.MachinistRicochet.TabIndex = 1;
+            this.MachinistRicochet.TabStop = false;
+            this.MachinistRicochet.Text = "Ricochet";
+            this.MachinistRicochet.UseVisualStyleBackColor = true;
+            this.MachinistRicochet.CheckedChanged += new System.EventHandler(this.MachinistRicochet_CheckedChanged);
+            // 
+            // MachinistWildfire
+            // 
+            this.MachinistWildfire.AutoSize = true;
+            this.MachinistWildfire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistWildfire.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistWildfire.ForeColor = System.Drawing.Color.White;
+            this.MachinistWildfire.Location = new System.Drawing.Point(6, 16);
+            this.MachinistWildfire.Name = "MachinistWildfire";
+            this.MachinistWildfire.Size = new System.Drawing.Size(64, 17);
+            this.MachinistWildfire.TabIndex = 0;
+            this.MachinistWildfire.TabStop = false;
+            this.MachinistWildfire.Text = "Wildfire";
+            this.MachinistWildfire.UseVisualStyleBackColor = true;
+            this.MachinistWildfire.CheckedChanged += new System.EventHandler(this.MachinistWildfire_CheckedChanged);
+            // 
+            // MachinistRoleGroup
+            // 
+            this.MachinistRoleGroup.Controls.Add(this.MachinistTacticianPct);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistInvigoratePct);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistSecondWindPct);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistPalisade);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistArmGraze);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistHeadGraze);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistRefresh);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistTactician);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistInvigorate);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistPeloton);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistLegGraze);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistFootGraze);
+            this.MachinistRoleGroup.Controls.Add(this.MachinistSecondWind);
+            this.MachinistRoleGroup.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistRoleGroup.Location = new System.Drawing.Point(13, 6);
+            this.MachinistRoleGroup.Name = "MachinistRoleGroup";
+            this.MachinistRoleGroup.Size = new System.Drawing.Size(199, 250);
+            this.MachinistRoleGroup.TabIndex = 0;
+            this.MachinistRoleGroup.TabStop = false;
+            this.MachinistRoleGroup.Text = "Role";
+            // 
+            // MachinistTacticianPct
+            // 
+            this.MachinistTacticianPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.MachinistTacticianPct.Location = new System.Drawing.Point(104, 131);
+            this.MachinistTacticianPct.Name = "MachinistTacticianPct";
+            this.MachinistTacticianPct.Size = new System.Drawing.Size(89, 22);
+            this.MachinistTacticianPct.TabIndex = 25;
+            this.MachinistTacticianPct.ValueChanged += new System.EventHandler(this.MachinistTacticianPct_ValueChanged);
+            // 
+            // MachinistInvigoratePct
+            // 
+            this.MachinistInvigoratePct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.MachinistInvigoratePct.Location = new System.Drawing.Point(104, 108);
+            this.MachinistInvigoratePct.Name = "MachinistInvigoratePct";
+            this.MachinistInvigoratePct.Size = new System.Drawing.Size(89, 22);
+            this.MachinistInvigoratePct.TabIndex = 24;
+            this.MachinistInvigoratePct.ValueChanged += new System.EventHandler(this.MachinistInvigoratePct_ValueChanged);
+            // 
+            // MachinistSecondWindPct
+            // 
+            this.MachinistSecondWindPct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.MachinistSecondWindPct.Location = new System.Drawing.Point(104, 16);
+            this.MachinistSecondWindPct.Name = "MachinistSecondWindPct";
+            this.MachinistSecondWindPct.Size = new System.Drawing.Size(89, 22);
+            this.MachinistSecondWindPct.TabIndex = 23;
+            this.MachinistSecondWindPct.ValueChanged += new System.EventHandler(this.MachinistSecondWindPct_ValueChanged);
+            // 
+            // MachinistPalisade
+            // 
+            this.MachinistPalisade.AutoCheck = false;
+            this.MachinistPalisade.AutoSize = true;
+            this.MachinistPalisade.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistPalisade.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistPalisade.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistPalisade.Location = new System.Drawing.Point(6, 223);
+            this.MachinistPalisade.Name = "MachinistPalisade";
+            this.MachinistPalisade.Size = new System.Drawing.Size(65, 17);
+            this.MachinistPalisade.TabIndex = 22;
+            this.MachinistPalisade.TabStop = false;
+            this.MachinistPalisade.Text = "Palisade";
+            this.MachinistPalisade.UseVisualStyleBackColor = true;
+            // 
+            // MachinistArmGraze
+            // 
+            this.MachinistArmGraze.AutoCheck = false;
+            this.MachinistArmGraze.AutoSize = true;
+            this.MachinistArmGraze.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistArmGraze.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistArmGraze.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistArmGraze.Location = new System.Drawing.Point(6, 200);
+            this.MachinistArmGraze.Name = "MachinistArmGraze";
+            this.MachinistArmGraze.Size = new System.Drawing.Size(75, 17);
+            this.MachinistArmGraze.TabIndex = 21;
+            this.MachinistArmGraze.TabStop = false;
+            this.MachinistArmGraze.Text = "Arm Graze";
+            this.MachinistArmGraze.UseVisualStyleBackColor = true;
+            // 
+            // MachinistHeadGraze
+            // 
+            this.MachinistHeadGraze.AutoCheck = false;
+            this.MachinistHeadGraze.AutoSize = true;
+            this.MachinistHeadGraze.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistHeadGraze.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistHeadGraze.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistHeadGraze.Location = new System.Drawing.Point(6, 177);
+            this.MachinistHeadGraze.Name = "MachinistHeadGraze";
+            this.MachinistHeadGraze.Size = new System.Drawing.Size(82, 17);
+            this.MachinistHeadGraze.TabIndex = 20;
+            this.MachinistHeadGraze.TabStop = false;
+            this.MachinistHeadGraze.Text = "Head Graze";
+            this.MachinistHeadGraze.UseVisualStyleBackColor = true;
+            // 
+            // MachinistRefresh
+            // 
+            this.MachinistRefresh.AutoCheck = false;
+            this.MachinistRefresh.AutoSize = true;
+            this.MachinistRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistRefresh.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistRefresh.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistRefresh.Location = new System.Drawing.Point(6, 154);
+            this.MachinistRefresh.Name = "MachinistRefresh";
+            this.MachinistRefresh.Size = new System.Drawing.Size(62, 17);
+            this.MachinistRefresh.TabIndex = 19;
+            this.MachinistRefresh.TabStop = false;
+            this.MachinistRefresh.Text = "Refresh";
+            this.MachinistRefresh.UseVisualStyleBackColor = true;
+            // 
+            // MachinistTactician
+            // 
+            this.MachinistTactician.AutoSize = true;
+            this.MachinistTactician.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistTactician.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistTactician.ForeColor = System.Drawing.Color.White;
+            this.MachinistTactician.Location = new System.Drawing.Point(6, 131);
+            this.MachinistTactician.Name = "MachinistTactician";
+            this.MachinistTactician.Size = new System.Drawing.Size(66, 17);
+            this.MachinistTactician.TabIndex = 18;
+            this.MachinistTactician.TabStop = false;
+            this.MachinistTactician.Text = "Tactician";
+            this.MachinistTactician.UseVisualStyleBackColor = true;
+            this.MachinistTactician.CheckedChanged += new System.EventHandler(this.MachinistTactician_CheckedChanged);
+            // 
+            // MachinistInvigorate
+            // 
+            this.MachinistInvigorate.AutoSize = true;
+            this.MachinistInvigorate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistInvigorate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistInvigorate.ForeColor = System.Drawing.Color.White;
+            this.MachinistInvigorate.Location = new System.Drawing.Point(6, 108);
+            this.MachinistInvigorate.Name = "MachinistInvigorate";
+            this.MachinistInvigorate.Size = new System.Drawing.Size(75, 17);
+            this.MachinistInvigorate.TabIndex = 17;
+            this.MachinistInvigorate.TabStop = false;
+            this.MachinistInvigorate.Text = "Invigorate";
+            this.MachinistInvigorate.UseVisualStyleBackColor = true;
+            this.MachinistInvigorate.CheckedChanged += new System.EventHandler(this.MachinistInvigorate_CheckedChanged);
+            // 
+            // MachinistPeloton
+            // 
+            this.MachinistPeloton.AutoSize = true;
+            this.MachinistPeloton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistPeloton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistPeloton.ForeColor = System.Drawing.Color.White;
+            this.MachinistPeloton.Location = new System.Drawing.Point(6, 85);
+            this.MachinistPeloton.Name = "MachinistPeloton";
+            this.MachinistPeloton.Size = new System.Drawing.Size(63, 17);
+            this.MachinistPeloton.TabIndex = 16;
+            this.MachinistPeloton.TabStop = false;
+            this.MachinistPeloton.Text = "Peloton";
+            this.MachinistPeloton.UseVisualStyleBackColor = true;
+            this.MachinistPeloton.CheckedChanged += new System.EventHandler(this.MachinistPeloton_CheckedChanged);
+            // 
+            // MachinistLegGraze
+            // 
+            this.MachinistLegGraze.AutoCheck = false;
+            this.MachinistLegGraze.AutoSize = true;
+            this.MachinistLegGraze.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistLegGraze.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistLegGraze.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistLegGraze.Location = new System.Drawing.Point(6, 62);
+            this.MachinistLegGraze.Name = "MachinistLegGraze";
+            this.MachinistLegGraze.Size = new System.Drawing.Size(73, 17);
+            this.MachinistLegGraze.TabIndex = 15;
+            this.MachinistLegGraze.TabStop = false;
+            this.MachinistLegGraze.Text = "Leg Graze";
+            this.MachinistLegGraze.UseVisualStyleBackColor = true;
+            // 
+            // MachinistFootGraze
+            // 
+            this.MachinistFootGraze.AutoCheck = false;
+            this.MachinistFootGraze.AutoSize = true;
+            this.MachinistFootGraze.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistFootGraze.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistFootGraze.ForeColor = System.Drawing.Color.DimGray;
+            this.MachinistFootGraze.Location = new System.Drawing.Point(6, 39);
+            this.MachinistFootGraze.Name = "MachinistFootGraze";
+            this.MachinistFootGraze.Size = new System.Drawing.Size(79, 17);
+            this.MachinistFootGraze.TabIndex = 14;
+            this.MachinistFootGraze.TabStop = false;
+            this.MachinistFootGraze.Text = "Foot Graze";
+            this.MachinistFootGraze.UseVisualStyleBackColor = true;
+            // 
+            // MachinistSecondWind
+            // 
+            this.MachinistSecondWind.AutoSize = true;
+            this.MachinistSecondWind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MachinistSecondWind.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.MachinistSecondWind.ForeColor = System.Drawing.Color.White;
+            this.MachinistSecondWind.Location = new System.Drawing.Point(6, 16);
+            this.MachinistSecondWind.Name = "MachinistSecondWind";
+            this.MachinistSecondWind.Size = new System.Drawing.Size(92, 17);
+            this.MachinistSecondWind.TabIndex = 13;
+            this.MachinistSecondWind.TabStop = false;
+            this.MachinistSecondWind.Text = "Second Wind";
+            this.MachinistSecondWind.UseVisualStyleBackColor = true;
+            this.MachinistSecondWind.CheckedChanged += new System.EventHandler(this.MachinistSecondWind_CheckedChanged);
             // 
             // pgeTanks
             // 
@@ -6136,21 +8221,6 @@
             this.WarriorRampart.UseVisualStyleBackColor = true;
             this.WarriorRampart.CheckedChanged += new System.EventHandler(this.WarriorRampart_CheckedChanged);
             // 
-            // SummonerAetherpact
-            // 
-            this.SummonerAetherpact.AutoSize = true;
-            this.SummonerAetherpact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SummonerAetherpact.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.SummonerAetherpact.ForeColor = System.Drawing.Color.White;
-            this.SummonerAetherpact.Location = new System.Drawing.Point(6, 62);
-            this.SummonerAetherpact.Name = "SummonerAetherpact";
-            this.SummonerAetherpact.Size = new System.Drawing.Size(79, 17);
-            this.SummonerAetherpact.TabIndex = 2;
-            this.SummonerAetherpact.TabStop = false;
-            this.SummonerAetherpact.Text = "Aetherpact";
-            this.SummonerAetherpact.UseVisualStyleBackColor = true;
-            this.SummonerAetherpact.CheckedChanged += new System.EventHandler(this.SummonerAetherpact_CheckedChanged);
-            // 
             // ShinraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -6160,6 +8230,7 @@
             this.Controls.Add(this.ShinraContainer);
             this.Controls.Add(this.ShinraBorder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(904, 504);
             this.Name = "ShinraForm";
             this.Text = "ShinraForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ShinraForm_FormClosing);
@@ -6168,6 +8239,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ShinraBanner)).EndInit();
             this.tabSettings.ResumeLayout(false);
             this.pgeMain.ResumeLayout(false);
+            this.RestGroup.ResumeLayout(false);
+            this.RestGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ShinraDonate)).EndInit();
             this.RotationGroup.ResumeLayout(false);
             this.RotationGroup.PerformLayout();
             this.ItemGroup.ResumeLayout(false);
@@ -6177,7 +8251,10 @@
             this.pgeCasters.ResumeLayout(false);
             this.tabCasters.ResumeLayout(false);
             this.pgeBlackMage.ResumeLayout(false);
-            this.pgeBlackMage.PerformLayout();
+            this.BlackMageBuffGroup.ResumeLayout(false);
+            this.BlackMageBuffGroup.PerformLayout();
+            this.BlackMageRoleGroup.ResumeLayout(false);
+            this.BlackMageRoleGroup.PerformLayout();
             this.pgeRedMage.ResumeLayout(false);
             this.RedMageBuffGroup.ResumeLayout(false);
             this.RedMageBuffGroup.PerformLayout();
@@ -6212,7 +8289,17 @@
             this.AstrologianRoleGroup.ResumeLayout(false);
             this.AstrologianRoleGroup.PerformLayout();
             this.pgeScholar.ResumeLayout(false);
-            this.pgeScholar.PerformLayout();
+            this.ScholarBuffGroup.ResumeLayout(false);
+            this.ScholarBuffGroup.PerformLayout();
+            this.ScholarCooldownGroup.ResumeLayout(false);
+            this.ScholarCooldownGroup.PerformLayout();
+            this.ScholarPetGroup.ResumeLayout(false);
+            this.ScholarAoEGroup.ResumeLayout(false);
+            this.ScholarAoEGroup.PerformLayout();
+            this.ScholarHealGroup.ResumeLayout(false);
+            this.ScholarHealGroup.PerformLayout();
+            this.ScholarRoleGroup.ResumeLayout(false);
+            this.ScholarRoleGroup.PerformLayout();
             this.pgeWhiteMage.ResumeLayout(false);
             this.WhiteMageBuffGroup.ResumeLayout(false);
             this.WhiteMageBuffGroup.PerformLayout();
@@ -6240,7 +8327,16 @@
             this.MonkRoleGroup.ResumeLayout(false);
             this.MonkRoleGroup.PerformLayout();
             this.pgeNinja.ResumeLayout(false);
-            this.pgeNinja.PerformLayout();
+            this.NinjaNinjutsuGroup.ResumeLayout(false);
+            this.NinjaNinjutsuGroup.PerformLayout();
+            this.NinjaDoTGroup.ResumeLayout(false);
+            this.NinjaDoTGroup.PerformLayout();
+            this.NinjaBuffGroup.ResumeLayout(false);
+            this.NinjaBuffGroup.PerformLayout();
+            this.NinjaCooldownGroup.ResumeLayout(false);
+            this.NinjaCooldownGroup.PerformLayout();
+            this.NinjaRoleGroup.ResumeLayout(false);
+            this.NinjaRoleGroup.PerformLayout();
             this.pgeSamurai.ResumeLayout(false);
             this.SamuraiBuffGroup.ResumeLayout(false);
             this.SamuraiBuffGroup.PerformLayout();
@@ -6260,7 +8356,13 @@
             this.BardRoleGroup.ResumeLayout(false);
             this.BardRoleGroup.PerformLayout();
             this.pgeMachinist.ResumeLayout(false);
-            this.pgeMachinist.PerformLayout();
+            this.MachinistTurretGroup.ResumeLayout(false);
+            this.MachinistBuffGroup.ResumeLayout(false);
+            this.MachinistBuffGroup.PerformLayout();
+            this.MachinistCooldownGroup.ResumeLayout(false);
+            this.MachinistCooldownGroup.PerformLayout();
+            this.MachinistRoleGroup.ResumeLayout(false);
+            this.MachinistRoleGroup.PerformLayout();
             this.pgeTanks.ResumeLayout(false);
             this.tabTanks.ResumeLayout(false);
             this.pgeDarkKnight.ResumeLayout(false);
@@ -6369,7 +8471,7 @@
         private Design.UserNumeric UsePotionPct;
         private Design.CustomCheck UsePotion;
         private Design.CustomGroup SummonerPetGroup;
-        private System.Windows.Forms.ComboBox SummonerPet;
+        private Design.CustomCombo SummonerPet;
         private Design.CustomGroup SummonerRoleGroup;
         private Design.CustomGroup RedMageRoleGroup;
         private Design.CustomCheck RedMageDrain;
@@ -6391,15 +8493,11 @@
         private Design.CustomCheck RedMageManafication;
         private Design.CustomCheck RedMageEmbolden;
         private Design.CustomCheck RedMageCorpsACorps;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private Design.CustomGroup RotationGroup;
         private Design.CustomCombo RotationMode;
         private System.Windows.Forms.Label RotationKeyLabel;
         private System.Windows.Forms.Label RotationModeLabel;
-        private Design.CustomCheck RotationOverlay;
+        private Design.CustomCheck RotationMessages;
         private Design.CustomGroup SamuraiRoleGroup;
         private Design.CustomCheck SamuraiTrueNorth;
         private Design.CustomCheckDisabled SamuraiCrutch;
@@ -6712,5 +8810,140 @@
         private Design.CustomCheck SummonerSummonBahamut;
         private Design.CustomCheck SummonerDreadwyrmTrance;
         private Design.CustomCheck SummonerAetherpact;
+        private Design.CustomGroup BlackMageRoleGroup;
+        private Design.UserNumeric BlackMageLucidDreamingPct;
+        private Design.UserNumeric BlackMageDrainPct;
+        private Design.CustomCheckDisabled BlackMageErase;
+        private Design.CustomCheckDisabled BlackMageSurecast;
+        private Design.CustomCheckDisabled BlackMageApocatastasis;
+        private Design.CustomCheckDisabled BlackMageManaShift;
+        private Design.CustomCheck BlackMageSwiftcast;
+        private Design.CustomCheck BlackMageLucidDreaming;
+        private Design.CustomCheckDisabled BlackMageDiversion;
+        private Design.CustomCheck BlackMageDrain;
+        private Design.CustomCheckDisabled BlackMageBreak;
+        private Design.CustomCheckDisabled BlackMageAddle;
+        private Design.CustomGroup BlackMageBuffGroup;
+        private Design.CustomCheck BlackMageEnochian;
+        private Design.CustomCheck BlackMageSharpcast;
+        private Design.CustomCheck BlackMageLeyLines;
+        private Design.CustomCheck BlackMageConvert;
+        private Design.CustomCheck BlackMageTriplecast;
+        private Design.CustomGroup ScholarRoleGroup;
+        private Design.CustomCheck ScholarEsuna;
+        private Design.CustomCheck ScholarClericStance;
+        private Design.UserNumeric ScholarLucidDreamingPct;
+        private Design.CustomCheckDisabled ScholarRescue;
+        private Design.CustomCheckDisabled ScholarSurecast;
+        private Design.CustomCheckDisabled ScholarLargesse;
+        private Design.CustomCheckDisabled ScholarEyeForAnEye;
+        private Design.CustomCheck ScholarSwiftcast;
+        private Design.CustomCheck ScholarLucidDreaming;
+        private Design.CustomCheck ScholarProtect;
+        private Design.CustomCheckDisabled ScholarBreak;
+        private Design.CustomGroup ScholarHealGroup;
+        private Design.CustomGroup ScholarAoEGroup;
+        private Design.CustomCheck ScholarBane;
+        private Design.CustomCheck ScholarPartyHeal;
+        private Design.CustomGroup ScholarPetGroup;
+        private Design.CustomCombo ScholarPet;
+        private Design.CustomGroup ScholarBuffGroup;
+        private Design.CustomCheck ScholarRouse;
+        private Design.CustomGroup ScholarCooldownGroup;
+        private Design.CustomCheck ScholarShadowFlare;
+        private Design.CustomCheck ScholarResurrection;
+        private Design.CustomCheck ScholarIndomitability;
+        private Design.CustomCheck ScholarSuccor;
+        private Design.CustomCheck ScholarExcogitation;
+        private Design.CustomCheck ScholarLustrate;
+        private Design.CustomCheck ScholarAdloquium;
+        private Design.CustomCheck ScholarPhysick;
+        private Design.CustomCheck ScholarAetherpact;
+        private Design.UserNumeric ScholarPhysickPct;
+        private Design.UserNumeric ScholarIndomitabilityPct;
+        private Design.UserNumeric ScholarSuccorPct;
+        private Design.UserNumeric ScholarExcogitationPct;
+        private Design.UserNumeric ScholarLustratePct;
+        private Design.UserNumeric ScholarAetherpactPct;
+        private Design.UserNumeric ScholarAdloquiumPct;
+        private Design.CustomCheck ScholarEmergencyTactics;
+        private Design.CustomCheck ScholarChainStrategem;
+        private Design.CustomCheck RotationOverlay;
+        private Design.CustomGroup NinjaRoleGroup;
+        private Design.UserNumeric NinjaBloodbathPct;
+        private Design.UserNumeric NinjaInvigoratePct;
+        private Design.UserNumeric NinjaSecondWindPct;
+        private Design.CustomCheck NinjaTrueNorth;
+        private Design.CustomCheckDisabled NinjaCrutch;
+        private Design.CustomCheckDisabled NinjaFeint;
+        private Design.CustomCheckDisabled NinjaGoad;
+        private Design.CustomCheck NinjaBloodbath;
+        private Design.CustomCheck NinjaInvigorate;
+        private Design.CustomCheckDisabled NinjaDiversion;
+        private Design.CustomCheckDisabled NinjaLegSweep;
+        private Design.CustomCheckDisabled NinjaArmsLength;
+        private Design.CustomCheck NinjaSecondWind;
+        private Design.CustomGroup NinjaCooldownGroup;
+        private Design.CustomCheck NinjaMug;
+        private Design.CustomCheck NinjaAssassinate;
+        private Design.CustomGroup NinjaBuffGroup;
+        private Design.CustomCheck NinjaShadeShift;
+        private Design.UserNumeric NinjaShadeShiftPct;
+        private Design.CustomCheck NinjaTrickAttack;
+        private Design.CustomCheck NinjaJugulate;
+        private Design.CustomCheck NinjaKassatsu;
+        private Design.CustomGroup NinjaDoTGroup;
+        private Design.CustomCheck NinjaShadowFang;
+        private Design.UserNumeric NinjaShadowFangHP;
+        private Design.CustomGroup NinjaNinjutsuGroup;
+        private Design.CustomCheck NinjaSuiton;
+        private Design.CustomCheck NinjaDoton;
+        private Design.CustomCheck NinjaHuton;
+        private Design.CustomCheck NinjaRaiton;
+        private Design.CustomCheck NinjaKaton;
+        private Design.CustomCheck NinjaFuma;
+        private Design.CustomCheck NinjaDuality;
+        private Design.CustomCheck NinjaDreamWithin;
+        private Design.CustomCheck NinjaBhavacakra;
+        private Design.CustomCheck NinjaHellfrogMedium;
+        private Design.CustomCheck NinjaTenChiJin;
+        private Design.CustomCheck ScholarInterruptOverheal;
+        private Design.CustomCheck ScholarInterruptDamage;
+        private Design.CustomCheck WhiteMageInterruptOverheal;
+        private Design.CustomCheck WhiteMageInterruptDamage;
+        private Design.CustomCheck AstrologianInterruptOverheal;
+        private Design.CustomCheck AstrologianInterruptDamage;
+        private Design.CustomGroup MachinistRoleGroup;
+        private Design.UserNumeric MachinistTacticianPct;
+        private Design.UserNumeric MachinistInvigoratePct;
+        private Design.UserNumeric MachinistSecondWindPct;
+        private Design.CustomCheckDisabled MachinistPalisade;
+        private Design.CustomCheckDisabled MachinistArmGraze;
+        private Design.CustomCheckDisabled MachinistHeadGraze;
+        private Design.CustomCheckDisabled MachinistRefresh;
+        private Design.CustomCheck MachinistTactician;
+        private Design.CustomCheck MachinistInvigorate;
+        private Design.CustomCheck MachinistPeloton;
+        private Design.CustomCheckDisabled MachinistLegGraze;
+        private Design.CustomCheckDisabled MachinistFootGraze;
+        private Design.CustomCheck MachinistSecondWind;
+        private Design.CustomGroup MachinistTurretGroup;
+        private Design.CustomGroup MachinistBuffGroup;
+        private Design.CustomGroup MachinistCooldownGroup;
+        private Design.CustomCheck MachinistRicochet;
+        private Design.CustomCheck MachinistWildfire;
+        private Design.CustomCheck MachinistHypercharge;
+        private Design.CustomCheck MachinistGaussBarrel;
+        private Design.CustomCheck MachinistRapidFire;
+        private Design.CustomCheck MachinistReassemble;
+        private Design.CustomCheck MachinistReload;
+        private Design.CustomCombo MachinistTurret;
+        private Design.UserNumeric MachinistWildfireHP;
+        private System.Windows.Forms.PictureBox ShinraDonate;
+        private Design.CustomGroup RestGroup;
+        private Design.UserNumeric RestEnergyPct;
+        private Design.UserNumeric RestHealthPct;
+        private Design.CustomCheck RestEnergy;
+        private Design.CustomCheck RestHealth;
     }
 }

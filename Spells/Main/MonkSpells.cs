@@ -161,7 +161,7 @@ namespace ShinraCo.Spells.Main
 
         public Spell FistsOfFire { get; } = new Spell
         {
-            Name = "Fists Of Fire",
+            Name = "Fists of Fire",
             ID = 63,
             Level = 40,
             GCDType = GCDType.Off,
@@ -226,7 +226,7 @@ namespace ShinraCo.Spells.Main
             Level = 56,
             GCDType = GCDType.Off,
             SpellType = SpellType.Cooldown,
-            CastType = CastType.Target
+            CastType = CastType.Self
         };
 
         public Spell Purification { get; } = new Spell

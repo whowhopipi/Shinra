@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -12,6 +13,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
 using ff14bot.Pathing;
+using ShinraCo.Settings;
 
 namespace ShinraCo.Spells
 {
@@ -93,7 +95,7 @@ namespace ShinraCo.Spells
 
             #region AoE
 
-            if (SpellType == SpellType.AoE)
+            if (SpellType == SpellType.AoE && Shinra.Settings.RotationMode != Modes.Multi)
             {
                 var enemyCount = Helpers.EnemyUnit.Count(eu => eu.Distance2D(target) - eu.CombatReach - target.CombatReach <=
                                                                DataManager.GetSpellData(ID).Radius);
@@ -101,7 +103,6 @@ namespace ShinraCo.Spells
                 switch (Core.Player.CurrentJob)
                 {
                     case ClassJobType.Arcanist:
-                    case ClassJobType.Scholar:
                     case ClassJobType.Summoner:
                         if (enemyCount < 2)
                         {
@@ -192,6 +193,93 @@ namespace ShinraCo.Spells
 
             #endregion
 
+            #region Ninjutsu
+
+            if (SpellType == SpellType.Ninjutsu || SpellType == SpellType.Mudra)
+            {
+                #region Movement
+
+                if (BotManager.Current.IsAutonomous)
+                {
+                    switch (ActionManager.InSpellInRangeLOS(2247, target))
+                    {
+                        case SpellRangeCheck.ErrorNotInLineOfSight:
+                            await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                            return false;
+                        case SpellRangeCheck.ErrorNotInRange:
+                            await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                            return false;
+                        case SpellRangeCheck.ErrorNotInFront:
+                            if (!target.InLineOfSight())
+                            {
+                                await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                                return false;
+                            }
+                            target.Face();
+                            return false;
+                        case SpellRangeCheck.Success:
+                            if (MovementManager.IsMoving)
+                            {
+                                Navigator.PlayerMover.MoveStop();
+                            }
+                            break;
+                    }
+                }
+
+                #endregion
+
+                #region IsMounted
+
+                if (Core.Player.IsMounted)
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region CanCast
+
+                if (!ActionManager.CanCast(ID, target))
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region DoAction
+
+                if (!await Coroutine.Wait(1000, () => ActionManager.DoAction(ID, target)))
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region Wait
+
+                await Coroutine.Wait(2000, () => !ActionManager.CanCast(ID, target));
+
+                #endregion
+
+                Shinra.LastSpell = this;
+
+                #region AddRecent
+
+                if (SpellType == SpellType.Mudra)
+                {
+                    var key = target.ObjectId.ToString("X") + "-" + Name;
+                    var val = DateTime.UtcNow + TimeSpan.FromSeconds(1);
+                    RecentSpell.Add(key, val);
+                }
+
+                #endregion
+
+                Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
+                return true;
+            }
+
+            #endregion
+
             #region CanAttack
 
             if (!target.CanAttack && CastType != CastType.Self)
@@ -224,14 +312,17 @@ namespace ShinraCo.Spells
                 {
                     case SpellRangeCheck.ErrorNotInLineOfSight:
                         await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                        //Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - LineOfSight >>> {Name}");
                         return false;
                     case SpellRangeCheck.ErrorNotInRange:
                         await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                        //Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - Range >>> {Name}");
                         return false;
                     case SpellRangeCheck.ErrorNotInFront:
                         if (!target.InLineOfSight())
                         {
                             await CommonTasks.MoveAndStop(new MoveToParameters(target.Location), 0f);
+                            //Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - Facing >>> {Name}");
                             return false;
                         }
                         target.Face();
@@ -268,6 +359,35 @@ namespace ShinraCo.Spells
 
             #endregion
 
+            #region StopCasting
+
+            if (SpellType == SpellType.Heal)
+            {
+                if (Core.Player.IsCasting && !Helpers.HealingSpells.Contains(Core.Player.SpellCastInfo.Name))
+                {
+                    var stopCasting = false;
+                    switch (Core.Player.CurrentJob)
+                    {
+                        case ClassJobType.Astrologian:
+                            stopCasting = Shinra.Settings.AstrologianInterruptDamage;
+                            break;
+                        case ClassJobType.Scholar:
+                            stopCasting = Shinra.Settings.ScholarInterruptDamage;
+                            break;
+                        case ClassJobType.WhiteMage:
+                            stopCasting = Shinra.Settings.WhiteMageInterruptDamage;
+                            break;
+                    }
+                    if (stopCasting)
+                    {
+                        Logging.Write(Colors.Yellow, $@"[Shinra] Interrupting >>> {Core.Player.SpellCastInfo.Name}");
+                        ActionManager.StopCasting();
+                    }
+                }
+            }
+
+            #endregion
+
             #region CanCast
 
             switch (CastType)
@@ -284,7 +404,6 @@ namespace ShinraCo.Spells
                     {
                         return false;
                     }
-
                     break;
             }
 
@@ -363,6 +482,12 @@ namespace ShinraCo.Spells
                             return false;
                         }
                         break;
+                    case ClassJobType.Machinist:
+                        if (DataManager.GetSpellData(2866).Cooldown.TotalMilliseconds < 1000)
+                        {
+                            return false;
+                        }
+                        break;
                     case ClassJobType.Marauder:
                     case ClassJobType.Warrior:
                         if (DataManager.GetSpellData(31).Cooldown.TotalMilliseconds < 1000)
@@ -383,8 +508,22 @@ namespace ShinraCo.Spells
                             return false;
                         }
                         break;
+                    case ClassJobType.Rogue:
+                    case ClassJobType.Ninja:
+                        if (DataManager.GetSpellData(2240).Cooldown.TotalMilliseconds < 1000)
+                        {
+                            return false;
+                        }
+                        break;
                     case ClassJobType.Samurai:
                         if (DataManager.GetSpellData(7477).Cooldown.TotalMilliseconds < 1000)
+                        {
+                            return false;
+                        }
+                        break;
+                    case ClassJobType.Thaumaturge:
+                    case ClassJobType.BlackMage:
+                        if (DataManager.GetSpellData(142).Cooldown.TotalMilliseconds < 1000)
                         {
                             return false;
                         }
@@ -434,7 +573,7 @@ namespace ShinraCo.Spells
 
             #region AddRecent
 
-            if (SpellType != SpellType.Damage && SpellType != SpellType.AoE)
+            if (SpellType != SpellType.Damage && SpellType != SpellType.AoE && SpellType != SpellType.Heal && await CastComplete(this))
             {
                 var key = target.ObjectId.ToString("X") + "-" + Name;
                 var val = DateTime.UtcNow + DataManager.GetSpellData(ID).AdjustedCastTime + TimeSpan.FromSeconds(3);
@@ -447,5 +586,32 @@ namespace ShinraCo.Spells
             Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
             return true;
         }
+
+        #region CastComplete
+
+        private static async Task<bool> CastComplete(Spell spell)
+        {
+            if (spell.SpellType == SpellType.DoT)
+            {
+                var castTime = DataManager.GetSpellData(spell.ID).AdjustedCastTime;
+                if (castTime.TotalMilliseconds > 0)
+                {
+                    var timer = new Stopwatch();
+                    timer.Start();
+                    await Coroutine.Wait(castTime, () => Core.Player.IsCasting);
+                    while (timer.ElapsedMilliseconds < castTime.TotalMilliseconds - 100)
+                    {
+                        if (!Core.Player.IsCasting)
+                        {
+                            return false;
+                        }
+                        await Coroutine.Yield();
+                    }
+                }
+            }
+            return true;
+        }
+
+        #endregion
     }
 }

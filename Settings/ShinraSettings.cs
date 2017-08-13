@@ -38,6 +38,13 @@ namespace ShinraCo.Settings
         Nocturnal
     }
 
+    public enum MachinistTurrets
+    {
+        None,
+        Rook,
+        Bishop
+    }
+
     public enum MonkFists
     {
         None,
@@ -51,6 +58,13 @@ namespace ShinraCo.Settings
         None,
         Shield,
         Sword
+    }
+
+    public enum ScholarPets
+    {
+        None,
+        Eos,
+        Selene
     }
 
     public enum SummonerPets
@@ -81,9 +95,34 @@ namespace ShinraCo.Settings
         [Setting]
         public Point WindowLocation { get; set; }
 
+        [Setting]
+        public Point OverlayLocation { get; set; }
+
         #endregion
 
         #region Main Settings
+
+        #region Rotation
+
+        [Setting, DefaultValue(true)]
+        public bool RotationOverlay { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool RotationMessages { get; set; }
+
+        [Setting, DefaultValue(Modes.Smart)]
+        public Modes RotationMode { get; set; }
+
+        [Setting, DefaultValue(Keys.None)]
+        public Keys RotationHotkey { get; set; }
+
+        [Setting, DefaultValue(TankModes.DPS)]
+        public TankModes TankMode { get; set; }
+
+        [Setting, DefaultValue(Keys.None)]
+        public Keys TankHotkey { get; set; }
+
+        #endregion
 
         #region Chocobo
 
@@ -111,22 +150,19 @@ namespace ShinraCo.Settings
 
         #endregion
 
-        #region Rotation
+        #region Rest
 
         [Setting, DefaultValue(true)]
-        public bool RotationOverlay { get; set; }
+        public bool RestHealth { get; set; }
 
-        [Setting, DefaultValue(Modes.Smart)]
-        public Modes RotationMode { get; set; }
+        [Setting, DefaultValue(true)]
+        public bool RestEnergy { get; set; }
 
-        [Setting, DefaultValue(Keys.None)]
-        public Keys RotationHotkey { get; set; }
+        [Setting, DefaultValue(70)]
+        public int RestHealthPct { get; set; }
 
-        [Setting, DefaultValue(TankModes.DPS)]
-        public TankModes TankMode { get; set; }
-
-        [Setting, DefaultValue(Keys.None)]
-        public Keys TankHotkey { get; set; }
+        [Setting, DefaultValue(50)]
+        public int RestEnergyPct { get; set; }
 
         #endregion
 
@@ -169,6 +205,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool AstrologianPartyHeal { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianInterruptDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianInterruptOverheal { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool AstrologianBenefic { get; set; }
@@ -283,6 +325,48 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool BardBattleVoice { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Black Mage
+
+        #region Role
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageDrain { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageLucidDreaming { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageSwiftcast { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int BlackMageDrainPct { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int BlackMageLucidDreamingPct { get; set; }
+
+        #endregion
+
+        #region Buff
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageConvert { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageLeyLines { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageSharpcast { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageEnochian { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageTriplecast { get; set; }
 
         #endregion
 
@@ -477,6 +561,80 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Machinist
+
+        #region Role
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistSecondWind { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistFootGraze { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistLegGraze { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistPeloton { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistInvigorate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistTactician { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int MachinistSecondWindPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int MachinistInvigoratePct { get; set; }
+
+        [Setting, DefaultValue(30)]
+        public int MachinistTacticianPct { get; set; }
+
+        #endregion
+
+        #region Cooldown
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistWildfire { get; set; }
+
+        [Setting, DefaultValue(100000)]
+        public int MachinistWildfireHP { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistRicochet { get; set; }
+
+        #endregion
+
+        #region Buff
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistReload { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistReassemble { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistRapidFire { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistGaussBarrel { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistHypercharge { get; set; }
+
+        #endregion
+
+        #region Turret
+
+        [Setting, DefaultValue(MachinistTurrets.Rook)]
+        public MachinistTurrets MachinistTurret { get; set; }
+
+        #endregion
+
+        #endregion
+
         #region Monk
 
         #region Role
@@ -509,7 +667,7 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool MonkDemolish { get; set; }
 
-        [Setting, DefaultValue(500000)]
+        [Setting, DefaultValue(100000)]
         public int MonkDemolishHP { get; set; }
 
         #endregion
@@ -556,6 +714,111 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(MonkFists.Fire)]
         public MonkFists MonkFist { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Ninja
+
+        #region Role
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaSecondWind { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaInvigorate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaBloodbath { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaTrueNorth { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int NinjaSecondWindPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int NinjaInvigoratePct { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int NinjaBloodbathPct { get; set; }
+
+        #endregion
+
+        #region DoT
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaShadowFang { get; set; }
+
+        [Setting, DefaultValue(100000)]
+        public int NinjaShadowFangHP { get; set; }
+
+        #endregion
+
+        #region Cooldown
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaAssassinate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaMug { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaTrickAttack { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaJugulate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaDreamWithin { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaHellfrogMedium { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaBhavacakra { get; set; }
+
+        #endregion
+
+        #region Buff
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaShadeShift { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaKassatsu { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaDuality { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaTenChiJin { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int NinjaShadeShiftPct { get; set; }
+
+        #endregion
+
+        #region Ninjutsu
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaFuma { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaKaton { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaRaiton { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaHuton { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaDoton { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaSuiton { get; set; }
 
         #endregion
 
@@ -775,6 +1038,124 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool SamuraiHagakure { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Scholar
+
+        #region Role
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarClericStance { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarProtect { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarEsuna { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarLucidDreaming { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarSwiftcast { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int ScholarLucidDreamingPct { get; set; }
+
+        #endregion
+
+        #region AoE
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarBane { get; set; }
+
+        #endregion
+
+        #region Cooldown
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarShadowFlare { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarChainStrategem { get; set; }
+
+        #endregion
+
+        #region Buff
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarRouse { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarEmergencyTactics { get; set; }
+
+        #endregion
+
+        #region Heal
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarPartyHeal { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarInterruptDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarInterruptOverheal { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarPhysick { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarAdloquium { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarAetherpact { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarLustrate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarExcogitation { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarSuccor { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarIndomitability { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarResurrection { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int ScholarPhysickPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int ScholarAdloquiumPct { get; set; }
+
+        [Setting, DefaultValue(30)]
+        public int ScholarAetherpactPct { get; set; }
+
+        [Setting, DefaultValue(20)]
+        public int ScholarLustratePct { get; set; }
+
+        [Setting, DefaultValue(90)]
+        public int ScholarExcogitationPct { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int ScholarSuccorPct { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int ScholarIndomitabilityPct { get; set; }
+
+        #endregion
+
+        #region Pet
+
+        [Setting, DefaultValue(ScholarPets.Eos)]
+        public ScholarPets ScholarPet { get; set; }
 
         #endregion
 
@@ -1025,6 +1406,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool WhiteMagePartyHeal { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageInterruptDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageInterruptOverheal { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool WhiteMageCure { get; set; }

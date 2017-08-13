@@ -29,10 +29,12 @@ namespace ShinraCo
         public sealed override void Initialize()
         {
             Logging.Write(Colors.GreenYellow, $@"[Shinra] Loaded Version: {Helpers.GetLocalVersion()}");
+            Overlay.Visible = Settings.RotationOverlay;
+            Overlay.UpdateText();
             HotkeyManager.Register("Shinra Rotation", Helpers.GetHotkey(Settings.RotationHotkey),
                                    Helpers.GetModkey(Settings.RotationHotkey), hk => CycleRotation());
-            HotkeyManager.Register("Shinra Tank", Helpers.GetHotkey(Settings.TankHotkey),
-                                   Helpers.GetModkey(Settings.TankHotkey), hk => CycleRotation(true));
+            HotkeyManager.Register("Shinra Tank", Helpers.GetHotkey(Settings.TankHotkey), Helpers.GetModkey(Settings.TankHotkey),
+                                   hk => CycleRotation(true));
         }
 
         public sealed override void Pulse()
@@ -54,6 +56,7 @@ namespace ShinraCo
         private Form _configForm;
 
         public static ShinraSettings Settings = ShinraSettings.Instance;
+        public static readonly ShinraOverlay Overlay = new ShinraOverlay();
 
         public sealed override void OnButtonPress()
         {
@@ -75,7 +78,7 @@ namespace ShinraCo
                 {
                     case TankModes.DPS:
                         Settings.TankMode = TankModes.Enmity;
-                        if (Settings.RotationOverlay)
+                        if (Settings.RotationMessages)
                         {
                             Core.OverlayManager.AddToast(() => @"Shinra Tank >>> Enmity", TimeSpan.FromMilliseconds(1000), textColor,
                                                          shadowColor, new FontFamily("Agency FB"));
@@ -83,21 +86,22 @@ namespace ShinraCo
                         break;
                     case TankModes.Enmity:
                         Settings.TankMode = TankModes.DPS;
-                        if (Settings.RotationOverlay)
+                        if (Settings.RotationMessages)
                         {
                             Core.OverlayManager.AddToast(() => @"Shinra Tank >>> DPS", TimeSpan.FromMilliseconds(1000), textColor,
                                                          shadowColor, new FontFamily("Agency FB"));
                         }
                         break;
                 }
-                Logging.Write(Colors.Yellow, $@"[Shinra] Tank >>> {Settings.RotationMode}");
+                Logging.Write(Colors.Yellow, $@"[Shinra] Tank >>> {Settings.TankMode}");
+                Overlay.UpdateText();
                 return;
             }
             switch (Settings.RotationMode)
             {
                 case Modes.Smart:
                     Settings.RotationMode = Modes.Single;
-                    if (Settings.RotationOverlay)
+                    if (Settings.RotationMessages)
                     {
                         Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Single", TimeSpan.FromMilliseconds(1000), textColor,
                                                      shadowColor, new FontFamily("Agency FB"));
@@ -105,7 +109,7 @@ namespace ShinraCo
                     break;
                 case Modes.Single:
                     Settings.RotationMode = Modes.Multi;
-                    if (Settings.RotationOverlay)
+                    if (Settings.RotationMessages)
                     {
                         Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Multi", TimeSpan.FromMilliseconds(1000), textColor,
                                                      shadowColor, new FontFamily("Agency FB"));
@@ -113,7 +117,7 @@ namespace ShinraCo
                     break;
                 case Modes.Multi:
                     Settings.RotationMode = Modes.Smart;
-                    if (Settings.RotationOverlay)
+                    if (Settings.RotationMessages)
                     {
                         Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Smart", TimeSpan.FromMilliseconds(1000), textColor,
                                                      shadowColor, new FontFamily("Agency FB"));
@@ -121,6 +125,7 @@ namespace ShinraCo
                     break;
             }
             Logging.Write(Colors.Yellow, $@"[Shinra] Rotation >>> {Settings.RotationMode}");
+            Overlay.UpdateText();
         }
 
         #endregion
@@ -159,23 +164,33 @@ namespace ShinraCo
                 case ClassJobType.Lancer:
                 case ClassJobType.Marauder:
                 case ClassJobType.Pugilist:
+                case ClassJobType.Rogue:
+                case ClassJobType.Thaumaturge:
                     return new BasicClass();
                 case ClassJobType.Astrologian:
                     return new Astrologian();
                 case ClassJobType.Bard:
                     return new Bard();
+                case ClassJobType.BlackMage:
+                    return new BlackMage();
                 case ClassJobType.DarkKnight:
                     return new DarkKnight();
                 case ClassJobType.Dragoon:
                     return new Dragoon();
+                case ClassJobType.Machinist:
+                    return new Machinist();
                 case ClassJobType.Monk:
                     return new Monk();
+                case ClassJobType.Ninja:
+                    return new Ninja();
                 case ClassJobType.Paladin:
                     return new Paladin();
                 case ClassJobType.RedMage:
                     return new RedMage();
                 case ClassJobType.Samurai:
                     return new Samurai();
+                case ClassJobType.Scholar:
+                    return new Scholar();
                 case ClassJobType.Summoner:
                     return new Summoner();
                 case ClassJobType.Warrior:
@@ -206,7 +221,8 @@ namespace ShinraCo
         public async Task<bool> Rest()
         {
             if (WorldManager.InSanctuary || Core.Player.HasAura("Sprint") ||
-                Core.Player.CurrentHealthPercent > 70 && Helpers.CurrentEnergyPct > 50)
+                (!Settings.RestHealth || Core.Player.CurrentHealthPercent > Settings.RestHealthPct) &&
+                (!Settings.RestEnergy || Helpers.CurrentEnergyPct > Settings.RestEnergyPct))
             {
                 return false;
             }

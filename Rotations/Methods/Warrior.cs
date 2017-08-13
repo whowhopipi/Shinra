@@ -80,9 +80,12 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> FellCleave()
         {
-            if (Shinra.Settings.WarriorFellCleave && DeliveranceStance && BeastValue >= 50 && UseSpenders)
+            if (Shinra.Settings.WarriorFellCleave && DeliveranceStance && UseSpenders)
             {
-                return await MySpells.FellCleave.Cast();
+                if (BeastValue >= 90 || Core.Player.CurrentTarget.HasAura(819) && Core.Player.HasAura(MySpells.StormsEye.Name))
+                {
+                    return await MySpells.FellCleave.Cast();
+                }
             }
             return false;
         }
@@ -135,7 +138,8 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.WarriorUpheaval && Core.Player.CurrentHealthPercent > 70 && (DefianceStance || UseSpenders))
             {
-                if (Shinra.Settings.RotationMode == Modes.Single || Helpers.EnemiesNearTarget(5) <= 2)
+                if (Shinra.Settings.RotationMode == Modes.Single || Shinra.Settings.RotationMode == Modes.Smart &&
+                    Helpers.EnemiesNearTarget(5) <= 2)
                 {
                     return await MySpells.Upheaval.Cast();
                 }
