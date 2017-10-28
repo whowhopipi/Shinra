@@ -73,13 +73,6 @@ namespace ShinraCo.Settings.Forms
 
             #endregion
 
-            #region Item
-
-            UsePotion.Checked = Shinra.Settings.UsePotion;
-            UsePotionPct.Value = Shinra.Settings.UsePotionPct;
-
-            #endregion
-
             #region Rest
 
             RestHealth.Checked = Shinra.Settings.RestHealth;
@@ -87,6 +80,18 @@ namespace ShinraCo.Settings.Forms
 
             RestHealthPct.Value = Shinra.Settings.RestHealthPct;
             RestEnergyPct.Value = Shinra.Settings.RestEnergyPct;
+
+            #endregion
+
+            #region Spell
+
+            RandomCastLocations.Checked = Shinra.Settings.RandomCastLocations;
+
+            #endregion
+
+            #region Misc
+
+            DebugLogging.Checked = Shinra.Settings.DebugLogging;
 
             #endregion
 
@@ -141,6 +146,8 @@ namespace ShinraCo.Settings.Forms
             AstrologianDraw.Checked = Shinra.Settings.AstrologianDraw;
             AstrologianSleeveDraw.Checked = Shinra.Settings.AstrologianSleeveDraw;
 
+            AstrologianStyle.Text = Convert.ToString(Shinra.Settings.AstrologianStyle);
+
             #endregion
 
             #region Sect
@@ -159,10 +166,21 @@ namespace ShinraCo.Settings.Forms
             BardPeloton.Checked = Shinra.Settings.BardPeloton;
             BardInvigorate.Checked = Shinra.Settings.BardInvigorate;
             BardTactician.Checked = Shinra.Settings.BardTactician;
+            BardRefresh.Checked = Shinra.Settings.BardRefresh;
+            BardPalisade.Checked = Shinra.Settings.BardPalisade;
 
             BardSecondWindPct.Value = Shinra.Settings.BardSecondWindPct;
             BardInvigoratePct.Value = Shinra.Settings.BardInvigoratePct;
             BardTacticianPct.Value = Shinra.Settings.BardTacticianPct;
+            BardRefreshPct.Value = Shinra.Settings.BardRefreshPct;
+            BardPalisadePct.Value = Shinra.Settings.BardPalisadePct;
+
+            #endregion
+
+            #region Damage
+
+            BardPitchPerfect.Checked = Shinra.Settings.BardPitchPerfect;
+            BardRepertoireCount.Value = Shinra.Settings.BardRepertoireCount;
 
             #endregion
 
@@ -181,6 +199,13 @@ namespace ShinraCo.Settings.Forms
 
             #endregion
 
+            #region Misc
+
+            BardOpener.Checked = Shinra.Settings.BardOpener;
+            BardPotion.Checked = Shinra.Settings.BardPotion;
+
+            #endregion
+
             #endregion
 
             #region Black Mage
@@ -196,6 +221,18 @@ namespace ShinraCo.Settings.Forms
 
             #endregion
 
+            #region Damage
+
+            BlackMageScathe.Checked = Shinra.Settings.BlackMageScathe;
+
+            #endregion
+
+            #region AoE
+
+            BlackMageThunder.Checked = Shinra.Settings.BlackMageThunder;
+
+            #endregion
+
             #region Buff
 
             BlackMageConvert.Checked = Shinra.Settings.BlackMageConvert;
@@ -203,6 +240,13 @@ namespace ShinraCo.Settings.Forms
             BlackMageSharpcast.Checked = Shinra.Settings.BlackMageSharpcast;
             BlackMageEnochian.Checked = Shinra.Settings.BlackMageEnochian;
             BlackMageTriplecast.Checked = Shinra.Settings.BlackMageTriplecast;
+
+            #endregion
+
+            #region Misc
+
+            BlackMageOpener.Checked = Shinra.Settings.BlackMageOpener;
+            BlackMagePotion.Checked = Shinra.Settings.BlackMagePotion;
 
             #endregion
 
@@ -287,11 +331,13 @@ namespace ShinraCo.Settings.Forms
             DragoonSecondWind.Checked = Shinra.Settings.DragoonSecondWind;
             DragoonInvigorate.Checked = Shinra.Settings.DragoonInvigorate;
             DragoonBloodbath.Checked = Shinra.Settings.DragoonBloodbath;
+            DragoonGoad.Checked = Shinra.Settings.DragoonGoad;
             DragoonTrueNorth.Checked = Shinra.Settings.DragoonTrueNorth;
 
             DragoonSecondWindPct.Value = Shinra.Settings.DragoonSecondWindPct;
             DragoonInvigoratePct.Value = Shinra.Settings.DragoonInvigoratePct;
             DragoonBloodbathPct.Value = Shinra.Settings.DragoonBloodbathPct;
+            DragoonGoadPct.Value = Shinra.Settings.DragoonGoadPct;
 
             #endregion
 
@@ -324,10 +370,14 @@ namespace ShinraCo.Settings.Forms
             MachinistPeloton.Checked = Shinra.Settings.MachinistPeloton;
             MachinistInvigorate.Checked = Shinra.Settings.MachinistInvigorate;
             MachinistTactician.Checked = Shinra.Settings.MachinistTactician;
+            MachinistRefresh.Checked = Shinra.Settings.MachinistRefresh;
+            MachinistPalisade.Checked = Shinra.Settings.MachinistPalisade;
 
             MachinistSecondWindPct.Value = Shinra.Settings.MachinistSecondWindPct;
             MachinistInvigoratePct.Value = Shinra.Settings.MachinistInvigoratePct;
             MachinistTacticianPct.Value = Shinra.Settings.MachinistTacticianPct;
+            MachinistRefreshPct.Value = Shinra.Settings.MachinistRefreshPct;
+            MachinistPalisadePct.Value = Shinra.Settings.MachinistPalisadePct;
 
             #endregion
 
@@ -335,6 +385,8 @@ namespace ShinraCo.Settings.Forms
 
             MachinistWildfire.Checked = Shinra.Settings.MachinistWildfire;
             MachinistRicochet.Checked = Shinra.Settings.MachinistRicochet;
+            MachinistCooldown.Checked = Shinra.Settings.MachinistCooldown;
+            MachinistFlamethrower.Checked = Shinra.Settings.MachinistFlamethrower;
 
             MachinistWildfireHP.Value = Shinra.Settings.MachinistWildfireHP;
 
@@ -347,12 +399,22 @@ namespace ShinraCo.Settings.Forms
             MachinistRapidFire.Checked = Shinra.Settings.MachinistRapidFire;
             MachinistGaussBarrel.Checked = Shinra.Settings.MachinistGaussBarrel;
             MachinistHypercharge.Checked = Shinra.Settings.MachinistHypercharge;
+            MachinistBarrelStabilizer.Checked = Shinra.Settings.MachinistBarrelStabilizer;
 
             #endregion
 
             #region Turret
 
             MachinistTurret.Text = Convert.ToString(Shinra.Settings.MachinistTurret);
+
+            #endregion
+
+            #region Misc
+
+            MachinistOpener.Checked = Shinra.Settings.MachinistOpener;
+            MachinistPotion.Checked = Shinra.Settings.MachinistPotion;
+            MachinistSyncWildfire.Checked = Shinra.Settings.MachinistSyncWildfire;
+            MachinistSyncOverheat.Checked = Shinra.Settings.MachinistSyncOverheat;
 
             #endregion
 
@@ -365,11 +427,13 @@ namespace ShinraCo.Settings.Forms
             MonkSecondWind.Checked = Shinra.Settings.MonkSecondWind;
             MonkInvigorate.Checked = Shinra.Settings.MonkInvigorate;
             MonkBloodbath.Checked = Shinra.Settings.MonkBloodbath;
+            MonkGoad.Checked = Shinra.Settings.MonkGoad;
             MonkTrueNorth.Checked = Shinra.Settings.MonkTrueNorth;
 
             MonkSecondWindPct.Value = Shinra.Settings.MonkSecondWindPct;
             MonkInvigoratePct.Value = Shinra.Settings.MonkInvigoratePct;
             MonkBloodbathPct.Value = Shinra.Settings.MonkBloodbathPct;
+            MonkGoadPct.Value = Shinra.Settings.MonkGoadPct;
 
             #endregion
 
@@ -415,11 +479,13 @@ namespace ShinraCo.Settings.Forms
             NinjaSecondWind.Checked = Shinra.Settings.NinjaSecondWind;
             NinjaInvigorate.Checked = Shinra.Settings.NinjaInvigorate;
             NinjaBloodbath.Checked = Shinra.Settings.NinjaBloodbath;
+            NinjaGoad.Checked = Shinra.Settings.NinjaGoad;
             NinjaTrueNorth.Checked = Shinra.Settings.NinjaTrueNorth;
 
             NinjaSecondWindPct.Value = Shinra.Settings.NinjaSecondWindPct;
             NinjaInvigoratePct.Value = Shinra.Settings.NinjaInvigoratePct;
             NinjaBloodbathPct.Value = Shinra.Settings.NinjaBloodbathPct;
+            NinjaGoadPct.Value = Shinra.Settings.NinjaGoadPct;
 
             #endregion
 
@@ -532,6 +598,13 @@ namespace ShinraCo.Settings.Forms
 
             #endregion
 
+            #region Misc
+
+            PaladinOpener.Checked = Shinra.Settings.PaladinOpener;
+            PaladinPotion.Checked = Shinra.Settings.PaladinPotion;
+
+            #endregion
+
             #endregion
 
             #region Red Mage
@@ -550,6 +623,7 @@ namespace ShinraCo.Settings.Forms
             #region Cooldown
 
             RedMageCorpsACorps.Checked = Shinra.Settings.RedMageCorpsACorps;
+            RedMageDisplacement.Checked = Shinra.Settings.RedMageDisplacement;
 
             #endregion
 
@@ -567,6 +641,13 @@ namespace ShinraCo.Settings.Forms
 
             #endregion
 
+            #region Misc
+
+            RedMageOpener.Checked = Shinra.Settings.RedMageOpener;
+            RedMagePotion.Checked = Shinra.Settings.RedMagePotion;
+
+            #endregion
+
             #endregion
 
             #region Samurai
@@ -576,11 +657,20 @@ namespace ShinraCo.Settings.Forms
             SamuraiSecondWind.Checked = Shinra.Settings.SamuraiSecondWind;
             SamuraiInvigorate.Checked = Shinra.Settings.SamuraiInvigorate;
             SamuraiBloodbath.Checked = Shinra.Settings.SamuraiBloodbath;
+            SamuraiGoad.Checked = Shinra.Settings.SamuraiGoad;
             SamuraiTrueNorth.Checked = Shinra.Settings.SamuraiTrueNorth;
 
             SamuraiSecondWindPct.Value = Shinra.Settings.SamuraiSecondWindPct;
             SamuraiInvigoratePct.Value = Shinra.Settings.SamuraiInvigoratePct;
             SamuraiBloodbathPct.Value = Shinra.Settings.SamuraiBloodbathPct;
+            SamuraiGoadPct.Value = Shinra.Settings.SamuraiGoadPct;
+
+            #endregion
+
+            #region Damage
+
+            SamuraiMidare.Checked = Shinra.Settings.SamuraiMidare;
+            SamuraiMidareHP.Value = Shinra.Settings.SamuraiMidareHP;
 
             #endregion
 
@@ -593,6 +683,7 @@ namespace ShinraCo.Settings.Forms
 
             #region Cooldown
 
+            SamuraiGyoten.Checked = Shinra.Settings.SamuraiGyoten;
             SamuraiGuren.Checked = Shinra.Settings.SamuraiGuren;
 
             #endregion
@@ -676,6 +767,7 @@ namespace ShinraCo.Settings.Forms
 
             #region Role
 
+            SummonerAddle.Checked = Shinra.Settings.SummonerAddle;
             SummonerDrain.Checked = Shinra.Settings.SummonerDrain;
             SummonerLucidDreaming.Checked = Shinra.Settings.SummonerLucidDreaming;
             SummonerSwiftcast.Checked = Shinra.Settings.SummonerSwiftcast;
@@ -719,6 +811,13 @@ namespace ShinraCo.Settings.Forms
             #region Pet
 
             SummonerPet.Text = Convert.ToString(Shinra.Settings.SummonerPet);
+
+            #endregion
+
+            #region Misc
+
+            SummonerOpener.Checked = Shinra.Settings.SummonerOpener;
+            SummonerPotion.Checked = Shinra.Settings.SummonerPotion;
 
             #endregion
 
@@ -940,20 +1039,6 @@ namespace ShinraCo.Settings.Forms
 
         #endregion
 
-        #region Item
-
-        private void UsePotion_CheckedChanged(object sender, EventArgs e)
-        {
-            Shinra.Settings.UsePotion = UsePotion.Checked;
-        }
-
-        private void UsePotionPct_ValueChanged(object sender, EventArgs e)
-        {
-            Shinra.Settings.UsePotionPct = Convert.ToInt32(UsePotionPct.Value);
-        }
-
-        #endregion
-
         #region Rest
 
         private void RestHealth_CheckedChanged(object sender, EventArgs e)
@@ -974,6 +1059,24 @@ namespace ShinraCo.Settings.Forms
         private void RestEnergyPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.RestEnergyPct = Convert.ToInt32(RestEnergyPct.Value);
+        }
+
+        #endregion
+
+        #region Spell
+
+        private void RandomCastLocations_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.RandomCastLocations = RandomCastLocations.Checked;
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void DebugLogging_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.DebugLogging = DebugLogging.Checked;
         }
 
         #endregion
@@ -1123,6 +1226,12 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.AstrologianSleeveDraw = AstrologianSleeveDraw.Checked;
         }
 
+        private void AstrologianStyle_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (AstrologianStyle.Text == @"Solo") Shinra.Settings.AstrologianStyle = AstrologianStyles.Solo;
+            if (AstrologianStyle.Text == @"Party") Shinra.Settings.AstrologianStyle = AstrologianStyles.Party;
+        }
+
         #endregion
 
         #region Sect
@@ -1162,6 +1271,16 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.BardTactician = BardTactician.Checked;
         }
 
+        private void BardRefresh_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardRefresh = BardRefresh.Checked;
+        }
+
+        private void BardPalisade_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardPalisade = BardPalisade.Checked;
+        }
+
         private void BardSecondWindPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.BardSecondWindPct = Convert.ToInt32(BardSecondWindPct.Value);
@@ -1175,6 +1294,30 @@ namespace ShinraCo.Settings.Forms
         private void BardTacticianPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.BardTacticianPct = Convert.ToInt32(BardTacticianPct.Value);
+        }
+
+        private void BardRefreshPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardRefreshPct = Convert.ToInt32(BardRefreshPct.Value);
+        }
+
+        private void BardPalisadePct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardPalisadePct = Convert.ToInt32(BardPalisadePct.Value);
+        }
+
+        #endregion
+
+        #region Damage
+
+        private void BardPitchPerfect_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardPitchPerfect = BardPitchPerfect.Checked;
+        }
+
+        private void BardRepertoireCount_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardRepertoireCount = Convert.ToInt32(BardRepertoireCount.Value);
         }
 
         #endregion
@@ -1212,6 +1355,20 @@ namespace ShinraCo.Settings.Forms
 
         #endregion
 
+        #region Misc
+
+        private void BardOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardOpener = BardOpener.Checked;
+        }
+
+        private void BardPotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BardPotion = BardPotion.Checked;
+        }
+
+        #endregion
+
         #endregion
 
         #region Black Mage
@@ -1245,6 +1402,24 @@ namespace ShinraCo.Settings.Forms
 
         #endregion
 
+        #region Damage
+
+        private void BlackMageScathe_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BlackMageScathe = BlackMageScathe.Checked;
+        }
+
+        #endregion
+
+        #region AoE
+
+        private void BlackMageThunder_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BlackMageThunder = BlackMageThunder.Checked;
+        }
+
+        #endregion
+
         #region Buff
 
         private void BlackMageConvert_CheckedChanged(object sender, EventArgs e)
@@ -1270,6 +1445,20 @@ namespace ShinraCo.Settings.Forms
         private void BlackMageTriplecast_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.BlackMageTriplecast = BlackMageTriplecast.Checked;
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void BlackMageOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BlackMageOpener = BlackMageOpener.Checked;
+        }
+
+        private void BlackMagePotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.BlackMagePotion = BlackMagePotion.Checked;
         }
 
         #endregion
@@ -1482,6 +1671,11 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.DragoonBloodbath = DragoonBloodbath.Checked;
         }
 
+        private void DragoonGoad_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.DragoonGoad = DragoonGoad.Checked;
+        }
+
         private void DragoonTrueNorth_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.DragoonTrueNorth = DragoonTrueNorth.Checked;
@@ -1500,6 +1694,11 @@ namespace ShinraCo.Settings.Forms
         private void DragoonBloodbathPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.DragoonBloodbathPct = Convert.ToInt32(DragoonBloodbathPct.Value);
+        }
+
+        private void DragoonGoadPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.DragoonGoadPct = Convert.ToInt32(DragoonGoadPct.Value);
         }
 
         #endregion
@@ -1583,6 +1782,16 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.MachinistTactician = MachinistTactician.Checked;
         }
 
+        private void MachinistRefresh_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistRefresh = MachinistRefresh.Checked;
+        }
+
+        private void MachinistPalisade_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistPalisade = MachinistPalisade.Checked;
+        }
+
         private void MachinistSecondWindPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.MachinistSecondWindPct = Convert.ToInt32(MachinistSecondWindPct.Value);
@@ -1598,6 +1807,16 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.MachinistTacticianPct = Convert.ToInt32(MachinistTacticianPct.Value);
         }
 
+        private void MachinistRefreshPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistRefreshPct = Convert.ToInt32(MachinistRefreshPct.Value);
+        }
+
+        private void MachinistPalisadePct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistPalisadePct = Convert.ToInt32(MachinistPalisadePct.Value);
+        }
+
         #endregion
 
         #region Cooldown
@@ -1610,6 +1829,16 @@ namespace ShinraCo.Settings.Forms
         private void MachinistRicochet_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.MachinistRicochet = MachinistRicochet.Checked;
+        }
+
+        private void MachinistCooldown_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistCooldown = MachinistCooldown.Checked;
+        }
+
+        private void MachinistFlamethrower_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistFlamethrower = MachinistFlamethrower.Checked;
         }
 
         private void MachinistWildfireHP_ValueChanged(object sender, EventArgs e)
@@ -1646,6 +1875,11 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.MachinistHypercharge = MachinistHypercharge.Checked;
         }
 
+        private void MachinistBarrelStabilizer_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistBarrelStabilizer = MachinistBarrelStabilizer.Checked;
+        }
+
         #endregion
 
         #region Turret
@@ -1655,6 +1889,30 @@ namespace ShinraCo.Settings.Forms
             if (MachinistTurret.Text == @"None") Shinra.Settings.MachinistTurret = MachinistTurrets.None;
             if (MachinistTurret.Text == @"Rook") Shinra.Settings.MachinistTurret = MachinistTurrets.Rook;
             if (MachinistTurret.Text == @"Bishop") Shinra.Settings.MachinistTurret = MachinistTurrets.Bishop;
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void MachinistOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistOpener = MachinistOpener.Checked;
+        }
+
+        private void MachinistPotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistPotion = MachinistPotion.Checked;
+        }
+
+        private void MachinistSyncWildfire_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistSyncWildfire = MachinistSyncWildfire.Checked;
+        }
+
+        private void MachinistSyncOverheat_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistSyncOverheat = MachinistSyncOverheat.Checked;
         }
 
         #endregion
@@ -1680,6 +1938,11 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.MonkBloodbath = MonkBloodbath.Checked;
         }
 
+        private void MonkGoad_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MonkGoad = MonkGoad.Checked;
+        }
+
         private void MonkTrueNorth_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.MonkTrueNorth = MonkTrueNorth.Checked;
@@ -1698,6 +1961,11 @@ namespace ShinraCo.Settings.Forms
         private void MonkBloodbathPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.MonkBloodbathPct = Convert.ToInt32(MonkBloodbathPct.Value);
+        }
+
+        private void MonkGoadPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MonkGoadPct = Convert.ToInt32(MonkGoadPct.Value);
         }
 
         #endregion
@@ -1807,6 +2075,11 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.NinjaBloodbath = NinjaBloodbath.Checked;
         }
 
+        private void NinjaGoad_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.NinjaGoad = NinjaGoad.Checked;
+        }
+
         private void NinjaTrueNorth_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.NinjaTrueNorth = NinjaTrueNorth.Checked;
@@ -1825,6 +2098,11 @@ namespace ShinraCo.Settings.Forms
         private void NinjaBloodbathPct_ValueChanged(object sender, EventArgs e)
         {
             Shinra.Settings.NinjaBloodbathPct = Convert.ToInt32(NinjaBloodbathPct.Value);
+        }
+
+        private void NinjaGoadPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.NinjaGoadPct = Convert.ToInt32(NinjaGoadPct.Value);
         }
 
         #endregion
@@ -2114,6 +2392,20 @@ namespace ShinraCo.Settings.Forms
 
         #endregion
 
+        #region Misc
+
+        private void PaladinOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.PaladinOpener = PaladinOpener.Checked;
+        }
+
+        private void PaladinPotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.PaladinPotion = PaladinPotion.Checked;
+        }
+
+        #endregion
+
         #endregion
 
         #region Red Mage
@@ -2154,6 +2446,11 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.RedMageCorpsACorps = RedMageCorpsACorps.Checked;
         }
 
+        private void RedMageDisplacement_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.RedMageDisplacement = RedMageDisplacement.Checked;
+        }
+
         #endregion
 
         #region Buff
@@ -2184,6 +2481,20 @@ namespace ShinraCo.Settings.Forms
 
         #endregion
 
+        #region Misc
+
+        private void RedMageOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.RedMageOpener = RedMageOpener.Checked;
+        }
+
+        private void RedMagePotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.RedMagePotion = RedMagePotion.Checked;
+        }
+
+        #endregion
+
         #endregion
 
         #region Samurai
@@ -2203,6 +2514,11 @@ namespace ShinraCo.Settings.Forms
         private void SamuraiBloodbath_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.SamuraiBloodbath = SamuraiBloodbath.Checked;
+        }
+
+        private void SamuraiGoad_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SamuraiGoad = SamuraiGoad.Checked;
         }
 
         private void SamuraiTrueNorth_CheckedChanged(object sender, EventArgs e)
@@ -2225,6 +2541,25 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.SamuraiBloodbathPct = Convert.ToInt32(SamuraiBloodbathPct.Value);
         }
 
+        private void SamuraiGoadPct_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SamuraiGoadPct = Convert.ToInt32(SamuraiGoadPct.Value);
+        }
+
+        #endregion
+
+        #region Damage
+
+        private void SamuraiMidare_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SamuraiMidare = SamuraiMidare.Checked;
+        }
+
+        private void SamuraiMidareHP_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SamuraiMidareHP = Convert.ToInt32(SamuraiMidareHP.Value);
+        }
+
         #endregion
 
         #region DoT
@@ -2242,6 +2577,11 @@ namespace ShinraCo.Settings.Forms
         #endregion
 
         #region Cooldown
+
+        private void SamuraiGyoten_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SamuraiGyoten = SamuraiGyoten.Checked;
+        }
 
         private void SamuraiGuren_CheckedChanged(object sender, EventArgs e)
         {
@@ -2450,6 +2790,11 @@ namespace ShinraCo.Settings.Forms
 
         #region Role
 
+        private void SummonerAddle_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SummonerAddle = SummonerAddle.Checked;
+        }
+
         private void SummonerDrain_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.SummonerDrain = SummonerDrain.Checked;
@@ -2556,6 +2901,20 @@ namespace ShinraCo.Settings.Forms
             if (SummonerPet.Text == @"Garuda") Shinra.Settings.SummonerPet = SummonerPets.Garuda;
             if (SummonerPet.Text == @"Titan") Shinra.Settings.SummonerPet = SummonerPets.Titan;
             if (SummonerPet.Text == @"Ifrit") Shinra.Settings.SummonerPet = SummonerPets.Ifrit;
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void SummonerOpener_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SummonerOpener = SummonerOpener.Checked;
+        }
+
+        private void SummonerPotion_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SummonerPotion = SummonerPotion.Checked;
         }
 
         #endregion

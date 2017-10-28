@@ -94,7 +94,7 @@ namespace ShinraCo.Rotations
             if (Core.Player.CurrentManaPercent > 30)
             {
                 if (Shinra.Settings.DarkKnightAbyssalArts && Core.Player.CurrentHealthPercent < 70 && Core.Player.CurrentManaPercent > 60 &&
-                    ActionManager.CanCast(MySpells.AbyssalDrain.Name, Core.Player.CurrentTarget))
+                    ActionManager.CanCast(MySpells.AbyssalDrain.Name, Core.Player.CurrentTarget) && Helpers.EnemiesNearTarget(5) > 2)
                 {
                     if (await MySpells.DarkArts.Cast(null, false))
                     {
@@ -111,7 +111,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.DarkKnightQuietus && Core.Player.CurrentManaPercent < 70 && BloodValue >= 50)
             {
                 if (Shinra.Settings.DarkKnightQuietusArts && Core.Player.CurrentManaPercent > 40 &&
-                    ActionManager.CanCast(MySpells.Quietus.Name, Core.Player))
+                    ActionManager.CanCast(MySpells.Quietus.Name, Core.Player) && Helpers.EnemiesNearPlayer(5) > 2)
                 {
                     if (await MySpells.DarkArts.Cast(null, false))
                     {
@@ -147,17 +147,21 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> CarveAndSpit()
         {
-            if (Shinra.Settings.DarkKnightCarveAndSpit && (Shinra.Settings.DarkKnightCarveArts || Core.Player.CurrentManaPercent < 70))
+            if (Shinra.Settings.DarkKnightCarveAndSpit)
             {
-                if (Shinra.Settings.DarkKnightCarveArts && Core.Player.CurrentManaPercent > 40 &&
-                    ActionManager.CanCast(MySpells.CarveAndSpit.Name, Core.Player.CurrentTarget))
+                if (Shinra.Settings.DarkKnightCarveArts && ActionManager.CanCast(MySpells.CarveAndSpit.Name, Core.Player.CurrentTarget))
                 {
                     if (await MySpells.DarkArts.Cast())
                     {
                         await Coroutine.Wait(3000, () => Core.Player.HasAura(MySpells.DarkArts.Name));
                     }
                 }
-                return await MySpells.CarveAndSpit.Cast(null, !Core.Player.HasAura(MySpells.DarkArts.Name));
+
+                if (Core.Player.HasAura(MySpells.DarkArts.Name) || Core.Player.CurrentManaPercent < 30 ||
+                    !Shinra.Settings.DarkKnightCarveArts && Core.Player.CurrentManaPercent < 70)
+                {
+                    return await MySpells.CarveAndSpit.Cast(null, !Core.Player.HasAura(MySpells.DarkArts.Name));
+                }
             }
             return false;
         }

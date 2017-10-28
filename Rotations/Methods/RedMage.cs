@@ -1,13 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ff14bot;
 using ff14bot.Managers;
+using ShinraCo.Settings;
 using ShinraCo.Spells.Main;
+using ShinraCo.Spells.Opener;
+using Resource = ff14bot.Managers.ActionResourceManager.RedMage;
 
 namespace ShinraCo.Rotations
 {
     public sealed partial class RedMage
     {
         private RedMageSpells MySpells { get; } = new RedMageSpells();
+        private RedMageOpener MyOpener { get; } = new RedMageOpener();
 
         #region Damage
 
@@ -150,6 +155,18 @@ namespace ShinraCo.Rotations
             return false;
         }
 
+        private async Task<bool> Displacement()
+        {
+            if (Shinra.Settings.RedMageDisplacement)
+            {
+                if (ActionManager.LastSpell.Name == MySpells.EnchantedRedoublement.Name)
+                {
+                    return await MySpells.Displacement.Cast(null, false);
+                }
+            }
+            return false;
+        }
+
         private async Task<bool> Fleche()
         {
             if (UseOffGCD)
@@ -176,7 +193,11 @@ namespace ShinraCo.Rotations
         {
             if (UseOffGCD)
             {
-                return await MySpells.Acceleration.Cast();
+                if (Shinra.Settings.RotationMode == Modes.Single || Shinra.Settings.RotationMode == Modes.Smart &&
+                    Helpers.EnemiesNearTarget(5) < 3)
+                {
+                    return await MySpells.Acceleration.Cast();
+                }
             }
             return false;
         }
@@ -222,6 +243,55 @@ namespace ShinraCo.Rotations
 
         #endregion
 
+        #region Opener
+
+        private async Task<bool> Opener()
+        {
+            if (!Shinra.Settings.RedMageOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
+            {
+                return false;
+            }
+
+            if (Shinra.OpenerStep == 0)
+            {
+                if (await MySpells.Acceleration.Cast(null, false))
+                {
+                    return true;
+                }
+            }
+
+            if (Shinra.Settings.RedMagePotion && Shinra.OpenerStep == 3)
+            {
+                if (await Helpers.UsePotion(Helpers.PotionIds.Int))
+                {
+                    return true;
+                }
+            }
+
+            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
+            if (spell.Name == MySpells.EnchantedRiposte.Name && (WhiteMana < 80 || BlackMana < 80))
+            {
+                Helpers.Debug("Aborted opener due to mana levels.");
+                Shinra.OpenerFinished = true;
+                return true;
+            }
+
+            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
+            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0 && !Core.Player.IsCasting)
+            {
+                Shinra.OpenerStep++;
+            }
+
+            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
+            {
+                Helpers.Debug("Opener finished.");
+                Shinra.OpenerFinished = true;
+            }
+            return true;
+        }
+
+        #endregion
+
         #region Role
 
         private async Task<bool> Drain()
@@ -256,8 +326,8 @@ namespace ShinraCo.Rotations
 
         #region Custom
 
-        private static int WhiteMana => ActionResourceManager.RedMage.WhiteMana;
-        private static int BlackMana => ActionResourceManager.RedMage.BlackMana;
+        private static int WhiteMana => Resource.WhiteMana;
+        private static int BlackMana => Resource.BlackMana;
 
         private static bool UseOffGCD => ActionManager.LastSpell.Name == "Veraero" || ActionManager.LastSpell.Name == "Verthunder" ||
                                          ActionManager.LastSpell.Name == "Scatter";

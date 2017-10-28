@@ -6,6 +6,7 @@ using ff14bot;
 using ff14bot.Managers;
 using ShinraCo.Spells;
 using ShinraCo.Spells.Main;
+using ShinraCo.Spells.Opener;
 using Resource = ff14bot.Managers.ActionResourceManager.BlackMage;
 
 namespace ShinraCo.Rotations
@@ -13,12 +14,13 @@ namespace ShinraCo.Rotations
     public sealed partial class BlackMage
     {
         private BlackMageSpells MySpells { get; } = new BlackMageSpells();
+        private BlackMageOpener MyOpener { get; } = new BlackMageOpener();
 
         #region Damage
 
         private async Task<bool> Blizzard()
         {
-            if (!ActionManager.HasSpell(MySpells.BlizzardIII.Name) && !UmbralIce)
+            if (!ActionManager.HasSpell(MySpells.BlizzardIII.Name) && (!UmbralIce || !ActionManager.HasSpell(MySpells.Fire.Name)))
             {
                 return await MySpells.Blizzard.Cast();
             }
@@ -101,9 +103,12 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Scathe()
         {
-            if (MovementManager.IsMoving && Core.Player.CurrentManaPercent > 20)
+            if (Shinra.Settings.BlackMageScathe && MovementManager.IsMoving && Core.Player.CurrentManaPercent > 20)
             {
-                return await MySpells.Scathe.Cast();
+                if (Resource.StackTimer.TotalMilliseconds > 8000 || Resource.StackTimer.TotalMilliseconds == 0)
+                {
+                    return await MySpells.Scathe.Cast();
+                }
             }
             return false;
         }
@@ -192,7 +197,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Flare()
         {
-            if (AstralFire && Core.Player.CurrentManaPercent < 25)
+            if (AstralFire && (Core.Player.CurrentManaPercent < 25 || Core.Player.ClassLevel > 67 && Resource.UmbralHearts > 0))
             {
                 if (Shinra.Settings.BlackMageConvert && ActionManager.HasSpell(MySpells.Flare.Name) &&
                     !ActionManager.CanCast(MySpells.Flare.Name, Core.Player.CurrentTarget))
@@ -228,6 +233,30 @@ namespace ShinraCo.Rotations
             return false;
         }
 
+        private async Task<bool> ThunderII()
+        {
+            if (Shinra.Settings.BlackMageThunder && !ActionManager.HasSpell(MySpells.ThunderIV.Name))
+            {
+                if (UmbralIce && !Core.Player.CurrentTarget.HasAura(MySpells.ThunderII.Name, true, 4000) || Core.Player.HasAura("Thundercloud"))
+                {
+                    return await MySpells.ThunderII.Cast();
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> ThunderIV()
+        {
+            if (Shinra.Settings.BlackMageThunder)
+            {
+                if (UmbralIce && !Core.Player.CurrentTarget.HasAura(MySpells.ThunderIV.Name, true, 4000) || Core.Player.HasAura("Thundercloud"))
+                {
+                    return await MySpells.ThunderIV.Cast();
+                }
+            }
+            return false;
+        }
+
         #endregion
 
         #region Buff
@@ -253,7 +282,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> LeyLines()
         {
-            if (Shinra.Settings.BlackMageLeyLines)
+            if (Shinra.Settings.BlackMageLeyLines && !MovementManager.IsMoving)
             {
                 if (Core.Player.CurrentManaPercent > 80 || ActionManager.LastSpell.Name == MySpells.FireII.Name)
                 {
@@ -280,6 +309,48 @@ namespace ShinraCo.Rotations
                 return await MySpells.Enochian.Cast(null, false);
             }
             return false;
+        }
+
+        #endregion
+
+        #region Opener
+
+        private async Task<bool> Opener()
+        {
+            if (!Shinra.Settings.BlackMageOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
+            {
+                return false;
+            }
+
+            if (Shinra.OpenerStep == 0)
+            {
+                if (await MySpells.Sharpcast.Cast(null, false))
+                {
+                    return true;
+                }
+            }
+
+            if (Shinra.Settings.BlackMagePotion && Shinra.OpenerStep == 9)
+            {
+                if (await Helpers.UsePotion(Helpers.PotionIds.Int))
+                {
+                    return true;
+                }
+            }
+
+            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
+            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
+            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0 && !Core.Player.IsCasting)
+            {
+                Shinra.OpenerStep++;
+            }
+
+            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
+            {
+                Helpers.Debug("Opener finished.");
+                Shinra.OpenerFinished = true;
+            }
+            return true;
         }
 
         #endregion

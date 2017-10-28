@@ -38,6 +38,12 @@ namespace ShinraCo.Settings
         Nocturnal
     }
 
+    public enum AstrologianStyles
+    {
+        Solo,
+        Party
+    }
+
     public enum MachinistTurrets
     {
         None,
@@ -140,16 +146,6 @@ namespace ShinraCo.Settings
 
         #endregion
 
-        #region Item
-
-        [Setting, DefaultValue(true)]
-        public bool UsePotion { get; set; }
-
-        [Setting, DefaultValue(70)]
-        public int UsePotionPct { get; set; }
-
-        #endregion
-
         #region Rest
 
         [Setting, DefaultValue(true)]
@@ -163,6 +159,20 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(50)]
         public int RestEnergyPct { get; set; }
+
+        #endregion
+
+        #region Spell
+
+        [Setting, DefaultValue(true)]
+        public bool RandomCastLocations { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool DebugLogging { get; set; }
 
         #endregion
 
@@ -261,6 +271,9 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool AstrologianSleeveDraw { get; set; }
 
+        [Setting, DefaultValue(AstrologianStyles.Solo)]
+        public AstrologianStyles AstrologianStyle { get; set; }
+
         #endregion
 
         #region Sect
@@ -294,6 +307,12 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool BardTactician { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool BardRefresh { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BardPalisade { get; set; }
+
         [Setting, DefaultValue(60)]
         public int BardSecondWindPct { get; set; }
 
@@ -302,6 +321,22 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(30)]
         public int BardTacticianPct { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int BardRefreshPct { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int BardPalisadePct { get; set; }
+
+        #endregion
+
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool BardPitchPerfect { get; set; }
+
+        [Setting, DefaultValue(3)]
+        public int BardRepertoireCount { get; set; }
 
         #endregion
 
@@ -328,6 +363,16 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool BardOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool BardPotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Black Mage
@@ -351,6 +396,20 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageScathe { get; set; }
+
+        #endregion
+
+        #region AoE
+
+        [Setting, DefaultValue(true)]
+        public bool BlackMageThunder { get; set; }
+
+        #endregion
+
         #region Buff
 
         [Setting, DefaultValue(true)]
@@ -367,6 +426,16 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool BlackMageTriplecast { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool BlackMageOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool BlackMagePotion { get; set; }
 
         #endregion
 
@@ -511,6 +580,9 @@ namespace ShinraCo.Settings
         public bool DragoonBloodbath { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool DragoonGoad { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool DragoonTrueNorth { get; set; }
 
         [Setting, DefaultValue(50)]
@@ -521,6 +593,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(70)]
         public int DragoonBloodbathPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int DragoonGoadPct { get; set; }
 
         #endregion
 
@@ -583,6 +658,12 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool MachinistTactician { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool MachinistRefresh { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistPalisade { get; set; }
+
         [Setting, DefaultValue(60)]
         public int MachinistSecondWindPct { get; set; }
 
@@ -591,6 +672,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(30)]
         public int MachinistTacticianPct { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int MachinistRefreshPct { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int MachinistPalisadePct { get; set; }
 
         #endregion
 
@@ -604,6 +691,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool MachinistRicochet { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistCooldown { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistFlamethrower { get; set; }
 
         #endregion
 
@@ -624,12 +717,31 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool MachinistHypercharge { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool MachinistBarrelStabilizer { get; set; }
+
         #endregion
 
         #region Turret
 
         [Setting, DefaultValue(MachinistTurrets.Rook)]
         public MachinistTurrets MachinistTurret { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistPotion { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistSyncWildfire { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MachinistSyncOverheat { get; set; }
 
         #endregion
 
@@ -649,6 +761,9 @@ namespace ShinraCo.Settings
         public bool MonkBloodbath { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool MonkGoad { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool MonkTrueNorth { get; set; }
 
         [Setting, DefaultValue(50)]
@@ -659,6 +774,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(70)]
         public int MonkBloodbathPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int MonkGoadPct { get; set; }
 
         #endregion
 
@@ -733,6 +851,9 @@ namespace ShinraCo.Settings
         public bool NinjaBloodbath { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool NinjaGoad { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool NinjaTrueNorth { get; set; }
 
         [Setting, DefaultValue(50)]
@@ -743,6 +864,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(70)]
         public int NinjaBloodbathPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int NinjaGoadPct { get; set; }
 
         #endregion
 
@@ -935,6 +1059,16 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool PaladinOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool PaladinPotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Red Mage
@@ -963,6 +1097,9 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool RedMageCorpsACorps { get; set; }
 
+        [Setting, DefaultValue(false)]
+        public bool RedMageDisplacement { get; set; }
+
         #endregion
 
         #region Buff
@@ -985,6 +1122,16 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool RedMageOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool RedMagePotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Samurai
@@ -1001,6 +1148,9 @@ namespace ShinraCo.Settings
         public bool SamuraiBloodbath { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool SamuraiGoad { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool SamuraiTrueNorth { get; set; }
 
         [Setting, DefaultValue(50)]
@@ -1011,6 +1161,19 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(70)]
         public int SamuraiBloodbathPct { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int SamuraiGoadPct { get; set; }
+
+        #endregion
+
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool SamuraiMidare { get; set; }
+
+        [Setting, DefaultValue(100000)]
+        public int SamuraiMidareHP { get; set; }
 
         #endregion
 
@@ -1025,6 +1188,9 @@ namespace ShinraCo.Settings
         #endregion
 
         #region Cooldown
+
+        [Setting, DefaultValue(true)]
+        public bool SamuraiGyoten { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool SamuraiGuren { get; set; }
@@ -1166,6 +1332,9 @@ namespace ShinraCo.Settings
         #region Role
 
         [Setting, DefaultValue(true)]
+        public bool SummonerAddle { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool SummonerDrain { get; set; }
 
         [Setting, DefaultValue(true)]
@@ -1235,6 +1404,16 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(SummonerPets.Garuda)]
         public SummonerPets SummonerPet { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool SummonerOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool SummonerPotion { get; set; }
 
         #endregion
 

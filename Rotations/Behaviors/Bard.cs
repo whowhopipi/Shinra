@@ -8,6 +8,7 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Combat()
         {
+            if (await Opener()) return true;
             if (await IronJaws()) return true;
             if (await RefulgentArrow()) return true;
             if (await StraightShotBuff()) return true;
@@ -26,6 +27,7 @@ namespace ShinraCo.Rotations
         {
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
+            if (await Opener()) return true;
             // Songs
             if (await WanderersMinuet()) return true;
             if (await MagesBallad()) return true;
@@ -42,8 +44,11 @@ namespace ShinraCo.Rotations
             if (await EmpyrealArrow()) return true;
             if (await Sidewinder()) return true;
             // Role
-            if (await Invigorate()) return true;
-            return await Tactician();
+            await Helpers.UpdateParty();
+            if (await Palisade()) return true;
+            if (await Refresh()) return true;
+            if (await Tactician()) return true;
+            return await Invigorate();
         }
 
         #endregion
@@ -52,7 +57,6 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
-            if (await Shinra.UsePotion()) return true;
             return await SecondWind();
         }
 

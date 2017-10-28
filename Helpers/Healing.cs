@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
@@ -9,31 +10,78 @@ namespace ShinraCo
 {
     public static partial class Helpers
     {
+        public static List<BattleCharacter> HealManager = new List<BattleCharacter>();
+        public static List<BattleCharacter> RessManager = new List<BattleCharacter>();
+        public static List<BattleCharacter> GoadManager = new List<BattleCharacter>();
+
         public static readonly HashSet<string> HealingSpells = new HashSet<string>
         {
             "Benefic", "Benefic II", "Helios", "Aspected Helios", "Ascend",
             "Cure", "Cure II", "Medica", "Medica II", "Raise",
-            "Physick", "Adloquium", "Succor", "Resurrection"
+            "Physick", "Adloquium", "Succor", "Resurrection", "Esuna"
         };
 
-        public static IEnumerable<BattleCharacter> PartyMembers
+        private static IEnumerable<BattleCharacter> PartyMembers
         {
             get
             {
                 return PartyManager.VisibleMembers.Select(pm => pm.GameObject as BattleCharacter)
-                                   .Where(pm => pm != null && pm.IsTargetable && pm.InLineOfSight() &&
-                                                Core.Player.UnitDistance(pm, 25, false));
+                                   .Where(pm => pm != null && pm.IsHealable());
             }
         }
 
-        public static IEnumerable<BattleCharacter> HealManager
+        public static int FriendsNearPlayer(int hp, float radius = 15)
         {
-            get
+            return HealManager.Count(hm => hm.CurrentHealthPercent < hp &&
+                                           hm.Distance2D(Core.Player) - hm.CombatReach - Core.Player.CombatReach <= radius);
+        }
+
+        public static bool IsHealable(this BattleCharacter c)
+        {
+            return c.IsTargetable && c.InLineOfSight() && Core.Player.UnitDistance(c, 25, false);
+        }
+
+        public static async Task<bool> UpdateHealManager()
+        {
+            var healList = new List<BattleCharacter>();
+            if (PartyManager.IsInParty)
             {
-                return GameObjectManager.GetObjectsOfType<BattleCharacter>(true, true)
-                                        .Where(hm => hm.IsAlive && (PartyMembers.Contains(hm) || hm == Core.Player ||
-                                                                    hm == ChocoboManager.Object)).OrderBy(HPScore);
+                healList.AddRange(PartyMembers.Where(pm => pm.IsAlive));
+                RessManager = new List<BattleCharacter>();
+                RessManager.AddRange(PartyMembers.Where(pm => pm.IsDead));
             }
+            else
+            {
+                healList.Add(Core.Player);
+            }
+            if (Core.Player.Pet != null && (int)PetManager.ActivePetType < 10)
+            {
+                healList.Add(Core.Player.Pet);
+            }
+            if (ChocoboManager.Object != null)
+            {
+                healList.Add(ChocoboManager.Object);
+            }
+            HealManager = healList.OrderBy(HPScore).ToList();
+            return true;
+        }
+
+        public static async Task UpdateParty()
+        {
+            var partyList = new List<BattleCharacter>();
+            var goadList = new List<BattleCharacter>();
+            if (PartyManager.IsInParty)
+            {
+                partyList.AddRange(PartyMembers.Where(pm => pm.IsAlive && pm.InCombat));
+                goadList.AddRange(PartyMembers.Where(pm => pm.IsAlive && pm.InCombat && pm != Core.Player &&
+                                                           !ManaJobs.Contains(pm.CurrentJob)));
+            }
+            else
+            {
+                partyList.Add(Core.Player);
+            }
+            HealManager = partyList.OrderBy(HPScore).ToList();
+            GoadManager = goadList.OrderBy(TPScore).ToList();
         }
 
         private static float HPScore(BattleCharacter c)
@@ -47,6 +95,17 @@ namespace ShinraCo
             if (c.IsHealer())
             {
                 score -= 3f;
+            }
+            return score;
+        }
+
+        private static float TPScore(BattleCharacter c)
+        {
+            var score = c.CurrentTPPercent;
+
+            if (c.IsDPS())
+            {
+                score -= 10;
             }
             return score;
         }

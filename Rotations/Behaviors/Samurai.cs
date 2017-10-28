@@ -26,6 +26,7 @@ namespace ShinraCo.Rotations
                 if (await Shifu()) return true;
                 if (await Jinpu()) return true;
                 if (await Yukikaze()) return true;
+                if (await Enpi()) return true;
                 return await Hakaze();
             }
             if (Shinra.Settings.RotationMode == Modes.Single)
@@ -41,6 +42,7 @@ namespace ShinraCo.Rotations
                 if (await Shifu()) return true;
                 if (await Jinpu()) return true;
                 if (await Yukikaze()) return true;
+                if (await Enpi()) return true;
                 return await Hakaze();
             }
             if (Shinra.Settings.RotationMode == Modes.Multi)
@@ -55,6 +57,7 @@ namespace ShinraCo.Rotations
                 if (await Mangetsu()) return true;
                 if (await Oka()) return true;
                 if (await Fuga()) return true;
+                if (await Enpi()) return true;
                 return await Hakaze();
             }
             return false;
@@ -69,6 +72,7 @@ namespace ShinraCo.Rotations
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
             if (await Meditate()) return true;
+            if (await HissatsuGyoten()) return true;
             if (await TrueNorth()) return true;
             if (await MeikyoShisui()) return true;
             if (await HissatsuGuren()) return true;
@@ -76,8 +80,10 @@ namespace ShinraCo.Rotations
             if (await HissatsuSeigan()) return true;
             if (await HissatsuShinten()) return true;
             if (await Hagakure()) return true;
+            if (await Ageha()) return true;
             if (await Invigorate()) return true;
-            return await Ageha();
+            await Helpers.UpdateParty();
+            return await Goad();
         }
 
         #endregion
@@ -86,7 +92,6 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
-            if (await Shinra.UsePotion()) return true;
             if (await SecondWind()) return true;
             if (await MercifulEyes()) return true;
             return await Bloodbath();
@@ -107,6 +112,8 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Pull()
         {
+            if (await HissatsuGyoten()) return true;
+            if (await Enpi()) return true;
             return await Combat();
         }
 

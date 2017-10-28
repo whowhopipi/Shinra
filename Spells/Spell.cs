@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Buddy.Coroutines;
+using Clio.Utilities;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
@@ -58,6 +59,9 @@ namespace ShinraCo.Spells
         public GCDType GCDType { private get; set; }
         public SpellType SpellType { private get; set; }
         public CastType CastType { private get; set; }
+
+        private readonly Random _rand = new Random();
+        private int GetMultiplier() { return _rand.NextDouble() < .5 ? 1 : -1; }
 
         public async Task<bool> Cast(GameObject target = null, bool checkGCDType = true)
         {
@@ -138,6 +142,71 @@ namespace ShinraCo.Spells
                 {
                     return false;
                 }
+            }
+
+            #endregion
+
+            #region Pet
+
+            if (SpellType == SpellType.Pet)
+            {
+                #region PetExists
+
+                if (Core.Player.Pet == null)
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region PetMode
+
+                if (PetManager.PetMode != PetMode.Obey)
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region IsMounted
+
+                if (Core.Player.IsMounted)
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region CanCast
+
+                if (!PetManager.CanCast(Name, target))
+                {
+                    return false;
+                }
+
+                #endregion
+
+                #region DoAction
+
+                if (!await Coroutine.Wait(5000, () => PetManager.DoAction(Name, target)))
+                {
+                    return false;
+                }
+
+                #endregion
+
+                Shinra.LastSpell = this;
+
+                #region AddRecent
+
+                var key = target.ObjectId.ToString("X") + "-" + Name;
+                var val = DateTime.UtcNow + TimeSpan.FromSeconds(3);
+                RecentSpell.Add(key, val);
+
+                #endregion
+
+                Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
+                return true;
             }
 
             #endregion
@@ -282,7 +351,7 @@ namespace ShinraCo.Spells
 
             #region CanAttack
 
-            if (!target.CanAttack && CastType != CastType.Self)
+            if (!target.CanAttack && CastType != CastType.Self && CastType != CastType.SelfLocation)
             {
                 switch (SpellType)
                 {
@@ -380,8 +449,10 @@ namespace ShinraCo.Spells
                     }
                     if (stopCasting)
                     {
+                        Helpers.Debug($@"Trying to cast {Name}");
                         Logging.Write(Colors.Yellow, $@"[Shinra] Interrupting >>> {Core.Player.SpellCastInfo.Name}");
                         ActionManager.StopCasting();
+                        await Coroutine.Wait(500, () => !Core.Player.IsCasting);
                     }
                 }
             }
@@ -537,11 +608,46 @@ namespace ShinraCo.Spells
 
             switch (CastType)
             {
-                case CastType.SelfLocation:
                 case CastType.TargetLocation:
-                    if (!await Coroutine.Wait(1000, () => ActionManager.DoActionLocation(ID, target.Location)))
+                    if (Shinra.Settings.RandomCastLocations)
                     {
-                        return false;
+                        var randX = target.CombatReach * _rand.NextDouble() * GetMultiplier();
+                        var randZ = target.CombatReach * _rand.NextDouble() * GetMultiplier();
+                        var randXYZ = new Vector3((float)randX, 0f, (float)randZ);
+                        var newLocation = target.Location + randXYZ;
+
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoActionLocation(ID, newLocation)))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoActionLocation(ID, target.Location)))
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+                case CastType.SelfLocation:
+                    if (Shinra.Settings.RandomCastLocations)
+                    {
+                        var randX = (1f * _rand.NextDouble() + 1f) * GetMultiplier();
+                        var randZ = (1f * _rand.NextDouble() + 1f) * GetMultiplier();
+                        var randXYZ = new Vector3((float)randX, 0f, (float)randZ);
+                        var newLocation = target.Location + randXYZ;
+
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoActionLocation(ID, newLocation)))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoActionLocation(ID, target.Location)))
+                        {
+                            return false;
+                        }
                     }
                     break;
                 default:
@@ -570,6 +676,7 @@ namespace ShinraCo.Spells
             #endregion
 
             Shinra.LastSpell = this;
+            Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
 
             #region AddRecent
 
@@ -577,21 +684,28 @@ namespace ShinraCo.Spells
             {
                 var key = target.ObjectId.ToString("X") + "-" + Name;
                 var val = DateTime.UtcNow + DataManager.GetSpellData(ID).AdjustedCastTime + TimeSpan.FromSeconds(3);
-                //Logging.Write(Colors.OrangeRed, $@"[Shinra] Blacklisting >>> {Name}");
                 RecentSpell.Add(key, val);
+            }
+
+            if (SpellType == SpellType.Damage || SpellType == SpellType.DoT)
+            {
+                if (!Shinra.OpenerFinished && !RecentSpell.ContainsKey("Opener") && await CastComplete(this, true))
+                {
+                    var val = DateTime.UtcNow + DataManager.GetSpellData(ID).AdjustedCastTime + TimeSpan.FromSeconds(3);
+                    RecentSpell.Add("Opener", val);
+                }
             }
 
             #endregion
 
-            Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
             return true;
         }
 
         #region CastComplete
 
-        private static async Task<bool> CastComplete(Spell spell)
+        private static async Task<bool> CastComplete(Spell spell, bool opener = false)
         {
-            if (spell.SpellType == SpellType.DoT)
+            if (spell.SpellType == SpellType.DoT || opener)
             {
                 var castTime = DataManager.GetSpellData(spell.ID).AdjustedCastTime;
                 if (castTime.TotalMilliseconds > 0)
@@ -613,5 +727,11 @@ namespace ShinraCo.Spells
         }
 
         #endregion
+
+        public double Cooldown(bool adjusted = false)
+        {
+            return adjusted ? DataManager.GetSpellData(ID).AdjustedCooldown.TotalMilliseconds
+                : DataManager.GetSpellData(ID).Cooldown.TotalMilliseconds;
+        }
     }
 }

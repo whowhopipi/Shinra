@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -40,6 +39,7 @@ namespace ShinraCo
         public sealed override void Pulse()
         {
             var _class = CurrentClass;
+            ResetOpener();
         }
 
         public sealed override void ShutDown()
@@ -198,7 +198,7 @@ namespace ShinraCo
                 case ClassJobType.WhiteMage:
                     return new WhiteMage();
                 default:
-                    Logging.Write(Colors.Red, $@"[Shinra] {classJob} is not supported.");
+                    //Logging.Write(Colors.OrangeRed, $@"[Shinra] {classJob} is not supported.");
                     return new Default();
             }
         }
@@ -207,11 +207,23 @@ namespace ShinraCo
 
         #region Behaviors
 
-        public override Composite CombatBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.Combat()); } }
-        public override Composite CombatBuffBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.CombatBuff()); } }
+        public override Composite CombatBehavior
+        {
+            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.Combat()))); }
+        }
+
+        public override Composite CombatBuffBehavior
+        {
+            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.CombatBuff()))); }
+        }
+
+        public override Composite PullBehavior
+        {
+            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.Pull()))); }
+        }
+
         public override Composite HealBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.Heal()); } }
         public override Composite PreCombatBuffBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.PreCombatBuff()); } }
-        public override Composite PullBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.Pull()); } }
         public override Composite RestBehavior { get { return new ActionRunCoroutine(ctx => Rest()); } }
 
         #endregion
@@ -220,7 +232,7 @@ namespace ShinraCo
 
         public async Task<bool> Rest()
         {
-            if (WorldManager.InSanctuary || Core.Player.HasAura("Sprint") ||
+            if (!BotManager.Current.IsAutonomous || WorldManager.InSanctuary || Core.Player.HasAura("Sprint") ||
                 (!Settings.RestHealth || Core.Player.CurrentHealthPercent > Settings.RestHealthPct) &&
                 (!Settings.RestEnergy || Helpers.CurrentEnergyPct > Settings.RestEnergyPct))
             {
@@ -232,6 +244,22 @@ namespace ShinraCo
             }
             Logging.Write(Colors.Yellow, @"[Shinra] Resting...");
             return true;
+        }
+
+        #endregion
+
+        #region Opener
+
+        public static int OpenerStep;
+        public static bool OpenerFinished;
+
+        private static void ResetOpener()
+        {
+            if (!Core.Player.InCombat && !Spell.RecentSpell.ContainsKey("Opener"))
+            {
+                OpenerStep = 0;
+                OpenerFinished = false;
+            }
         }
 
         #endregion
@@ -329,30 +357,6 @@ namespace ShinraCo
         }
 
         #endregion
-
-        #endregion
-
-        #region Potion
-
-        public static async Task<bool> UsePotion()
-        {
-            if (!Settings.UsePotion || Core.Player.ClassLevel > 30 || Core.Player.CurrentHealthPercent > Settings.UsePotionPct)
-            {
-                return false;
-            }
-
-            var item = InventoryManager.FilledSlots.FirstOrDefault(s => s.Name == "Potion");
-
-            if (item == null || !item.CanUse())
-            {
-                return false;
-            }
-
-            item.UseItem();
-            await Coroutine.Wait(1000, () => !item.CanUse());
-            Logging.Write(Colors.Yellow, @"[Shinra] Using >>> Potion");
-            return true;
-        }
 
         #endregion
 

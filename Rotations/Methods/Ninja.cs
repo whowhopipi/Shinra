@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Managers;
@@ -207,8 +208,8 @@ namespace ShinraCo.Rotations
         {
             return Core.Player.HasAura(496) ||
                    (NinjutsuGcd > 1000 || NinjutsuGcd == 0 && !ActionManager.CanCast(2240, Core.Player.CurrentTarget)) &&
-                   (targetSelf || Core.Player.CurrentTarget.CanAttack && Core.Player.TargetDistance(range, false) &&
-                    Core.Player.CurrentTarget.InLineOfSight());
+                   (targetSelf || Core.Player.HasTarget && Core.Player.CurrentTarget.CanAttack &&
+                    Core.Player.TargetDistance(range, false) && Core.Player.CurrentTarget.InLineOfSight());
         }
 
         #region Fuma
@@ -538,6 +539,20 @@ namespace ShinraCo.Rotations
             return false;
         }
 
+        private async Task<bool> Goad()
+        {
+            if (Shinra.Settings.NinjaGoad)
+            {
+                var target = Helpers.GoadManager.FirstOrDefault(gm => gm.CurrentTPPercent < Shinra.Settings.NinjaGoadPct);
+
+                if (target != null)
+                {
+                    return await MySpells.Role.Goad.Cast(target);
+                }
+            }
+            return false;
+        }
+
         private async Task<bool> TrueNorth()
         {
             if (Shinra.Settings.NinjaTrueNorth)
@@ -551,7 +566,7 @@ namespace ShinraCo.Rotations
 
         #region Custom
 
-        private static bool UseOffGCD => DataManager.GetSpellData(2260).Cooldown.TotalMilliseconds > 1000;
+        private static bool UseOffGCD => DataManager.GetSpellData(2260).Cooldown.TotalMilliseconds > 1000 || Core.Player.ClassLevel < 30;
         private static bool UseHellfrog => Resource.NinkiGauge == 100 && BhavacakraCooldown > 10000 && TenChiJinCooldown > 10000;
 
         private static double TrickCooldown => DataManager.GetSpellData(2258).Cooldown.TotalMilliseconds;

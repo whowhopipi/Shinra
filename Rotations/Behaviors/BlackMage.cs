@@ -19,6 +19,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Single()
         {
+            if (await Opener()) return true;
             if (await Transpose()) return true;
             if (await Sharpcast()) return true;
             if (await Drain()) return true;
@@ -38,9 +39,13 @@ namespace ShinraCo.Rotations
         {
             if (await Drain()) return true;
             if (await Foul()) return true;
+            if (await ThunderIV()) return true;
+            if (await ThunderII()) return true;
+            if (await BlizzardIV()) return true;
             if (await FireIIIMulti()) return true;
             if (await Flare()) return true;
             if (await FireII()) return true;
+            if (await BlizzardIII()) return true;
             if (await TransposeMulti()) return true;
             if (await FireMulti()) return true;
             return await BlizzardMulti();
@@ -54,6 +59,7 @@ namespace ShinraCo.Rotations
         {
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
+            if (await Opener()) return true;
             if (await Convert()) return true;
             if (await Enochian()) return true;
             if (await LeyLines()) return true;
@@ -66,7 +72,7 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
-            return await Shinra.UsePotion();
+            return false;
         }
 
         #endregion

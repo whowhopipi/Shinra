@@ -115,16 +115,20 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> MidareSetsugekka()
         {
-            if (NumSen == 3 && !MovementManager.IsMoving && Core.Player.CurrentTarget.CurrentHealth > Core.Player.MaxHealth / 2)
+            if (Shinra.Settings.SamuraiMidare && (Core.Player.CurrentTarget.IsBoss() ||
+                                                  Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.SamuraiMidareHP))
             {
-                if (ActionManager.CanCast(MySpells.MidareSetsugekka.Name, Core.Player.CurrentTarget))
+                if (NumSen == 3 && !MovementManager.IsMoving)
                 {
-                    if (await MySpells.HissatsuKaiten.Cast(null, false))
+                    if (ActionManager.CanCast(MySpells.MidareSetsugekka.Name, Core.Player.CurrentTarget))
                     {
-                        await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
+                        if (await MySpells.HissatsuKaiten.Cast(null, false))
+                        {
+                            await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
+                        }
                     }
+                    return await MySpells.MidareSetsugekka.Cast();
                 }
-                return await MySpells.MidareSetsugekka.Cast();
             }
             return false;
         }
@@ -140,9 +144,18 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> HissatsuSeigan()
         {
-            if (Shinra.LastSpell.Name != MySpells.HissatsuKaiten.Name && Resource.Kenki >= 45 && !PoolKenki)
+            if (Shinra.LastSpell.Name != MySpells.HissatsuKaiten.Name && Resource.Kenki >= 35 && !PoolKenki)
             {
                 return await MySpells.HissatsuSeigan.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> Enpi()
+        {
+            if (Core.Player.HasAura("Enhanced Enpi") && Core.Player.TargetDistance(10))
+            {
+                return await MySpells.Enpi.Cast();
             }
             return false;
         }
@@ -240,6 +253,15 @@ namespace ShinraCo.Rotations
             return await MySpells.Ageha.Cast();
         }
 
+        private async Task<bool> HissatsuGyoten()
+        {
+            if (Shinra.Settings.SamuraiGyoten && Core.Player.TargetDistance(10))
+            {
+                return await MySpells.HissatsuGyoten.Cast(null, false);
+            }
+            return false;
+        }
+
         private async Task<bool> HissatsuGuren()
         {
             if (Shinra.Settings.SamuraiGuren)
@@ -279,13 +301,7 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.SamuraiHagakure)
             {
-                if (ActionManager.LastSpell.Name == MySpells.Jinpu.Name && GetsuActive ||
-                    ActionManager.LastSpell.Name == MySpells.Shifu.Name && KaActive)
-                {
-                    return await MySpells.Hagakure.Cast();
-                }
-                if (NumSen == 3 && (MovementManager.IsMoving || Shinra.Settings.RotationMode == Modes.Multi ||
-                                    Helpers.EnemiesNearPlayer(5) > 2))
+                if (NumSen == 3 && Resource.Kenki <= 40)
                 {
                     return await MySpells.Hagakure.Cast();
                 }
@@ -333,6 +349,20 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.SamuraiBloodbath && Core.Player.CurrentHealthPercent < Shinra.Settings.SamuraiBloodbathPct)
             {
                 return await MySpells.Role.Bloodbath.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> Goad()
+        {
+            if (Shinra.Settings.SamuraiGoad)
+            {
+                var target = Helpers.GoadManager.FirstOrDefault(gm => gm.CurrentTPPercent < Shinra.Settings.SamuraiGoadPct);
+
+                if (target != null)
+                {
+                    return await MySpells.Role.Goad.Cast(target);
+                }
             }
             return false;
         }

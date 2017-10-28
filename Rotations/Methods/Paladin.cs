@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ff14bot;
 using ff14bot.Managers;
 using ShinraCo.Settings;
 using ShinraCo.Spells.Main;
+using ShinraCo.Spells.Opener;
 using Resource = ff14bot.Managers.ActionResourceManager.Paladin;
 
 namespace ShinraCo.Rotations
@@ -10,6 +12,7 @@ namespace ShinraCo.Rotations
     public sealed partial class Paladin
     {
         private PaladinSpells MySpells { get; } = new PaladinSpells();
+        private PaladinOpener MyOpener { get; } = new PaladinOpener();
 
         #region Damage
 
@@ -272,6 +275,40 @@ namespace ShinraCo.Rotations
                 }
             }
             return false;
+        }
+
+        #endregion
+
+        #region Opener
+
+        private async Task<bool> Opener()
+        {
+            if (!Shinra.Settings.PaladinOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
+            {
+                return false;
+            }
+
+            if (Shinra.Settings.PaladinPotion && Shinra.OpenerStep == 8)
+            {
+                if (await Helpers.UsePotion(Helpers.PotionIds.Str))
+                {
+                    return true;
+                }
+            }
+
+            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
+            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
+            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0 && !Core.Player.IsCasting)
+            {
+                Shinra.OpenerStep++;
+            }
+
+            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
+            {
+                Helpers.Debug("Opener finished.");
+                Shinra.OpenerFinished = true;
+            }
+            return true;
         }
 
         #endregion

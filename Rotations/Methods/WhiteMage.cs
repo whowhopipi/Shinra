@@ -117,20 +117,35 @@ namespace ShinraCo.Rotations
 
         #region Heal
 
+        private async Task<bool> UpdateHealing()
+        {
+            if (Shinra.Settings.WhiteMagePartyHeal && !await Helpers.UpdateHealManager())
+            {
+                return true;
+            }
+            return false;
+        }
+
         private async Task<bool> StopCasting()
         {
             if (Shinra.Settings.WhiteMageInterruptOverheal && Core.Player.IsCasting)
             {
                 var target = GameObjectManager.GetObjectByObjectId(Core.Player.SpellCastInfo.TargetId);
                 var spellName = Core.Player.SpellCastInfo.Name;
+                var freeCure = Core.Player.HasAura(155) ? Shinra.Settings.WhiteMageCurePct : Shinra.Settings.WhiteMageCureIIPct;
 
                 if (target != null)
                 {
-                    if (spellName == MySpells.Cure.Name && target.CurrentHealthPercent > Shinra.Settings.WhiteMageCurePct ||
-                        spellName == MySpells.CureII.Name && target.CurrentHealthPercent > Shinra.Settings.WhiteMageCureIIPct)
+                    if (spellName == MySpells.Cure.Name && target.CurrentHealthPercent >= Shinra.Settings.WhiteMageCurePct + 10 ||
+                        spellName == MySpells.CureII.Name && target.CurrentHealthPercent >= freeCure + 10)
                     {
+                        var debugSetting = spellName == MySpells.Cure.Name ? Shinra.Settings.WhiteMageCurePct
+                            : Shinra.Settings.WhiteMageCureIIPct;
+                        Helpers.Debug($@"Target HP: {target.CurrentHealthPercent}, Setting: {debugSetting}, Adjusted: {debugSetting + 10}");
+
                         Logging.Write(Colors.Yellow, $@"[Shinra] Interrupting >>> {spellName}");
                         ActionManager.StopCasting();
+                        await Coroutine.Wait(500, () => !Core.Player.IsCasting);
                     }
                 }
             }
@@ -225,10 +240,9 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Medica()
         {
-            if (Shinra.Settings.WhiteMageMedica && Shinra.Settings.WhiteMagePartyHeal && Shinra.LastSpell.Name != MySpells.MedicaII.Name)
+            if (Shinra.Settings.WhiteMageMedica && Shinra.Settings.WhiteMagePartyHeal && UseAoEHeals)
             {
-                var count = Helpers.HealManager.Count(hm => hm.Distance2D(Core.Player) - hm.CombatReach - Core.Player.CombatReach < 15 &&
-                                                            hm.CurrentHealthPercent < Shinra.Settings.WhiteMageMedicaPct);
+                var count = Helpers.FriendsNearPlayer(Shinra.Settings.WhiteMageMedicaPct);
 
                 if (count > 2)
                 {
@@ -240,11 +254,10 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> MedicaII()
         {
-            if (Shinra.Settings.WhiteMageMedicaII && Shinra.Settings.WhiteMagePartyHeal && Shinra.LastSpell.Name != MySpells.Medica.Name &&
+            if (Shinra.Settings.WhiteMageMedicaII && Shinra.Settings.WhiteMagePartyHeal && UseAoEHeals &&
                 !Core.Player.HasAura(MySpells.MedicaII.Name, true))
             {
-                var count = Helpers.HealManager.Count(hm => hm.Distance2D(Core.Player) - hm.CombatReach - Core.Player.CombatReach < 15 &&
-                                                            hm.CurrentHealthPercent < Shinra.Settings.WhiteMageMedicaIIPct);
+                var count = Helpers.FriendsNearPlayer(Shinra.Settings.WhiteMageMedicaIIPct);
 
                 if (count > 2)
                 {
@@ -256,10 +269,9 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Assize()
         {
-            if (Shinra.Settings.WhiteMageAssize && Shinra.Settings.WhiteMagePartyHeal && Core.Player.CurrentManaPercent < 85)
+            if (Shinra.Settings.WhiteMageAssize && Shinra.Settings.WhiteMagePartyHeal && UseAoEHeals && Core.Player.CurrentManaPercent < 85)
             {
-                var count = Helpers.HealManager.Count(hm => hm.Distance2D(Core.Player) - hm.CombatReach - Core.Player.CombatReach < 15 &&
-                                                            hm.CurrentHealthPercent < Shinra.Settings.WhiteMageAssizePct);
+                var count = Helpers.FriendsNearPlayer(Shinra.Settings.WhiteMageAssizePct);
 
                 if (count > 2)
                 {
@@ -271,10 +283,9 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> PlenaryIndulgence()
         {
-            if (Shinra.Settings.WhiteMagePlenary && Shinra.Settings.WhiteMagePartyHeal)
+            if (Shinra.Settings.WhiteMagePlenary && Shinra.Settings.WhiteMagePartyHeal && UseAoEHeals)
             {
-                var count = Helpers.HealManager.Count(hm => hm.Distance2D(Core.Player) - hm.CombatReach - Core.Player.CombatReach < 15 &&
-                                                            hm.CurrentHealthPercent < Shinra.Settings.WhiteMagePlenaryPct);
+                var count = Helpers.FriendsNearPlayer(Shinra.Settings.WhiteMagePlenaryPct);
 
                 if (count > 2)
                 {
@@ -290,8 +301,7 @@ namespace ShinraCo.Rotations
                 (Shinra.Settings.WhiteMageSwiftcast && ActionManager.CanCast(MySpells.Role.Swiftcast.Name, Core.Player) ||
                  !Helpers.HealManager.Any(hm => hm.CurrentHealthPercent < Shinra.Settings.WhiteMageCurePct)))
             {
-                var target = Helpers.PartyMembers.FirstOrDefault(pm => pm.IsDead && pm.Type == GameObjectType.Pc &&
-                                                                       !pm.HasAura("Raise"));
+                var target = Helpers.RessManager.FirstOrDefault(pm => !pm.HasAura("Raise"));
 
                 if (target != null)
                 {
@@ -326,7 +336,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.WhiteMageProtect)
             {
                 var target = Shinra.Settings.WhiteMagePartyHeal
-                    ? Helpers.HealManager.FirstOrDefault(hm => !hm.HasAura(MySpells.Role.Protect.Name) && hm != ChocoboManager.Object)
+                    ? Helpers.HealManager.FirstOrDefault(hm => !hm.HasAura(MySpells.Role.Protect.Name) && hm.Type == GameObjectType.Pc)
                     : !Core.Player.HasAura(MySpells.Role.Protect.Name) ? Core.Player : null;
 
                 if (target != null)
@@ -373,6 +383,10 @@ namespace ShinraCo.Rotations
         #region Custom
 
         private static int LilyCount => Resource.Lily;
+
+        private bool UseAoEHeals => Shinra.LastSpell.Name != MySpells.Medica.Name && Shinra.LastSpell.Name != MySpells.MedicaII.Name &&
+                                    Shinra.LastSpell.Name != MySpells.Assize.Name &&
+                                    Shinra.LastSpell.Name != MySpells.PlenaryIndulgence.Name;
 
         #endregion
     }

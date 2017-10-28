@@ -6,6 +6,7 @@ using ff14bot.Managers;
 using ShinraCo.Settings;
 using ShinraCo.Spells;
 using ShinraCo.Spells.Main;
+using ShinraCo.Spells.Opener;
 using Resource = ff14bot.Managers.ActionResourceManager.Bard;
 
 namespace ShinraCo.Rotations
@@ -13,6 +14,7 @@ namespace ShinraCo.Rotations
     public sealed partial class Bard
     {
         private BardSpells MySpells { get; } = new BardSpells();
+        private BardOpener MyOpener { get; } = new BardOpener();
 
         private int _heavyCount;
 
@@ -65,9 +67,12 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> PitchPerfect()
         {
-            if (NumRepertoire == 3 || MinuetActive && SongTimer < 3000)
+            if (Shinra.Settings.BardPitchPerfect)
             {
-                return await MySpells.PitchPerfect.Cast();
+                if (NumRepertoire >= Shinra.Settings.BardRepertoireCount || MinuetActive && SongTimer < 3000)
+                {
+                    return await MySpells.PitchPerfect.Cast();
+                }
             }
             return false;
         }
@@ -237,6 +242,48 @@ namespace ShinraCo.Rotations
 
         #endregion
 
+        #region Opener
+
+        private async Task<bool> Opener()
+        {
+            if (!Shinra.Settings.BardOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
+            {
+                return false;
+            }
+
+            if (Shinra.Settings.BardPotion && Shinra.OpenerStep == 0)
+            {
+                if (await Helpers.UsePotion(Helpers.PotionIds.Dex))
+                {
+                    return true;
+                }
+            }
+
+            if (Resource.Repertoire == 3)
+            {
+                if (await MySpells.PitchPerfect.Cast(null, false))
+                {
+                    return true;
+                }
+            }
+
+            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
+            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
+            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0)
+            {
+                Shinra.OpenerStep++;
+            }
+
+            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
+            {
+                Helpers.Debug("Opener finished.");
+                Shinra.OpenerFinished = true;
+            }
+            return true;
+        }
+
+        #endregion
+
         #region Role
 
         private async Task<bool> SecondWind()
@@ -251,7 +298,7 @@ namespace ShinraCo.Rotations
         private async Task<bool> Peloton()
         {
             if (Shinra.Settings.BardPeloton && !Core.Player.HasAura(MySpells.Role.Peloton.Name) && !Core.Player.HasTarget &&
-                MovementManager.IsMoving)
+                (MovementManager.IsMoving || BotManager.Current.EnglishName == "DeepDive"))
             {
                 return await MySpells.Role.Peloton.Cast(null, false);
             }
@@ -269,9 +316,45 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Tactician()
         {
-            if (Shinra.Settings.BardTactician && Core.Player.CurrentTPPercent < Shinra.Settings.BardTacticianPct)
+            if (Shinra.Settings.BardTactician)
             {
-                return await MySpells.Role.Tactician.Cast();
+                var target = Core.Player.CurrentTPPercent < Shinra.Settings.BardTacticianPct ? Core.Player
+                    : Helpers.GoadManager.FirstOrDefault(gm => gm.CurrentTPPercent < Shinra.Settings.BardTacticianPct);
+
+                if (target != null)
+                {
+                    return await MySpells.Role.Tactician.Cast();
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> Refresh()
+        {
+            if (Shinra.Settings.BardRefresh)
+            {
+                var target = Helpers.HealManager.FirstOrDefault(hm => hm.CurrentManaPercent < Shinra.Settings.BardRefreshPct &&
+                                                                      hm.IsHealer());
+
+                if (target != null)
+                {
+                    return await MySpells.Role.Refresh.Cast();
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> Palisade()
+        {
+            if (Shinra.Settings.BardPalisade)
+            {
+                var target = Helpers.HealManager.FirstOrDefault(hm => hm.CurrentHealthPercent < Shinra.Settings.BardPalisadePct &&
+                                                                      hm.IsTank());
+
+                if (target != null)
+                {
+                    return await MySpells.Role.Palisade.Cast(target);
+                }
             }
             return false;
         }

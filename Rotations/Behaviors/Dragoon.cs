@@ -63,7 +63,9 @@ namespace ShinraCo.Rotations
             if (await DragonfireDive()) return true;
             if (await SpineshatterDive()) return true;
             if (await Jump()) return true;
-            return await Invigorate();
+            if (await Invigorate()) return true;
+            await Helpers.UpdateParty();
+            return await Goad();
         }
 
         #endregion
@@ -72,7 +74,6 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
-            if (await Shinra.UsePotion()) return true;
             if (await SecondWind()) return true;
             return await Bloodbath();
         }
