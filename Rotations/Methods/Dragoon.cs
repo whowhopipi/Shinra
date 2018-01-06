@@ -95,7 +95,9 @@ namespace ShinraCo.Rotations
         {
             if (Core.Player.CurrentTPPercent > 30 && Core.Player.HasAura(MySpells.HeavyThrust.Name))
             {
-                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 2)
+                var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+
+                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= count)
                 {
                     return await MySpells.DoomSpike.Cast();
                 }
@@ -108,7 +110,9 @@ namespace ShinraCo.Rotations
             if (ActionManager.LastSpell.Name == MySpells.DoomSpike.Name && Core.Player.CurrentTPPercent > 30 &&
                 Core.Player.HasAura(MySpells.HeavyThrust.Name))
             {
-                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 2)
+                var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+
+                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= count)
                 {
                     return await MySpells.SonicThrust.Cast();
                 }
@@ -154,7 +158,7 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.DragoonGeirskogul && Core.Player.HasAura(MySpells.HeavyThrust.Name))
             {
-                if (Resource.DragonGaze == 3 || !RecentJump && !Core.Player.HasAura(1243) && JumpCooldown > 25 && SpineCooldown > 25 ||
+                if (Resource.DragonGaze == GazeMax || !RecentJump && !Core.Player.HasAura(1243) && JumpCooldown > 25 && SpineCooldown > 25 ||
                     Core.Player.ClassLevel < 70)
                 {
                     return await MySpells.Geirskogul.Cast();
@@ -278,8 +282,91 @@ namespace ShinraCo.Rotations
 
         #endregion
 
+        #region PVP
+
+        private async Task<bool> FullThrustPVP()
+        {
+            return await MySpells.PVP.FullThrust.Cast();
+        }
+
+        private async Task<bool> ChaosThrustPVP()
+        {
+            if (!Core.Player.CurrentTarget.HasAura(MySpells.ChaosThrust.Name, true, 10000) &&
+                ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.FangAndClaw.Combo) == MySpells.PVP.TrueThrust.ID)
+            {
+                return await MySpells.PVP.ChaosThrust.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> WheelingThrustPVP()
+        {
+            if (ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.WheelingThrust.Combo) == MySpells.PVP.WheelingThrust.ID)
+            {
+                return await MySpells.PVP.WheelingThrust.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> SkewerPVP()
+        {
+            if (!RecentJump)
+            {
+                return await MySpells.PVP.Skewer.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> JumpPVP()
+        {
+            if (!MovementManager.IsMoving && !RecentJump && Resource.DragonGaze < 2)
+            {
+                return await MySpells.PVP.Jump.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> SpineshatterDivePVP()
+        {
+            if (!MovementManager.IsMoving && !RecentJump && Resource.DragonGaze < 2)
+            {
+                return await MySpells.PVP.SpineshatterDive.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> BloodOfTheDragonPVP()
+        {
+            if (!RecentJump)
+            {
+                return await MySpells.PVP.BloodOfTheDragon.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> GeirskogulPVP()
+        {
+            if (!RecentJump)
+            {
+                return await MySpells.PVP.Geirskogul.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> NastrondPVP()
+        {
+            if (!RecentJump)
+            {
+                return await MySpells.PVP.Nastrond.Cast();
+            }
+            return false;
+        }
+
+        #endregion
+
         #region Custom
 
+        private static readonly int GazeMax = Helpers.CNVersion ? 4 : 3;
         private static bool RecentJump { get { return Spell.RecentSpell.Keys.Any(rs => rs.Contains("Dive") || rs.Contains("Jump")); } }
         private static bool BloodActive => Resource.Timer != TimeSpan.Zero;
         private static double JumpCooldown => DataManager.GetSpellData(92).Cooldown.TotalSeconds;

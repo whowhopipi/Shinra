@@ -1,9 +1,11 @@
-﻿using ShinraCo.Spells.Role;
+﻿using ShinraCo.Spells.PVP;
+using ShinraCo.Spells.Role;
 
 namespace ShinraCo.Spells.Main
 {
     public class RedMageSpells
     {
+        public RedMagePVP PVP { get; } = new RedMagePVP();
         public CasterSpells Role { get; } = new CasterSpells();
 
         public Spell Riposte { get; } = new Spell
@@ -233,6 +235,16 @@ namespace ShinraCo.Spells.Main
             Level = 62,
             GCDType = GCDType.On,
             SpellType = SpellType.Damage,
+            CastType = CastType.Target
+        };
+
+        public Spell Verraise { get; } = new Spell
+        {
+            Name = "Verraise",
+            ID = 7523,
+            Level = 64,
+            GCDType = GCDType.On,
+            SpellType = SpellType.Heal,
             CastType = CastType.Target
         };
 

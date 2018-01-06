@@ -97,5 +97,22 @@ namespace ShinraCo.Rotations
         }
 
         #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            if (await NastrondPVP()) return true;
+            if (await GeirskogulPVP()) return true;
+            if (await BloodOfTheDragonPVP()) return true;
+            if (await SpineshatterDivePVP()) return true;
+            if (await JumpPVP()) return true;
+            if (await SkewerPVP()) return true;
+            if (await WheelingThrustPVP()) return true;
+            if (await ChaosThrustPVP()) return true;
+            return await FullThrustPVP();
+        }
+
+        #endregion
     }
 }

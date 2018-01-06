@@ -134,8 +134,10 @@ namespace ShinraCo.Rotations
         {
             if (Core.Player.CurrentTPPercent > 40)
             {
+                var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+
                 if (Shinra.Settings.RotationMode == Modes.Multi || Shinra.Settings.RotationMode == Modes.Smart &&
-                    Helpers.EnemiesNearTarget(5) > 2)
+                    Helpers.EnemiesNearTarget(5) >= count)
                 {
                     return await MySpells.QuickNock.Cast();
                 }
@@ -355,6 +357,84 @@ namespace ShinraCo.Rotations
                 {
                     return await MySpells.Role.Palisade.Cast(target);
                 }
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region PVP
+
+        private async Task<bool> StraightShotPVP()
+        {
+            return await MySpells.PVP.StraightShot.Cast();
+        }
+
+        private async Task<bool> StormbitePVP()
+        {
+            if (!Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 4000) || !Core.Player.CurrentTarget.HasAura("Storm Bite", true, 4000))
+            {
+                return await MySpells.PVP.Stormbite.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> SidewinderPVP()
+        {
+            if (Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 1000) && Core.Player.CurrentTarget.HasAura("Storm Bite", true, 1000))
+            {
+                return await MySpells.PVP.Sidewinder.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> EmpyrealArrowPVP()
+        {
+            return await MySpells.PVP.EmpyrealArrow.Cast();
+        }
+
+        private async Task<bool> BloodletterPVP()
+        {
+            if (!MinuetActive || NumRepertoire == 3 || MinuetActive && SongTimer < 3000)
+            {
+                return await MySpells.PVP.Bloodletter.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> WanderersMinuetPVP()
+        {
+            if (!MinuetActive)
+            {
+                return await MySpells.PVP.WanderersMinuet.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> ArmysPaeonPVP()
+        {
+            if (NoSong)
+            {
+                return await MySpells.PVP.ArmysPaeon.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> BarragePVP()
+        {
+            if (Shinra.LastSpell.Name != MySpells.PVP.StraightShot.Name &&
+                ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.StraightShot.Combo) == MySpells.PVP.StraightShot.ID)
+            {
+                return await MySpells.PVP.Barrage.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> TroubadourPVP()
+        {
+            if (MinuetActive)
+            {
+                return await MySpells.PVP.Troubadour.Cast();
             }
             return false;
         }

@@ -23,6 +23,7 @@ namespace ShinraCo.Rotations
             }
             if (Shinra.Settings.RotationMode == Modes.Single)
             {
+                if (await Bloodspiller()) return true;
                 if (await Souleater()) return true;
                 if (await SyphonStrike()) return true;
                 if (await PowerSlash()) return true;
@@ -95,6 +96,15 @@ namespace ShinraCo.Rotations
         public override async Task<bool> Pull()
         {
             return await Combat();
+        }
+
+        #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            return false;
         }
 
         #endregion

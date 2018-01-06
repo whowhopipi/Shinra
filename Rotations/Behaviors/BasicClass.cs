@@ -8,6 +8,7 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Combat()
         {
+            if (await Drain()) return true;
             // Arcanist
             if (await Miasma()) return true;
             if (await BioII()) return true;
@@ -127,6 +128,15 @@ namespace ShinraCo.Rotations
         public override async Task<bool> Pull()
         {
             return await Combat();
+        }
+
+        #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            return false;
         }
 
         #endregion

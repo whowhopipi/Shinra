@@ -83,6 +83,8 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
+            if (await UpdateHealing()) return true;
+            if (await Verraise()) return true;
             return await Vercure();
         }
 
@@ -102,6 +104,25 @@ namespace ShinraCo.Rotations
         public override async Task<bool> Pull()
         {
             return await Combat();
+        }
+
+        #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            if (await CorpsACorpsPVP()) return true;
+            if (await VerholyPVP()) return true;
+            if (await EnchantedRedoublementPVP()) return true;
+            if (await EnchantedZwerchhauPVP()) return true;
+            if (await EnchantedRipostePVP()) return true;
+            if (await ImpactPVP()) return true;
+            if (await VeraeroPVP()) return true;
+            if (await VerthunderPVP()) return true;
+            if (await JoltIIPVP()) return true;
+            if (await VerstonePVP()) return true;
+            return await VerfirePVP();
         }
 
         #endregion

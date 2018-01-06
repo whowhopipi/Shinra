@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ff14bot.Managers;
 using ShinraCo.Properties;
 using System.Diagnostics;
 
@@ -44,9 +43,9 @@ namespace ShinraCo.Settings.Forms
         {
             ShinraBanner.Image = _shinraBanner;
             ShinraDonate.Image = _shinraDonate;
-            HotkeyManager.Unregister("Shinra Rotation");
-            HotkeyManager.Unregister("Shinra Tank");
+            Shinra.UnregisterHotkeys();
             Location = Shinra.Settings.WindowLocation;
+            var kc = new KeysConverter();
 
             #region Main Settings
 
@@ -56,10 +55,11 @@ namespace ShinraCo.Settings.Forms
             RotationMessages.Checked = Shinra.Settings.RotationMessages;
 
             RotationMode.Text = Convert.ToString(Shinra.Settings.RotationMode);
+            CooldownMode.Text = Convert.ToString(Shinra.Settings.CooldownMode);
             TankMode.Text = Convert.ToString(Shinra.Settings.TankMode);
 
-            var kc = new KeysConverter();
             RotationHotkey.Text = kc.ConvertToString(Shinra.Settings.RotationHotkey);
+            CooldownHotkey.Text = kc.ConvertToString(Shinra.Settings.CooldownHotkey);
             TankHotkey.Text = kc.ConvertToString(Shinra.Settings.TankHotkey);
 
             #endregion
@@ -86,11 +86,15 @@ namespace ShinraCo.Settings.Forms
             #region Spell
 
             RandomCastLocations.Checked = Shinra.Settings.RandomCastLocations;
+            CustomAoE.Checked = Shinra.Settings.CustomAoE;
+
+            CustomAoECount.Value = Shinra.Settings.CustomAoECount;
 
             #endregion
 
             #region Misc
 
+            IgnoreSmart.Checked = Shinra.Settings.IgnoreSmart;
             DebugLogging.Checked = Shinra.Settings.DebugLogging;
 
             #endregion
@@ -400,12 +404,16 @@ namespace ShinraCo.Settings.Forms
             MachinistGaussBarrel.Checked = Shinra.Settings.MachinistGaussBarrel;
             MachinistHypercharge.Checked = Shinra.Settings.MachinistHypercharge;
             MachinistBarrelStabilizer.Checked = Shinra.Settings.MachinistBarrelStabilizer;
+            MachinistRookOverdrive.Checked = Shinra.Settings.MachinistRookOverdrive;
+            MachinistBishopOverdrive.Checked = Shinra.Settings.MachinistBishopOverdrive;
 
             #endregion
 
             #region Turret
 
             MachinistTurret.Text = Convert.ToString(Shinra.Settings.MachinistTurret);
+            MachinistTurretHotkey.Text = kc.ConvertToString(Shinra.Settings.MachinistTurretHotkey);
+            MachinistTurretLocation.Text = Convert.ToString(Shinra.Settings.MachinistTurretLocation);
 
             #endregion
 
@@ -502,6 +510,7 @@ namespace ShinraCo.Settings.Forms
             NinjaMug.Checked = Shinra.Settings.NinjaMug;
             NinjaTrickAttack.Checked = Shinra.Settings.NinjaTrickAttack;
             NinjaJugulate.Checked = Shinra.Settings.NinjaJugulate;
+            NinjaShukuchi.Checked = Shinra.Settings.NinjaShukuchi;
             NinjaDreamWithin.Checked = Shinra.Settings.NinjaDreamWithin;
             NinjaHellfrogMedium.Checked = Shinra.Settings.NinjaHellfrogMedium;
             NinjaBhavacakra.Checked = Shinra.Settings.NinjaBhavacakra;
@@ -637,6 +646,8 @@ namespace ShinraCo.Settings.Forms
             #region Heal
 
             RedMageVercure.Checked = Shinra.Settings.RedMageVercure;
+            RedMageVerraise.Checked = Shinra.Settings.RedMageVerraise;
+
             RedMageVercurePct.Value = Shinra.Settings.RedMageVercurePct;
 
             #endregion
@@ -804,6 +815,8 @@ namespace ShinraCo.Settings.Forms
             #region Heal
 
             SummonerPhysick.Checked = Shinra.Settings.SummonerPhysick;
+            SummonerResurrection.Checked = Shinra.Settings.SummonerResurrection;
+
             SummonerPhysickPct.Value = Shinra.Settings.SummonerPhysickPct;
 
             #endregion
@@ -957,10 +970,8 @@ namespace ShinraCo.Settings.Forms
 
         private void ShinraForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            HotkeyManager.Register("Shinra Rotation", Helpers.GetHotkey(Shinra.Settings.RotationHotkey),
-                                   Helpers.GetModkey(Shinra.Settings.RotationHotkey), hk => Shinra.CycleRotation());
-            HotkeyManager.Register("Shinra Tank", Helpers.GetHotkey(Shinra.Settings.TankHotkey),
-                                   Helpers.GetModkey(Shinra.Settings.TankHotkey), hk => Shinra.CycleRotation(true));
+            Shinra.RegisterHotkeys();
+            Shinra.RegisterClassHotkeys();
             Shinra.Settings.WindowLocation = Location;
             Shinra.Settings.Save();
         }
@@ -996,6 +1007,18 @@ namespace ShinraCo.Settings.Forms
         private void RotationHotkey_KeyDown(object sender, KeyEventArgs e)
         {
             Shinra.Settings.RotationHotkey = RotationHotkey.Hotkey;
+        }
+
+        private void CooldownMode_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (CooldownMode.Text == @"Enabled") Shinra.Settings.CooldownMode = CooldownModes.Enabled;
+            if (CooldownMode.Text == @"Disabled") Shinra.Settings.CooldownMode = CooldownModes.Disabled;
+            Shinra.Overlay.UpdateText();
+        }
+
+        private void CooldownHotkey_KeyDown(object sender, KeyEventArgs e)
+        {
+            Shinra.Settings.CooldownHotkey = CooldownHotkey.Hotkey;
         }
 
         private void TankMode_SelectedValueChanged(object sender, EventArgs e)
@@ -1070,9 +1093,24 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.RandomCastLocations = RandomCastLocations.Checked;
         }
 
+        private void CustomAoE_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.CustomAoE = CustomAoE.Checked;
+        }
+
+        private void CustomAoECount_ValueChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.CustomAoECount = Convert.ToInt32(CustomAoECount.Value);
+        }
+
         #endregion
 
         #region Misc
+
+        private void IgnoreSmart_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.IgnoreSmart = IgnoreSmart.Checked;
+        }
 
         private void DebugLogging_CheckedChanged(object sender, EventArgs e)
         {
@@ -1880,6 +1918,16 @@ namespace ShinraCo.Settings.Forms
             Shinra.Settings.MachinistBarrelStabilizer = MachinistBarrelStabilizer.Checked;
         }
 
+        private void MachinistRookOverdrive_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistRookOverdrive = MachinistRookOverdrive.Checked;
+        }
+
+        private void MachinistBishopOverdrive_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.MachinistBishopOverdrive = MachinistBishopOverdrive.Checked;
+        }
+
         #endregion
 
         #region Turret
@@ -1889,6 +1937,17 @@ namespace ShinraCo.Settings.Forms
             if (MachinistTurret.Text == @"None") Shinra.Settings.MachinistTurret = MachinistTurrets.None;
             if (MachinistTurret.Text == @"Rook") Shinra.Settings.MachinistTurret = MachinistTurrets.Rook;
             if (MachinistTurret.Text == @"Bishop") Shinra.Settings.MachinistTurret = MachinistTurrets.Bishop;
+        }
+
+        private void MachinistTurretHotkey_KeyDown(object sender, KeyEventArgs e)
+        {
+            Shinra.Settings.MachinistTurretHotkey = MachinistTurretHotkey.Hotkey;
+        }
+
+        private void MachinistTurretLocation_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (MachinistTurretLocation.Text == @"Self") Shinra.Settings.MachinistTurretLocation = CastLocations.Self;
+            if (MachinistTurretLocation.Text == @"Target") Shinra.Settings.MachinistTurretLocation = CastLocations.Target;
         }
 
         #endregion
@@ -2141,6 +2200,11 @@ namespace ShinraCo.Settings.Forms
         private void NinjaJugulate_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.NinjaJugulate = NinjaJugulate.Checked;
+        }
+
+        private void NinjaShukuchi_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.NinjaShukuchi = NinjaShukuchi.Checked;
         }
 
         private void NinjaDreamWithin_CheckedChanged(object sender, EventArgs e)
@@ -2472,6 +2536,11 @@ namespace ShinraCo.Settings.Forms
         private void RedMageVercure_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.RedMageVercure = RedMageVercure.Checked;
+        }
+
+        private void RedMageVerraise_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.RedMageVerraise = RedMageVerraise.Checked;
         }
 
         private void RedMageVercurePct_ValueChanged(object sender, EventArgs e)
@@ -2884,6 +2953,11 @@ namespace ShinraCo.Settings.Forms
         private void SummonerPhysick_CheckedChanged(object sender, EventArgs e)
         {
             Shinra.Settings.SummonerPhysick = SummonerPhysick.Checked;
+        }
+
+        private void SummonerResurrection_CheckedChanged(object sender, EventArgs e)
+        {
+            Shinra.Settings.SummonerResurrection = SummonerResurrection.Checked;
         }
 
         private void SummonerPhysickPct_ValueChanged(object sender, EventArgs e)

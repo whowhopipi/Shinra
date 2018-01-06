@@ -103,7 +103,10 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.NinjaMug && UseOffGCD)
             {
-                return await MySpells.Mug.Cast();
+                if (Resource.NinkiGauge <= 70 || Core.Player.ClassLevel < 66)
+                {
+                    return await MySpells.Mug.Cast();
+                }
             }
             return false;
         }
@@ -113,7 +116,8 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaTrickAttack && UseOffGCD && !Core.Player.CurrentTarget.HasAura(638, false, 3000))
             {
                 if (Core.Player.CurrentTarget.IsBehind || BotManager.Current.IsAutonomous ||
-                    Core.Player.HasAura(MySpells.Role.TrueNorth.Name))
+                    Core.Player.HasAura(MySpells.Role.TrueNorth.Name) || Core.Player.HasAura(MySpells.Suiton.Name, false, 100) &&
+                    !Core.Player.HasAura(MySpells.Suiton.Name, false, 4000))
                 {
                     return await MySpells.TrickAttack.Cast();
                 }
@@ -126,6 +130,15 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaJugulate && UseOffGCD)
             {
                 return await MySpells.Jugulate.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> Shukuchi()
+        {
+            if (Shinra.Settings.NinjaShukuchi && Core.Player.TargetDistance(10))
+            {
+                return await MySpells.Shukuchi.Cast(null, false);
             }
             return false;
         }
@@ -144,7 +157,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaHellfrogMedium && UseOffGCD)
             {
                 if (Shinra.Settings.RotationMode == Modes.Multi || !ActionManager.HasSpell(MySpells.Bhavacakra.Name) || UseHellfrog ||
-                    Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(6) > 1)
+                    Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(6) >= AoECount)
                 {
                     return await MySpells.HellfrogMedium.Cast();
                 }
@@ -157,7 +170,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaBhavacakra && UseOffGCD)
             {
                 if (Shinra.Settings.RotationMode == Modes.Single || Shinra.Settings.RotationMode == Modes.Smart &&
-                    Helpers.EnemiesNearTarget(6) < 2)
+                    Helpers.EnemiesNearTarget(6) < AoECount)
                 {
                     return await MySpells.Bhavacakra.Cast();
                 }
@@ -183,7 +196,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaKassatsu && UseOffGCD)
             {
                 if (Core.Player.CurrentTarget.HasAura(638) || Shinra.Settings.RotationMode == Modes.Multi || TrickCooldown > 30000 ||
-                    Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(5) > 2)
+                    Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(5) >= AoECount)
                 {
                     return await MySpells.Kassatsu.Cast();
                 }
@@ -245,7 +258,7 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.NinjaKaton && UseNinjutsu() && ActionManager.CanCast(MySpells.Chi.ID, null))
             {
-                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 2)
+                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= AoECount)
                 {
                     if (!CanNinjutsu)
                     {
@@ -362,7 +375,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.NinjaDoton && UseNinjutsu() && ActionManager.CanCast(MySpells.Jin.ID, null) && !MovementManager.IsMoving &&
                 !Core.Player.HasAura(MySpells.Doton.Name, true, 5000))
             {
-                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 2)
+                if (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= AoECount)
                 {
                     if (!CanNinjutsu)
                     {
@@ -566,6 +579,7 @@ namespace ShinraCo.Rotations
 
         #region Custom
 
+        private static int AoECount => Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 2;
         private static bool UseOffGCD => DataManager.GetSpellData(2260).Cooldown.TotalMilliseconds > 1000 || Core.Player.ClassLevel < 30;
         private static bool UseHellfrog => Resource.NinkiGauge == 100 && BhavacakraCooldown > 10000 && TenChiJinCooldown > 10000;
 

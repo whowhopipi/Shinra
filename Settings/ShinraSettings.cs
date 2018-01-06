@@ -10,11 +10,23 @@ namespace ShinraCo.Settings
 {
     #region Enums
 
+    public enum CastLocations
+    {
+        Self,
+        Target
+    }
+
     public enum Modes
     {
         Smart,
         Single,
         Multi
+    }
+
+    public enum CooldownModes
+    {
+        Enabled,
+        Disabled
     }
 
     public enum TankModes
@@ -122,6 +134,12 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(Keys.None)]
         public Keys RotationHotkey { get; set; }
 
+        [Setting, DefaultValue(CooldownModes.Enabled)]
+        public CooldownModes CooldownMode { get; set; }
+
+        [Setting, DefaultValue(Keys.None)]
+        public Keys CooldownHotkey { get; set; }
+
         [Setting, DefaultValue(TankModes.DPS)]
         public TankModes TankMode { get; set; }
 
@@ -167,9 +185,18 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool RandomCastLocations { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool CustomAoE { get; set; }
+
+        [Setting, DefaultValue(3)]
+        public int CustomAoECount { get; set; }
+
         #endregion
 
         #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool IgnoreSmart { get; set; }
 
         [Setting, DefaultValue(false)]
         public bool DebugLogging { get; set; }
@@ -720,12 +747,24 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool MachinistBarrelStabilizer { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool MachinistRookOverdrive { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MachinistBishopOverdrive { get; set; }
+
         #endregion
 
         #region Turret
 
         [Setting, DefaultValue(MachinistTurrets.Rook)]
         public MachinistTurrets MachinistTurret { get; set; }
+
+        [Setting, DefaultValue(Keys.None)]
+        public Keys MachinistTurretHotkey { get; set; }
+
+        [Setting, DefaultValue(CastLocations.Target)]
+        public CastLocations MachinistTurretLocation { get; set; }
 
         #endregion
 
@@ -893,6 +932,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool NinjaJugulate { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool NinjaShukuchi { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool NinjaDreamWithin { get; set; }
@@ -1116,6 +1158,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool RedMageVercure { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool RedMageVerraise { get; set; }
 
         [Setting, DefaultValue(50)]
         public int RedMageVercurePct { get; set; }
@@ -1394,6 +1439,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool SummonerPhysick { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool SummonerResurrection { get; set; }
 
         [Setting, DefaultValue(50)]
         public int SummonerPhysickPct { get; set; }

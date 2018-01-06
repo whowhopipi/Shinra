@@ -45,7 +45,8 @@ namespace ShinraCo.Spells
         Pet,
         Ninjutsu,
         Mudra,
-        Card
+        Card,
+        PVP
     }
 
     #endregion
@@ -55,6 +56,7 @@ namespace ShinraCo.Spells
         public static readonly Dictionary<string, DateTime> RecentSpell = new Dictionary<string, DateTime>();
         public string Name { get; set; }
         public uint ID { get; set; }
+        public uint Combo { get; set; }
         public byte Level { get; set; }
         public GCDType GCDType { private get; set; }
         public SpellType SpellType { private get; set; }
@@ -97,28 +99,65 @@ namespace ShinraCo.Spells
 
             #endregion
 
+            #region CapabilityManager
+
+            if (RoutineManager.IsAnyDisallowed(CapabilityFlags.Movement | CapabilityFlags.Facing))
+            {
+                return false;
+            }
+
+            #endregion
+
+            #region Cooldown
+
+            if (Shinra.Settings.CooldownMode == CooldownModes.Disabled)
+            {
+                if ((SpellType == SpellType.Buff || SpellType == SpellType.Cooldown) && Cooldown(true) > 2500)
+                {
+                    return false;
+                }
+            }
+
+            #endregion
+
             #region AoE
 
             if (SpellType == SpellType.AoE && Shinra.Settings.RotationMode != Modes.Multi)
             {
-                var enemyCount = Helpers.EnemyUnit.Count(eu => eu.Distance2D(target) - eu.CombatReach - target.CombatReach <=
-                                                               DataManager.GetSpellData(ID).Radius);
-
-                switch (Core.Player.CurrentJob)
+                if (RoutineManager.IsAnyDisallowed(CapabilityFlags.Aoe))
                 {
-                    case ClassJobType.Arcanist:
-                    case ClassJobType.Summoner:
-                        if (enemyCount < 2)
-                        {
-                            return false;
-                        }
-                        break;
-                    default:
-                        if (enemyCount < 3)
-                        {
-                            return false;
-                        }
-                        break;
+                    return false;
+                }
+
+                var enemyCount =
+                    Helpers.EnemyUnit.Count(eu => eu.Distance2D(target) - eu.CombatReach - target.CombatReach <=
+                                                  DataManager.GetSpellData(ID).Radius);
+
+                if (Shinra.Settings.CustomAoE)
+                {
+                    if (enemyCount < Shinra.Settings.CustomAoECount)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    switch (Core.Player.CurrentJob)
+                    {
+                        case ClassJobType.Arcanist:
+                        case ClassJobType.Summoner:
+                            if (enemyCount < 2)
+                            {
+                                return false;
+                            }
+                            break;
+                        default:
+                            if (enemyCount < 3)
+                            {
+                                return false;
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -548,7 +587,14 @@ namespace ShinraCo.Spells
                         break;
                     case ClassJobType.Lancer:
                     case ClassJobType.Dragoon:
-                        if (DataManager.GetSpellData(75).Cooldown.TotalMilliseconds < 1000)
+                        if (ID == 8801 || ID == 8802)
+                        {
+                            if (DataManager.GetSpellData(75).Cooldown.TotalMilliseconds < 1500)
+                            {
+                                return false;
+                            }
+                        }
+                        else if (DataManager.GetSpellData(75).Cooldown.TotalMilliseconds < 1000)
                         {
                             return false;
                         }
@@ -651,9 +697,19 @@ namespace ShinraCo.Spells
                     }
                     break;
                 default:
-                    if (!await Coroutine.Wait(1000, () => ActionManager.DoAction(ID, target)))
+                    if (SpellType == SpellType.PVP)
                     {
-                        return false;
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoPvPCombo(Combo, target)))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (!await Coroutine.Wait(1000, () => ActionManager.DoAction(ID, target)))
+                        {
+                            return false;
+                        }
                     }
                     break;
             }
@@ -680,7 +736,8 @@ namespace ShinraCo.Spells
 
             #region AddRecent
 
-            if (SpellType != SpellType.Damage && SpellType != SpellType.AoE && SpellType != SpellType.Heal && await CastComplete(this))
+            if (SpellType != SpellType.Damage && SpellType != SpellType.AoE && SpellType != SpellType.Heal && SpellType != SpellType.PVP &&
+                await CastComplete(this))
             {
                 var key = target.ObjectId.ToString("X") + "-" + Name;
                 var val = DateTime.UtcNow + DataManager.GetSpellData(ID).AdjustedCastTime + TimeSpan.FromSeconds(3);

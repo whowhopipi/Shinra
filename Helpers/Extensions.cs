@@ -47,6 +47,12 @@ namespace ShinraCo
             catch { return null; }
         }
 
+#if RB_CN
+        public static readonly bool CNVersion = true;
+#else
+        public static readonly bool CNVersion = false;
+#endif
+
         public static Keys GetHotkey(Keys number)
         {
             return (Keys)((int)number & 0x0000FFFF);
@@ -64,6 +70,26 @@ namespace ShinraCo
             {
                 Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - {msg}");
             }
+        }
+
+        public static void DisplayToast(string msg)
+        {
+            if (Shinra.Settings.RotationMessages)
+            {
+                Core.OverlayManager.AddToast(() => msg, TimeSpan.FromMilliseconds(1000), Colors.GreenYellow, Color.FromRgb(0, 0, 0),
+                                             new FontFamily("Agency FB"));
+            }
+        }
+
+        public static T Cycle<T>(this T src, string name, bool skip = false)
+        {
+            var arr = (T[])Enum.GetValues(src.GetType());
+            var i = Array.IndexOf(arr, src) + 1;
+            var next = arr.Length == i ? (skip ? arr[1] : arr[0]) : arr[i];
+
+            DisplayToast($@"Shinra {name} >>> {next}");
+            Logging.Write(Colors.Yellow, $@"[Shinra] {name} >>> {next}");
+            return next;
         }
     }
 }

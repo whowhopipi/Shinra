@@ -193,8 +193,10 @@ namespace ShinraCo.Rotations
         {
             if (UseOffGCD)
             {
+                var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+
                 if (Shinra.Settings.RotationMode == Modes.Single || Shinra.Settings.RotationMode == Modes.Smart &&
-                    Helpers.EnemiesNearTarget(5) < 3)
+                    Helpers.EnemiesNearTarget(5) < count)
                 {
                     return await MySpells.Acceleration.Cast();
                 }
@@ -227,6 +229,18 @@ namespace ShinraCo.Rotations
 
         #region Heal
 
+        private async Task<bool> UpdateHealing()
+        {
+            if (Shinra.Settings.RedMageVerraise)
+            {
+                if (!await Helpers.UpdateHealManager())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private async Task<bool> Vercure()
         {
             if (Shinra.Settings.RedMageVercure && Core.Player.CurrentHealthPercent < Shinra.Settings.RedMageVercurePct)
@@ -236,6 +250,23 @@ namespace ShinraCo.Rotations
                 if (target != null)
                 {
                     return await MySpells.Vercure.Cast(target);
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> Verraise()
+        {
+            if (Shinra.Settings.RedMageVerraise && Core.Player.CurrentManaPercent > 50)
+            {
+                if (Core.Player.HasAura("Dualcast") || Core.Player.HasAura("Swiftcast"))
+                {
+                    var target = Helpers.RessManager.FirstOrDefault(pm => !pm.HasAura("Raise"));
+
+                    if (target != null)
+                    {
+                        return await MySpells.Verraise.Cast(target);
+                    }
                 }
             }
             return false;
@@ -320,6 +351,101 @@ namespace ShinraCo.Rotations
                 return await MySpells.Role.Swiftcast.Cast();
             }
             return false;
+        }
+
+        #endregion
+
+        #region PVP
+
+        private async Task<bool> JoltIIPVP()
+        {
+            if (!Core.Player.HasAura("Dualcast") && Core.Player.CurrentManaPercent > 30)
+            {
+                return await MySpells.PVP.JoltII.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> ImpactPVP()
+        {
+            if (Core.Player.CurrentManaPercent > 30)
+            {
+                return await MySpells.PVP.Impact.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> VerstonePVP()
+        {
+            if (!Core.Player.HasAura("Dualcast") && WhiteMana < BlackMana)
+            {
+                return await MySpells.PVP.Verstone.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> VeraeroPVP()
+        {
+            if (WhiteMana < BlackMana)
+            {
+                return await MySpells.PVP.Veraero.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> VerfirePVP()
+        {
+            if (!Core.Player.HasAura("Dualcast"))
+            {
+                return await MySpells.PVP.Verfire.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> VerthunderPVP()
+        {
+            return await MySpells.PVP.Verthunder.Cast();
+        }
+
+        private async Task<bool> CorpsACorpsPVP()
+        {
+            if (!MovementManager.IsMoving && WhiteMana >= 75 && BlackMana >= 75 && Core.Player.TargetDistance(5))
+            {
+                return await MySpells.PVP.CorpsACorps.Cast(null, false);
+            }
+            return false;
+        }
+
+        private async Task<bool> EnchantedRipostePVP()
+        {
+            if (WhiteMana >= 75 && BlackMana >= 75 && Core.Player.TargetDistance(5, false))
+            {
+                return await MySpells.PVP.EnchantedRiposte.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> EnchantedZwerchhauPVP()
+        {
+            if (Core.Player.TargetDistance(5, false))
+            {
+                return await MySpells.PVP.EnchantedZwerchhau.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> EnchantedRedoublementPVP()
+        {
+            if (Core.Player.TargetDistance(5, false))
+            {
+                return await MySpells.PVP.EnchantedRedoublement.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> VerholyPVP()
+        {
+            return await MySpells.PVP.Verholy.Cast();
         }
 
         #endregion

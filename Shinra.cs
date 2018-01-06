@@ -22,18 +22,16 @@ namespace ShinraCo
         #region Overrides
 
         public sealed override string Name => "Shinra";
-        public sealed override float PullRange => 15f;
+        public sealed override float PullRange => 25;
         public sealed override bool WantButton => true;
+        public sealed override CapabilityFlags SupportedCapabilities => CapabilityFlags.All;
 
         public sealed override void Initialize()
         {
             Logging.Write(Colors.GreenYellow, $@"[Shinra] Loaded Version: {Helpers.GetLocalVersion()}");
             Overlay.Visible = Settings.RotationOverlay;
             Overlay.UpdateText();
-            HotkeyManager.Register("Shinra Rotation", Helpers.GetHotkey(Settings.RotationHotkey),
-                                   Helpers.GetModkey(Settings.RotationHotkey), hk => CycleRotation());
-            HotkeyManager.Register("Shinra Tank", Helpers.GetHotkey(Settings.TankHotkey), Helpers.GetModkey(Settings.TankHotkey),
-                                   hk => CycleRotation(true));
+            RegisterHotkeys();
         }
 
         public sealed override void Pulse()
@@ -45,8 +43,7 @@ namespace ShinraCo
         public sealed override void ShutDown()
         {
             Logging.Write(Colors.GreenYellow, @"[Shinra] Shutting down...");
-            HotkeyManager.Unregister("Shinra Rotation");
-            HotkeyManager.Unregister("Shinra Tank");
+            UnregisterHotkeys();
         }
 
         #endregion
@@ -67,65 +64,51 @@ namespace ShinraCo
             _configForm.ShowDialog();
         }
 
-        public static void CycleRotation(bool isTank = false)
-        {
-            var textColor = Colors.GreenYellow;
-            var shadowColor = Color.FromRgb(0, 0, 0);
+        #endregion
 
-            if (isTank)
+        #region Hotkeys
+
+        public static void RegisterHotkeys()
+        {
+            HotkeyManager.Register("Shinra Rotation", Helpers.GetHotkey(Settings.RotationHotkey),
+                                   Helpers.GetModkey(Settings.RotationHotkey), hk =>
+                                   {
+                                       Settings.RotationMode = Settings.RotationMode.Cycle("Rotation", Settings.IgnoreSmart);
+                                       Overlay.UpdateText();
+                                   });
+            HotkeyManager.Register("Shinra Cooldown", Helpers.GetHotkey(Settings.CooldownHotkey),
+                                   Helpers.GetModkey(Settings.CooldownHotkey), hk =>
+                                   {
+                                       Settings.CooldownMode = Settings.CooldownMode.Cycle("Cooldown");
+                                       Overlay.UpdateText();
+                                   });
+            HotkeyManager.Register("Shinra Tank", Helpers.GetHotkey(Settings.TankHotkey),
+                                   Helpers.GetModkey(Settings.TankHotkey), hk =>
+                                   {
+                                       Settings.TankMode = Settings.TankMode.Cycle("Tank");
+                                       Overlay.UpdateText();
+                                   });
+        }
+
+        public static void RegisterClassHotkeys()
+        {
+            HotkeyManager.Unregister("Shinra Job");
+            switch (Core.Player.CurrentJob)
             {
-                switch (Settings.TankMode)
-                {
-                    case TankModes.DPS:
-                        Settings.TankMode = TankModes.Enmity;
-                        if (Settings.RotationMessages)
-                        {
-                            Core.OverlayManager.AddToast(() => @"Shinra Tank >>> Enmity", TimeSpan.FromMilliseconds(1000), textColor,
-                                                         shadowColor, new FontFamily("Agency FB"));
-                        }
-                        break;
-                    case TankModes.Enmity:
-                        Settings.TankMode = TankModes.DPS;
-                        if (Settings.RotationMessages)
-                        {
-                            Core.OverlayManager.AddToast(() => @"Shinra Tank >>> DPS", TimeSpan.FromMilliseconds(1000), textColor,
-                                                         shadowColor, new FontFamily("Agency FB"));
-                        }
-                        break;
-                }
-                Logging.Write(Colors.Yellow, $@"[Shinra] Tank >>> {Settings.TankMode}");
-                Overlay.UpdateText();
-                return;
-            }
-            switch (Settings.RotationMode)
-            {
-                case Modes.Smart:
-                    Settings.RotationMode = Modes.Single;
-                    if (Settings.RotationMessages)
-                    {
-                        Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Single", TimeSpan.FromMilliseconds(1000), textColor,
-                                                     shadowColor, new FontFamily("Agency FB"));
-                    }
-                    break;
-                case Modes.Single:
-                    Settings.RotationMode = Modes.Multi;
-                    if (Settings.RotationMessages)
-                    {
-                        Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Multi", TimeSpan.FromMilliseconds(1000), textColor,
-                                                     shadowColor, new FontFamily("Agency FB"));
-                    }
-                    break;
-                case Modes.Multi:
-                    Settings.RotationMode = Modes.Smart;
-                    if (Settings.RotationMessages)
-                    {
-                        Core.OverlayManager.AddToast(() => @"Shinra Rotation >>> Smart", TimeSpan.FromMilliseconds(1000), textColor,
-                                                     shadowColor, new FontFamily("Agency FB"));
-                    }
+                case ClassJobType.Machinist:
+                    HotkeyManager.Register("Shinra Job", Helpers.GetHotkey(Settings.MachinistTurretHotkey),
+                                           Helpers.GetModkey(Settings.MachinistTurretHotkey),
+                                           hk => Settings.MachinistTurret = Settings.MachinistTurret.Cycle("Turret", true));
                     break;
             }
-            Logging.Write(Colors.Yellow, $@"[Shinra] Rotation >>> {Settings.RotationMode}");
-            Overlay.UpdateText();
+        }
+
+        public static void UnregisterHotkeys()
+        {
+            HotkeyManager.Unregister("Shinra Rotation");
+            HotkeyManager.Unregister("Shinra Cooldown");
+            HotkeyManager.Unregister("Shinra Tank");
+            HotkeyManager.Unregister("Shinra Job");
         }
 
         #endregion
@@ -147,6 +130,7 @@ namespace ShinraCo
                 _currentClass = Core.Player.CurrentJob;
                 _myRotation = GetRotation(_currentClass);
                 Logging.Write(Colors.Yellow, $@"[Shinra] Loading {_currentClass}...");
+                RegisterClassHotkeys();
                 return _currentClass;
             }
         }
@@ -209,17 +193,27 @@ namespace ShinraCo
 
         public override Composite CombatBehavior
         {
-            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.Combat()))); }
+            get
+            {
+                return new Decorator(r => Core.Player.HasTarget,
+                                     new PrioritySelector(new Decorator(r => WorldManager.InPvP, new ActionRunCoroutine(ctx => MyRotation.CombatPVP())),
+                                                          new Decorator(r => !WorldManager.InPvP, new ActionRunCoroutine(ctx => MyRotation.Combat()))));
+            }
         }
 
         public override Composite CombatBuffBehavior
         {
-            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.CombatBuff()))); }
+            get { return new Decorator(r => Core.Player.HasTarget && !WorldManager.InPvP, new ActionRunCoroutine(ctx => MyRotation.CombatBuff())); }
         }
 
         public override Composite PullBehavior
         {
-            get { return new PrioritySelector(new Decorator(r => Core.Player.HasTarget, new ActionRunCoroutine(ctx => MyRotation.Pull()))); }
+            get
+            {
+                return new Decorator(r => Core.Player.HasTarget,
+                                     new PrioritySelector(new Decorator(r => WorldManager.InPvP, new ActionRunCoroutine(ctx => MyRotation.CombatPVP())),
+                                                          new Decorator(r => !WorldManager.InPvP, new ActionRunCoroutine(ctx => MyRotation.Pull()))));
+            }
         }
 
         public override Composite HealBehavior { get { return new ActionRunCoroutine(ctx => MyRotation.Heal()); } }

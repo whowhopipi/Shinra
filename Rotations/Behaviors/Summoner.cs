@@ -57,6 +57,8 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Heal()
         {
+            if (await UpdateHealing()) return true;
+            if (await Resurrection()) return true;
             return await Physick();
         }
 
@@ -83,6 +85,15 @@ namespace ShinraCo.Rotations
             if (await Opener()) return true;
             if (await TriDisaster()) return true;
             return await Combat();
+        }
+
+        #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            return false;
         }
 
         #endregion

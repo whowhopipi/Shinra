@@ -101,5 +101,17 @@ namespace ShinraCo.Rotations
         }
 
         #endregion
+
+        #region CombatPVP
+
+        public override async Task<bool> CombatPVP()
+        {
+            if (await RequiescatPVP()) return true;
+            if (await HolySpiritPVP()) return true;
+            if (await RageOfHalonePVP()) return true;
+            return await RoyalAuthorityPVP();
+        }
+
+        #endregion
     }
 }

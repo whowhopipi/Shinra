@@ -24,7 +24,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Ruin()
         {
-            if (!ActionManager.HasSpell(MySpells.RuinIII.Name))
+            if (!ActionManager.HasSpell(MySpells.RuinIII.Name) || Helpers.CNVersion)
             {
                 return await MySpells.Ruin.Cast();
             }
@@ -33,17 +33,33 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> RuinII()
         {
-            if (Core.Player.HasAura("Further Ruin") || RecentBahamut || !Resource.DreadwyrmTrance &&
-                (MovementManager.IsMoving || UseBane || UseFester || UsePainflare || UseAddle || UsePet || UseShadowFlare))
+            if (Helpers.CNVersion)
             {
-                return await MySpells.RuinII.Cast();
+                if (MovementManager.IsMoving || UseBane || UseFester || UsePainflare || UseAddle ||
+                    !Resource.DreadwyrmTrance && (UsePet || UseShadowFlare) || Resource.DreadwyrmTrance && Resource.Timer.TotalMilliseconds < 3500)
+                {
+                    return await MySpells.RuinII.Cast();
+                }
+            }
+            else
+            {
+                if (Core.Player.HasAura("Further Ruin") || RecentBahamut || !Resource.DreadwyrmTrance &&
+                    (MovementManager.IsMoving || UseBane || UseFester || UsePainflare || UseAddle || UsePet || UseShadowFlare))
+                {
+                    return await MySpells.RuinII.Cast();
+                }
             }
             return false;
         }
 
         private async Task<bool> RuinIII()
         {
-            return await MySpells.RuinIII.Cast();
+            if (!Helpers.CNVersion || Resource.DreadwyrmTrance || Core.Player.CurrentManaPercent > 80 ||
+                Core.Player.CurrentTarget.HasAura(1291, true, 3000) && Core.Player.CurrentManaPercent > 40)
+            {
+                return await MySpells.RuinIII.Cast();
+            }
+            return false;
         }
 
         #endregion
@@ -248,6 +264,18 @@ namespace ShinraCo.Rotations
 
         #region Heal
 
+        private async Task<bool> UpdateHealing()
+        {
+            if (Shinra.Settings.SummonerResurrection && Shinra.Settings.SummonerSwiftcast)
+            {
+                if (!await Helpers.UpdateHealManager())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private async Task<bool> Physick()
         {
             if (Shinra.Settings.SummonerPhysick && Core.Player.CurrentHealthPercent < Shinra.Settings.SummonerPhysickPct)
@@ -257,6 +285,25 @@ namespace ShinraCo.Rotations
                 if (target != null)
                 {
                     return await MySpells.Physick.Cast(target);
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> Resurrection()
+        {
+            if (Shinra.Settings.SummonerResurrection && Shinra.Settings.SummonerSwiftcast && Core.Player.CurrentManaPercent > 50 &&
+                ActionManager.CanCast(MySpells.Role.Swiftcast.Name, Core.Player))
+            {
+                var target = Helpers.RessManager.FirstOrDefault(pm => !pm.HasAura("Raise"));
+
+                if (target != null)
+                {
+                    if (await MySpells.Role.Swiftcast.Cast(null, false))
+                    {
+                        await Coroutine.Wait(3000, () => Core.Player.HasAura(MySpells.Role.Swiftcast.Name));
+                    }
+                    return await MySpells.Resurrection.Cast(target);
                 }
             }
             return false;
@@ -280,8 +327,8 @@ namespace ShinraCo.Rotations
 
             if (PetManager.ActivePetType != PetType.Emerald_Carbuncle && PetManager.ActivePetType != PetType.Garuda_Egi && !RecentBahamut)
             {
-                if (Shinra.Settings.SummonerSwiftcast && ActionManager.CanCast(MySpells.Summon.Name, Core.Player) &&
-                    (!Shinra.Settings.SummonerOpener || Shinra.OpenerFinished))
+                if (Shinra.Settings.SummonerSwiftcast && !Shinra.Settings.SummonerResurrection &&
+                    ActionManager.CanCast(MySpells.Summon.Name, Core.Player) && (!Shinra.Settings.SummonerOpener || Shinra.OpenerFinished))
                 {
                     if (await MySpells.Role.Swiftcast.Cast(null, false))
                     {
@@ -303,7 +350,8 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.SummonerPet == SummonerPets.Titan && PetManager.ActivePetType != PetType.Topaz_Carbuncle &&
                 PetManager.ActivePetType != PetType.Titan_Egi && !RecentBahamut)
             {
-                if (Shinra.Settings.SummonerSwiftcast && ActionManager.CanCast(MySpells.SummonII.Name, Core.Player))
+                if (Shinra.Settings.SummonerSwiftcast && !Shinra.Settings.SummonerResurrection &&
+                    ActionManager.CanCast(MySpells.SummonII.Name, Core.Player))
                 {
                     if (await MySpells.Role.Swiftcast.Cast(null, false))
                     {
@@ -324,7 +372,8 @@ namespace ShinraCo.Rotations
 
             if (Shinra.Settings.SummonerPet == SummonerPets.Ifrit && PetManager.ActivePetType != PetType.Ifrit_Egi && !RecentBahamut)
             {
-                if (Shinra.Settings.SummonerSwiftcast && ActionManager.CanCast(MySpells.SummonIII.Name, Core.Player))
+                if (Shinra.Settings.SummonerSwiftcast && !Shinra.Settings.SummonerResurrection &&
+                    ActionManager.CanCast(MySpells.SummonIII.Name, Core.Player))
                 {
                     if (await MySpells.Role.Swiftcast.Cast(null, false))
                     {
@@ -487,6 +536,7 @@ namespace ShinraCo.Rotations
 
         #region Custom
 
+        private static int AoECount => Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 2;
         private static string BioDebuff => Core.Player.ClassLevel >= 66 ? "Bio III" : Core.Player.ClassLevel >= 26 ? "Bio II" : "Bio";
         private static string MiasmaDebuff => Core.Player.ClassLevel >= 66 ? "Miasma III" : "Miasma";
         private static bool RecentDoT { get { return Spell.RecentSpell.Keys.Any(key => key.Contains("Tri-disaster")); } }
@@ -498,18 +548,18 @@ namespace ShinraCo.Rotations
 
         private bool UseBane => Shinra.Settings.RotationMode != Modes.Single && Shinra.Settings.SummonerBane &&
                                 ActionManager.CanCast(MySpells.Bane.Name, Core.Player.CurrentTarget) &&
-                                (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 1) &&
+                                (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= AoECount) &&
                                 Core.Player.CurrentTarget.HasAura(BioDebuff, true, 20000) &&
                                 Core.Player.CurrentTarget.HasAura(MiasmaDebuff, true, 14000);
 
         private bool UseFester => (Shinra.Settings.RotationMode == Modes.Single ||
-                                   Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(5) <= 1) &&
+                                   Shinra.Settings.RotationMode == Modes.Smart && Helpers.EnemiesNearTarget(5) < AoECount) &&
                                   ActionManager.CanCast(MySpells.Fester.Name, Core.Player.CurrentTarget) && !AetherLow &&
                                   Core.Player.CurrentTarget.HasAura(BioDebuff, true) &&
                                   Core.Player.CurrentTarget.HasAura(MiasmaDebuff, true);
 
         private bool UsePainflare => Shinra.Settings.RotationMode != Modes.Single &&
-                                     (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) > 1) &&
+                                     (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= AoECount) &&
                                      ActionManager.CanCast(MySpells.Painflare.Name, Core.Player.CurrentTarget) && !AetherLow;
 
         private bool UsePet => PetExists && (Shinra.Settings.SummonerRouse && ActionManager.CanCast(MySpells.Rouse.Name, Core.Player) ||
