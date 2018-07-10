@@ -11,14 +11,16 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.RotationMode == Modes.Smart)
             {
+                if (Shinra.Settings.NinjaOpener) { if (await Helpers.ExecuteOpener()) return true; }
                 if (await TenChiJinBuff()) return true;
                 if (await Huton()) return true;
                 if (await Doton()) return true;
                 if (await Katon()) return true;
                 if (await Suiton()) return true;
-                if (await Raiton()) return true;
                 if (await FumaShuriken()) return true;
                 if (await DeathBlossom()) return true;
+                if (await Duality()) return true;
+                if (await DualityActive()) return true;
                 if (await ShadowFang()) return true;
                 if (await ArmorCrush()) return true;
                 if (await AeolianEdge()) return true;
@@ -27,11 +29,13 @@ namespace ShinraCo.Rotations
             }
             if (Shinra.Settings.RotationMode == Modes.Single)
             {
+                if (Shinra.Settings.NinjaOpener) { if (await Helpers.ExecuteOpener()) return true; }
                 if (await TenChiJinBuff()) return true;
                 if (await Huton()) return true;
                 if (await Suiton()) return true;
-                if (await Raiton()) return true;
                 if (await FumaShuriken()) return true;
+                if (await Duality()) return true;
+                if (await DualityActive()) return true;
                 if (await ShadowFang()) return true;
                 if (await ArmorCrush()) return true;
                 if (await AeolianEdge()) return true;
@@ -46,6 +50,8 @@ namespace ShinraCo.Rotations
                 if (await Katon()) return true;
                 if (await FumaShuriken()) return true;
                 if (await DeathBlossom()) return true;
+                if (await Duality()) return true;
+                if (await DualityActive()) return true;
                 if (await ShadowFang()) return true;
                 if (await ArmorCrush()) return true;
                 if (await AeolianEdge()) return true;
@@ -63,6 +69,7 @@ namespace ShinraCo.Rotations
         {
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
+            if (Shinra.Settings.NinjaOpener) { if (await Helpers.ExecuteOpener()) return true; }
             if (await ShadeShift()) return true;
             if (await Shukuchi()) return true;
             if (await Assassinate()) return true;
@@ -97,7 +104,8 @@ namespace ShinraCo.Rotations
         public override async Task<bool> PreCombatBuff()
         {
             if (await Shinra.SummonChocobo()) return true;
-            return await Huton();
+            if (await Huton()) return true;
+            return false;
         }
 
         #endregion

@@ -11,9 +11,11 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.RotationMode == Modes.Smart)
             {
+                if (Shinra.Settings.SamuraiOpener) { if (await Helpers.ExecuteOpener()) return true; }
                 if (await MidareSetsugekka()) return true;
                 if (await TenkaGoken()) return true;
                 if (await Higanbana()) return true;
+                if (await Kaiten()) return true;
                 if (await Meikyo()) return true;
                 if (await Kasha()) return true;
                 if (await Gekko()) return true;
@@ -31,8 +33,10 @@ namespace ShinraCo.Rotations
             }
             if (Shinra.Settings.RotationMode == Modes.Single)
             {
+                if (Shinra.Settings.SamuraiOpener) { if (await Helpers.ExecuteOpener()) return true; }
                 if (await MidareSetsugekka()) return true;
                 if (await Higanbana()) return true;
+                if (await Kaiten()) return true;
                 if (await Meikyo()) return true;
                 if (await Kasha()) return true;
                 if (await Gekko()) return true;
@@ -49,6 +53,7 @@ namespace ShinraCo.Rotations
             {
                 if (await MidareSetsugekka()) return true;
                 if (await TenkaGoken()) return true;
+                if (await Kaiten()) return true;
                 if (await Meikyo()) return true;
                 if (await Kasha()) return true;
                 if (await Gekko()) return true;
@@ -71,7 +76,9 @@ namespace ShinraCo.Rotations
         {
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
+            if (Shinra.Settings.SamuraiOpener) { if (await Helpers.ExecuteOpener()) return true; }
             if (await Meditate()) return true;
+            if (await HissatsuKaiten()) return true;
             if (await HissatsuGyoten()) return true;
             if (await TrueNorth()) return true;
             if (await MeikyoShisui()) return true;
@@ -123,7 +130,14 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> CombatPVP()
         {
-            return false;
+            if (await MeikyoShisuiPVP()) return true;
+            if (await HissatsuShintenPVP()) return true;
+            if (await MidareSetsugekkaPVP()) return true;
+            if (await HiganbanaPVP()) return true;
+            if (await YukikazePVP()) return true;
+            if (await GekkoPVP()) return true;
+            if (await KashaPVP()) return true;
+            return await EnpiPVP();
         }
 
         #endregion

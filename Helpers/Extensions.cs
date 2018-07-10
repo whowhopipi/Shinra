@@ -13,6 +13,8 @@ namespace ShinraCo
 {
     public static partial class Helpers
     {
+        public static int AoECount => Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+
         public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<TValue, bool> predicate)
         {
             var keys = dic.Keys.Where(k => predicate(dic[k])).ToList();
@@ -66,18 +68,16 @@ namespace ShinraCo
 
         public static void Debug(string msg)
         {
-            if (Shinra.Settings.DebugLogging)
-            {
-                Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - {msg}");
-            }
+            if (Shinra.Settings.DisableDebug) return;
+            Logging.Write(Colors.OrangeRed, $@"[Shinra] DEBUG - {msg}");
         }
 
-        public static void DisplayToast(string msg)
+        public static void DisplayToast(string msg, int duration = 1000)
         {
             if (Shinra.Settings.RotationMessages)
             {
-                Core.OverlayManager.AddToast(() => msg, TimeSpan.FromMilliseconds(1000), Colors.GreenYellow, Color.FromRgb(0, 0, 0),
-                                             new FontFamily("Agency FB"));
+                Core.OverlayManager.AddToast(() => msg, TimeSpan.FromMilliseconds(duration), Colors.GreenYellow, Color.FromRgb(0, 0, 0),
+                    new FontFamily("Agency FB"));
             }
         }
 

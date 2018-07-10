@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ff14bot;
 using ff14bot.Managers;
@@ -30,7 +31,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> SnapPunch()
         {
-            if (CoeurlForm || BalanceActive && Resource.GreasedLightning < 3)
+            if (CoeurlForm || BalanceActive && (Resource.GreasedLightning < 3 || Resource.Timer < TimeSpan.FromMilliseconds(6000)))
             {
                 return await MySpells.SnapPunch.Cast();
             }
@@ -39,7 +40,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> TwinSnakes()
         {
-            if ((RaptorForm || BalanceActive) && !Core.Player.HasAura(MySpells.TwinSnakes.Name, true, 3000))
+            if ((RaptorForm || BalanceActive) && !Core.Player.HasAura(MySpells.TwinSnakes.Name, true, 6000))
             {
                 return await MySpells.TwinSnakes.Cast();
             }
@@ -48,7 +49,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> DragonKick()
         {
-            if ((OpoOpoForm || BalanceActive) && !Core.Player.CurrentTarget.HasAura(821, false, 5000))
+            if ((OpoOpoForm || BalanceActive) && !Core.Player.CurrentTarget.HasAura(821, false, 6000))
             {
                 return await MySpells.DragonKick.Cast();
             }
@@ -64,7 +65,7 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.MonkDemolish && (Core.Player.CurrentTarget.IsBoss() ||
                                                  Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.MonkDemolishHP))
             {
-                if ((CoeurlForm || BalanceActive) && !Core.Player.CurrentTarget.HasAura(MySpells.Demolish.Name, true, 5000))
+                if ((CoeurlForm || BalanceActive) && !Core.Player.CurrentTarget.HasAura(MySpells.Demolish.Name, true, 6000))
                 {
                     return await MySpells.Demolish.Cast();
                 }
@@ -120,7 +121,7 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.MonkForbiddenChakra && Resource.FithChakra == 5)
             {
-                return await MySpells.ForbiddenChakra.Cast();
+                return await MySpells.ForbiddenChakra.Cast(null, false);
             }
             return false;
         }
@@ -165,6 +166,20 @@ namespace ShinraCo.Rotations
             return false;
         }
 
+        private async Task<bool> FormShift()
+        {
+            if (!Shinra.Settings.MonkFormShift || !Core.Player.HasTarget || CoeurlForm) return false;
+
+            return await MySpells.FormShift.Cast();
+        }
+
+        private async Task<bool> Meditation()
+        {
+            if (!Shinra.Settings.MonkMeditation || Resource.FithChakra == 5) return false;
+
+            return await MySpells.Meditation.Cast();
+        }
+
         private async Task<bool> RiddleOfFire()
         {
             if (Shinra.Settings.MonkRiddleOfFire)
@@ -203,7 +218,8 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> FistsOfWind()
         {
-            if (Shinra.Settings.MonkFist == MonkFists.Wind && !Core.Player.HasAura(MySpells.FistsOfWind.Name))
+            if (Shinra.Settings.MonkFist == MonkFists.Wind && !Core.Player.HasAura(MySpells.FistsOfWind.Name) &&
+                !Core.Player.HasAura(MySpells.RiddleOfEarth.Name))
             {
                 return await MySpells.FistsOfWind.Cast(null, false);
             }
@@ -212,7 +228,8 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> FistsOfFire()
         {
-            if (Shinra.Settings.MonkFist == MonkFists.Fire && !Core.Player.HasAura(MySpells.FistsOfFire.Name))
+            if (Shinra.Settings.MonkFist == MonkFists.Fire && !Core.Player.HasAura(MySpells.FistsOfFire.Name) &&
+                !Core.Player.HasAura(MySpells.RiddleOfEarth.Name))
             {
                 return await MySpells.FistsOfFire.Cast(null, false);
             }
@@ -269,6 +286,74 @@ namespace ShinraCo.Rotations
             if (Shinra.Settings.MonkTrueNorth && Core.Player.TargetDistance(5, false))
             {
                 return await MySpells.Role.TrueNorth.Cast();
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region PVP
+
+        private async Task<bool> SnapPunchPVP()
+        {
+            return await MySpells.PVP.SnapPunch.Cast();
+        }
+
+        private async Task<bool> DemolishPVP()
+        {
+            if (!Core.Player.CurrentTarget.HasAura(MySpells.Demolish.Name, true, 6000) &&
+                ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Bootshine.Combo) == MySpells.PVP.Bootshine.ID)
+            {
+                return await MySpells.PVP.Demolish.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> SomersaultPVP()
+        {
+            if (Core.Player.CurrentTP > 700 && Resource.FithChakra < 5)
+            {
+                return await MySpells.PVP.Somersault.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> TheForbiddenChakraPVP()
+        {
+            if (Resource.FithChakra == 5)
+            {
+                return await MySpells.PVP.TheForbiddenChakra.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> FormShiftPVP()
+        {
+            if (Resource.GreasedLightning < 3 || Resource.Timer.TotalMilliseconds < 2000)
+            {
+                return await MySpells.PVP.FormShift.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> TornadoKickPVP()
+        {
+            if (Resource.GreasedLightning == 3 && Core.Player.CurrentTarget.CurrentHealthPercent < 20)
+            {
+                if (ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.SnapPunch.Combo) == MySpells.PVP.SnapPunch.ID ||
+                    ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Demolish.Combo) == MySpells.PVP.Demolish.ID)
+                {
+                    return await MySpells.PVP.TornadoKick.Cast();
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> RiddleOfFirePVP()
+        {
+            if ((Resource.FithChakra >= 4 || Resource.GreasedLightning == 3) && Core.Player.TargetDistance(5, false))
+            {
+                return await MySpells.PVP.RiddleOfFire.Cast();
             }
             return false;
         }

@@ -1,9 +1,11 @@
-﻿using ShinraCo.Spells.Role;
+﻿using ShinraCo.Spells.PVP;
+using ShinraCo.Spells.Role;
 
 namespace ShinraCo.Spells.Main
 {
     public class ArcanistSpells
     {
+        public SummonerPVP PVP { get; } = new SummonerPVP();
         public CasterSpells Role { get; } = new CasterSpells();
 
         public Spell Ruin { get; } = new Spell
@@ -83,6 +85,16 @@ namespace ShinraCo.Spells.Main
             Level = 15,
             GCDType = GCDType.On,
             SpellType = SpellType.Buff,
+            CastType = CastType.Self
+        };
+
+        public Spell Sustain { get; } = new Spell
+        {
+            Name = "Sustain",
+            ID = 171,
+            Level = 18,
+            GCDType = GCDType.On,
+            SpellType = SpellType.Heal,
             CastType = CastType.Self
         };
 

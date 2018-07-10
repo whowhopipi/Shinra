@@ -8,7 +8,7 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Combat()
         {
-            if (await Opener()) return true;
+            if (Shinra.Settings.SummonerOpener) { if (await Helpers.ExecuteOpener()) return true; }
             if (await Drain()) return true;
             if (await MiasmaIII()) return true;
             if (await Miasma()) return true;
@@ -28,7 +28,7 @@ namespace ShinraCo.Rotations
         {
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
-            if (await Opener()) return true;
+            if (Shinra.Settings.SummonerOpener) { if (await Helpers.ExecuteOpener()) return true; }
             if (await Sic()) return true;
             if (await SummonIII()) return true;
             if (await SummonII()) return true;
@@ -59,6 +59,7 @@ namespace ShinraCo.Rotations
         {
             if (await UpdateHealing()) return true;
             if (await Resurrection()) return true;
+            if (await Sustain()) return true;
             return await Physick();
         }
 
@@ -69,7 +70,7 @@ namespace ShinraCo.Rotations
         public override async Task<bool> PreCombatBuff()
         {
             if (await Shinra.SummonChocobo()) return true;
-            if (await Aetherflow()) return true;
+            if (await AetherflowPreCombat()) return true;
             if (await SummonIII()) return true;
             if (await SummonII()) return true;
             if (await Summon()) return true;
@@ -82,7 +83,7 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> Pull()
         {
-            if (await Opener()) return true;
+            if (Shinra.Settings.SummonerOpener) { if (await Helpers.ExecuteOpener()) return true; }
             if (await TriDisaster()) return true;
             return await Combat();
         }
@@ -93,7 +94,17 @@ namespace ShinraCo.Rotations
 
         public override async Task<bool> CombatPVP()
         {
-            return false;
+            if (await EnkindleBahamutPVP()) return true;
+            if (await SummonBahamutPVP()) return true;
+            if (await DeathflarePVP()) return true;
+            if (await DreadwyrmTrancePVP()) return true;
+            if (await FesterPVP()) return true;
+            if (await EnergyDrainPVP()) return true;
+            if (await AetherflowPVP()) return true;
+            if (await WitherPVP()) return true;
+            if (await MiasmaIIIPVP()) return true;
+            if (await BioIIIPVP()) return true;
+            return await RuinIIIPVP();
         }
 
         #endregion

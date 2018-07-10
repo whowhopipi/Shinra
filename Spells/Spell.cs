@@ -299,6 +299,11 @@ namespace ShinraCo.Spells
                 return true;
             }
 
+            if (Shinra.Settings.AstrologianCardOnly && Core.Player.CurrentJob == ClassJobType.Astrologian)
+            {
+                return false;
+            }
+
             #endregion
 
             #region Ninjutsu
@@ -347,7 +352,8 @@ namespace ShinraCo.Spells
 
                 #region CanCast
 
-                if (!ActionManager.CanCast(ID, target))
+                if (Shinra.Settings.QueueSpells && !ActionManager.CanCastOrQueue(DataManager.GetSpellData(ID), target) ||
+                    !ActionManager.CanCast(ID, target))
                 {
                     return false;
                 }
@@ -390,7 +396,9 @@ namespace ShinraCo.Spells
 
             #region CanAttack
 
-            if (!target.CanAttack && CastType != CastType.Self && CastType != CastType.SelfLocation)
+            var bc = target as BattleCharacter;
+
+            if (!target.CanAttack && CastType != CastType.Self && CastType != CastType.SelfLocation && (bc == null || !bc.IsFate))
             {
                 switch (SpellType)
                 {
@@ -510,9 +518,19 @@ namespace ShinraCo.Spells
                     }
                     break;
                 default:
-                    if (!ActionManager.CanCast(ID, target))
+                    if (Shinra.Settings.QueueSpells && GCDType == GCDType.On)
                     {
-                        return false;
+                        if (!ActionManager.CanCastOrQueue(DataManager.GetSpellData(ID), target))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (!ActionManager.CanCast(ID, target))
+                        {
+                            return false;
+                        }
                     }
                     break;
             }
@@ -703,6 +721,7 @@ namespace ShinraCo.Spells
                         {
                             return false;
                         }
+                        Logging.Write(Colors.Orange, $@"DoAction Combo {Combo} 0x{target.ObjectId:X}");
                     }
                     else
                     {
@@ -732,7 +751,7 @@ namespace ShinraCo.Spells
             #endregion
 
             Shinra.LastSpell = this;
-            Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}");
+            Logging.Write(Colors.GreenYellow, $@"[Shinra] Casting >>> {Name}{(SpellType == SpellType.PVP ? " Combo" : "")}");
 
             #region AddRecent
 
@@ -746,7 +765,7 @@ namespace ShinraCo.Spells
 
             if (SpellType == SpellType.Damage || SpellType == SpellType.DoT)
             {
-                if (!Shinra.OpenerFinished && !RecentSpell.ContainsKey("Opener") && await CastComplete(this, true))
+                if (!Helpers.OpenerFinished && !RecentSpell.ContainsKey("Opener") && await CastComplete(this, true))
                 {
                     var val = DateTime.UtcNow + DataManager.GetSpellData(ID).AdjustedCastTime + TimeSpan.FromSeconds(3);
                     RecentSpell.Add("Opener", val);

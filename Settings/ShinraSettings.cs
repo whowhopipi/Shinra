@@ -50,12 +50,6 @@ namespace ShinraCo.Settings
         Nocturnal
     }
 
-    public enum AstrologianStyles
-    {
-        Solo,
-        Party
-    }
-
     public enum MachinistTurrets
     {
         None,
@@ -191,6 +185,9 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(3)]
         public int CustomAoECount { get; set; }
 
+        [Setting, DefaultValue(false)]
+        public bool QueueSpells { get; set; }
+
         #endregion
 
         #region Misc
@@ -199,7 +196,7 @@ namespace ShinraCo.Settings
         public bool IgnoreSmart { get; set; }
 
         [Setting, DefaultValue(false)]
-        public bool DebugLogging { get; set; }
+        public bool DisableDebug { get; set; }
 
         #endregion
 
@@ -223,11 +220,42 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool AstrologianLucidDreaming { get; set; }
 
+        [Setting, DefaultValue(60)]
+        public int AstrologianLucidDreamingPct { get; set; }
+
         [Setting, DefaultValue(true)]
         public bool AstrologianSwiftcast { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool AstrologianEyeForAnEye { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int AstrologianEyeForAnEyePct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianLargesse { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int AstrologianLargesseCount { get; set; }
+
         [Setting, DefaultValue(60)]
-        public int AstrologianLucidDreamingPct { get; set; }
+        public int AstrologianLargessePct { get; set; }
+
+        #endregion
+
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianStopDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianStopDots { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int AstrologianStopDamagePct { get; set; }
+
+        [Setting, DefaultValue(20)]
+        public int AstrologianStopDotsPct { get; set; }
 
         #endregion
 
@@ -235,6 +263,37 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool AstrologianEarthlyStar { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianStellarDetonation { get; set; }
+
+        #endregion
+
+        #region Buff
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianLightspeed { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int AstrologianLightspeedCount { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int AstrologianLightspeedPct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianSynastry { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int AstrologianSynastryCount { get; set; }
+
+        [Setting, DefaultValue(60)]
+        public int AstrologianSynastryPct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianTimeDilation { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianCelestialOpposition { get; set; }
 
         #endregion
 
@@ -252,14 +311,26 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool AstrologianBenefic { get; set; }
 
+        [Setting, DefaultValue(50)]
+        public int AstrologianBeneficPct { get; set; }
+
         [Setting, DefaultValue(true)]
         public bool AstrologianBeneficII { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int AstrologianBeneficIIPct { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool AstrologianEssDignity { get; set; }
 
+        [Setting, DefaultValue(30)]
+        public int AstrologianEssDignityPct { get; set; }
+
         [Setting, DefaultValue(true)]
         public bool AstrologianAspBenefic { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int AstrologianAspBeneficPct { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool AstrologianHelios { get; set; }
@@ -267,23 +338,11 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool AstrologianAspHelios { get; set; }
 
-        [Setting, DefaultValue(true)]
-        public bool AstrologianAscend { get; set; }
-
-        [Setting, DefaultValue(50)]
-        public int AstrologianBeneficPct { get; set; }
-
-        [Setting, DefaultValue(40)]
-        public int AstrologianBeneficIIPct { get; set; }
-
-        [Setting, DefaultValue(30)]
-        public int AstrologianEssDignityPct { get; set; }
-
-        [Setting, DefaultValue(70)]
-        public int AstrologianAspBeneficPct { get; set; }
-
         [Setting, DefaultValue(60)]
         public int AstrologianHeliosPct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool AstrologianAscend { get; set; }
 
         [Setting, DefaultValue(60)]
         public int AstrologianAspHeliosPct { get; set; }
@@ -298,8 +357,8 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool AstrologianSleeveDraw { get; set; }
 
-        [Setting, DefaultValue(AstrologianStyles.Solo)]
-        public AstrologianStyles AstrologianStyle { get; set; }
+        [Setting, DefaultValue(true)]
+        public bool AstrologianCardPreCombat { get; set; }
 
         #endregion
 
@@ -307,6 +366,13 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(AstrologianSects.Diurnal)]
         public AstrologianSects AstrologianSect { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool AstrologianCardOnly { get; set; }
 
         #endregion
 
@@ -367,10 +433,26 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region DoT
+
+        [Setting, DefaultValue(true)]
+        public bool BardUseDots { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool BardUseDotsAoe { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BardDotSnapshot { get; set; }
+
+        #endregion
+
         #region Cooldown
 
         [Setting, DefaultValue(true)]
         public bool BardSongs { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BardEmpyrealArrow { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool BardSidewinder { get; set; }
@@ -381,6 +463,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool BardRagingStrikes { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool BardFoeRequiem { get; set; }
+
+        [Setting, DefaultValue(100)]
+        public int BardFoeRequiemPct { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool BardBarrage { get; set; }
@@ -591,6 +679,16 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool DarkKnightOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool DarkKnightPotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Dragoon
@@ -658,6 +756,19 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool DragoonBloodOfTheDragon { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool DragoonDragonSight { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool DragoonOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool DragoonPotion { get; set; }
 
         #endregion
 
@@ -860,6 +971,12 @@ namespace ShinraCo.Settings
         public bool MonkPerfectBalance { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool MonkFormShift { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool MonkMeditation { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool MonkRiddleOfFire { get; set; }
 
         [Setting, DefaultValue(true)]
@@ -871,6 +988,16 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(MonkFists.Fire)]
         public MonkFists MonkFist { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool MonkOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool MonkPotion { get; set; }
 
         #endregion
 
@@ -985,6 +1112,16 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool NinjaSuiton { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool NinjaOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool NinjaPotion { get; set; }
 
         #endregion
 
@@ -1252,6 +1389,26 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Heal
+
+        [Setting, DefaultValue(true)]
+        public bool SamuraiMerciful { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int SamuraiMercifulPct { get; set; }
+
+        #endregion
+
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool SamuraiOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool SamuraiPotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Scholar
@@ -1270,11 +1427,42 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool ScholarLucidDreaming { get; set; }
 
+        [Setting, DefaultValue(60)]
+        public int ScholarLucidDreamingPct { get; set; }
+
         [Setting, DefaultValue(true)]
         public bool ScholarSwiftcast { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool ScholarEyeForAnEye { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int ScholarEyeForAnEyePct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarLargesse { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int ScholarLargesseCount { get; set; }
+
         [Setting, DefaultValue(60)]
-        public int ScholarLucidDreamingPct { get; set; }
+        public int ScholarLargessePct { get; set; }
+
+        #endregion
+
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarStopDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarStopDots { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int ScholarStopDamagePct { get; set; }
+
+        [Setting, DefaultValue(20)]
+        public int ScholarStopDotsPct { get; set; }
 
         #endregion
 
@@ -1286,6 +1474,12 @@ namespace ShinraCo.Settings
         #endregion
 
         #region Cooldown
+
+        [Setting, DefaultValue(true)]
+        public bool ScholarEnergyDrain { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int ScholarEnergyDrainPct { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool ScholarShadowFlare { get; set; }
@@ -1441,10 +1635,16 @@ namespace ShinraCo.Settings
         public bool SummonerPhysick { get; set; }
 
         [Setting, DefaultValue(true)]
+        public bool SummonerSustain { get; set; }
+
+        [Setting, DefaultValue(true)]
         public bool SummonerResurrection { get; set; }
 
         [Setting, DefaultValue(50)]
         public int SummonerPhysickPct { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int SummonerSustainPct { get; set; }
 
         #endregion
 
@@ -1462,6 +1662,9 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(false)]
         public bool SummonerPotion { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool SummonerOpenerGaruda { get; set; }
 
         #endregion
 
@@ -1593,6 +1796,16 @@ namespace ShinraCo.Settings
 
         #endregion
 
+        #region Misc
+
+        [Setting, DefaultValue(false)]
+        public bool WarriorOpener { get; set; }
+
+        [Setting, DefaultValue(false)]
+        public bool WarriorPotion { get; set; }
+
+        #endregion
+
         #endregion
 
         #region White Mage
@@ -1611,11 +1824,42 @@ namespace ShinraCo.Settings
         [Setting, DefaultValue(true)]
         public bool WhiteMageLucidDreaming { get; set; }
 
+        [Setting, DefaultValue(60)]
+        public int WhiteMageLucidDreamingPct { get; set; }
+
         [Setting, DefaultValue(true)]
         public bool WhiteMageSwiftcast { get; set; }
 
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageEyeForAnEye { get; set; }
+
+        [Setting, DefaultValue(70)]
+        public int WhiteMageEyeForAnEyePct { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageLargesse { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int WhiteMageLargesseCount { get; set; }
+
         [Setting, DefaultValue(60)]
-        public int WhiteMageLucidDreamingPct { get; set; }
+        public int WhiteMageLargessePct { get; set; }
+
+        #endregion
+
+        #region Damage
+
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageStopDamage { get; set; }
+
+        [Setting, DefaultValue(true)]
+        public bool WhiteMageStopDots { get; set; }
+
+        [Setting, DefaultValue(40)]
+        public int WhiteMageStopDamagePct { get; set; }
+
+        [Setting, DefaultValue(20)]
+        public int WhiteMageStopDotsPct { get; set; }
 
         #endregion
 
@@ -1623,6 +1867,12 @@ namespace ShinraCo.Settings
 
         [Setting, DefaultValue(true)]
         public bool WhiteMagePresenceOfMind { get; set; }
+
+        [Setting, DefaultValue(2)]
+        public int WhiteMagePresenceOfMindCount { get; set; }
+
+        [Setting, DefaultValue(50)]
+        public int WhiteMagePresenceOfMindPct { get; set; }
 
         [Setting, DefaultValue(true)]
         public bool WhiteMageThinAir { get; set; }

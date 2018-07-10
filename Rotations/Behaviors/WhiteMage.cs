@@ -47,7 +47,6 @@ namespace ShinraCo.Rotations
             if (await Shinra.SummonChocobo()) return true;
             if (await Shinra.ChocoboStance()) return true;
             if (await LucidDreaming()) return true;
-            if (await PresenceOfMind()) return true;
             return await ClericStance();
         }
 
@@ -61,6 +60,9 @@ namespace ShinraCo.Rotations
             if (await StopCasting()) return true;
             if (await Benediction()) return true;
             if (await Tetragrammaton()) return true;
+            if (await PresenceOfMind()) return true;
+            if (await Largesse()) return true;
+            if (await EyeForAnEye()) return true;
             if (await PlenaryIndulgence()) return true;
             if (await Assize()) return true;
             if (await MedicaII()) return true;
@@ -89,7 +91,8 @@ namespace ShinraCo.Rotations
         public override async Task<bool> Pull()
         {
             if (await AeroII()) return true;
-            return await Aero();
+            if (await Aero()) return true;
+            return await Combat();
         }
 
         #endregion

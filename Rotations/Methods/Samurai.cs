@@ -115,27 +115,21 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> MidareSetsugekka()
         {
-            if (Shinra.Settings.SamuraiMidare && (Core.Player.CurrentTarget.IsBoss() ||
-                                                  Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.SamuraiMidareHP))
+            if (!UseMidare) return false;
+
+            if (!Core.Player.HasAura(1229) && ActionManager.CanCast(MySpells.MidareSetsugekka.Name, Core.Player.CurrentTarget))
             {
-                if (NumSen == 3 && !MovementManager.IsMoving)
+                if (await MySpells.HissatsuKaiten.Cast(null, false))
                 {
-                    if (ActionManager.CanCast(MySpells.MidareSetsugekka.Name, Core.Player.CurrentTarget))
-                    {
-                        if (await MySpells.HissatsuKaiten.Cast(null, false))
-                        {
-                            await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
-                        }
-                    }
-                    return await MySpells.MidareSetsugekka.Cast();
+                    await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
                 }
             }
-            return false;
+            return await MySpells.MidareSetsugekka.Cast();
         }
 
         private async Task<bool> HissatsuShinten()
         {
-            if (Shinra.LastSpell.Name != MySpells.HissatsuKaiten.Name && Resource.Kenki >= 45 && !PoolKenki)
+            if (Resource.Kenki >= 45 && (!PoolKenki || MySpells.Hagakure.Cooldown() == 0))
             {
                 return await MySpells.HissatsuShinten.Cast();
             }
@@ -166,22 +160,16 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Higanbana()
         {
-            if (Shinra.Settings.SamuraiHiganbana && NumSen == 1 && !MovementManager.IsMoving &&
-                !Core.Player.CurrentTarget.HasAura(MySpells.Higanbana.Name, true, 5000))
+            if (!UseHiganbana) return false;
+
+            if (!Core.Player.HasAura(1229) && ActionManager.CanCast(MySpells.Higanbana.Name, Core.Player.CurrentTarget))
             {
-                if (Core.Player.CurrentTarget.IsBoss() || Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.SamuraiHiganbanaHP)
+                if (await MySpells.HissatsuKaiten.Cast(null, false))
                 {
-                    if (ActionManager.CanCast(MySpells.Higanbana.Name, Core.Player.CurrentTarget))
-                    {
-                        if (await MySpells.HissatsuKaiten.Cast(null, false))
-                        {
-                            await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
-                        }
-                    }
-                    return await MySpells.Higanbana.Cast();
+                    await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
                 }
             }
-            return false;
+            return await MySpells.Higanbana.Cast();
         }
 
         #endregion
@@ -217,21 +205,16 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> TenkaGoken()
         {
-            var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
+            if (!UseTenka) return false;
 
-            if (NumSen == 2 && !MovementManager.IsMoving &&
-                (Shinra.Settings.RotationMode == Modes.Multi || Helpers.EnemiesNearTarget(5) >= count))
+            if (!Core.Player.HasAura(1229) && ActionManager.CanCast(MySpells.TenkaGoken.Name, Core.Player.CurrentTarget))
             {
-                if (ActionManager.CanCast(MySpells.TenkaGoken.Name, Core.Player.CurrentTarget))
+                if (await MySpells.HissatsuKaiten.Cast(null, false))
                 {
-                    if (await MySpells.HissatsuKaiten.Cast(null, false))
-                    {
-                        await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
-                    }
+                    await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
                 }
-                return await MySpells.TenkaGoken.Cast();
             }
-            return false;
+            return await MySpells.TenkaGoken.Cast();
         }
 
         private async Task<bool> HissatsuKyuten()
@@ -266,7 +249,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> HissatsuGuren()
         {
-            if (Shinra.Settings.SamuraiGuren)
+            if (Shinra.Settings.SamuraiGuren && Resource.Kenki >= 70)
             {
                 return await MySpells.HissatsuGuren.Cast();
             }
@@ -290,25 +273,33 @@ namespace ShinraCo.Rotations
             return false;
         }
 
-        private async Task<bool> Meditate()
+        private static async Task<bool> Kaiten()
         {
-            if (Core.Player.HasAura(MySpells.Meditate.Name))
+            return Core.Player.HasAura(1229);
+        }
+
+        private async Task<bool> HissatsuKaiten()
+        {
+            if (Shinra.LastSpell.Name == MySpells.Hagakure.Name || UseHagakure || !UseHiganbana && !UseTenka && !UseMidare)
+                return false;
+
+            if (await MySpells.HissatsuKaiten.Cast())
             {
-                return true;
+                return await Coroutine.Wait(3000, () => Core.Player.HasAura(1229));
             }
             return false;
         }
 
+        private async Task<bool> Meditate()
+        {
+            return Core.Player.HasAura(MySpells.Meditate.Name);
+        }
+
         private async Task<bool> Hagakure()
         {
-            if (Shinra.Settings.SamuraiHagakure)
-            {
-                if (NumSen == 3 && Resource.Kenki <= 40)
-                {
-                    return await MySpells.Hagakure.Cast();
-                }
-            }
-            return false;
+            if (!UseHagakure || Core.Player.HasAura(1229)) return false;
+
+            return await MySpells.Hagakure.Cast();
         }
 
         #endregion
@@ -317,7 +308,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> MercifulEyes()
         {
-            if (Core.Player.CurrentHealthPercent < 60)
+            if (Shinra.Settings.SamuraiMerciful && Core.Player.CurrentHealthPercent < Shinra.Settings.SamuraiMercifulPct)
             {
                 return await MySpells.MercifulEyes.Cast();
             }
@@ -380,6 +371,86 @@ namespace ShinraCo.Rotations
 
         #endregion
 
+        #region PVP
+
+        private async Task<bool> YukikazePVP()
+        {
+            if (!SetsuActive && (Core.Player.HasAura(MySpells.MeikyoShisui.Name) ||
+                                 ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Gekko.Combo) == MySpells.PVP.Jinpu.ID &&
+                                 ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Kasha.Combo) == MySpells.PVP.Shifu.ID))
+            {
+                return await MySpells.PVP.Yukikaze.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> GekkoPVP()
+        {
+            if (!GetsuActive && (Core.Player.HasAura(MySpells.MeikyoShisui.Name) ||
+                                 ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Kasha.Combo) == MySpells.PVP.Shifu.ID))
+            {
+                return await MySpells.PVP.Gekko.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> KashaPVP()
+        {
+            return await MySpells.PVP.Kasha.Cast();
+        }
+
+        private async Task<bool> EnpiPVP()
+        {
+            return await MySpells.PVP.Enpi.Cast();
+        }
+
+        private async Task<bool> HissatsuShintenPVP()
+        {
+            if (Resource.Kenki >= 80 || Core.Player.CurrentTarget.CurrentHealthPercent < 30)
+            {
+                return await MySpells.PVP.HissatsuShinten.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> MeikyoShisuiPVP()
+        {
+            if (Core.Player.CurrentTP >= 750 || !SetsuActive && !Core.Player.CurrentTarget.HasAura(MySpells.Yukikaze.Name, true, 2500))
+            {
+                if (ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Yukikaze.Combo) == MySpells.PVP.Hakaze.ID &&
+                    ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Gekko.Combo) == MySpells.PVP.Jinpu.ID &&
+                    ActionManager.GetPvPComboCurrentActionId(MySpells.PVP.Kasha.Combo) == MySpells.PVP.Shifu.ID &&
+                    DataManager.GetSpellData(7477).Cooldown.TotalMilliseconds < 1500)
+                {
+                    if (await MySpells.PVP.MeikyoShisui.Cast())
+                    {
+                        await Coroutine.Wait(3000, () => Core.Player.HasAura(MySpells.MeikyoShisui.Name));
+                    }
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> HiganbanaPVP()
+        {
+            if (NumSen == 1 && !MovementManager.IsMoving && !Core.Player.CurrentTarget.HasAura(MySpells.Higanbana.Name, true, 5000))
+            {
+                return await MySpells.PVP.Higanbana.Cast();
+            }
+            return false;
+        }
+
+        private async Task<bool> MidareSetsugekkaPVP()
+        {
+            if (NumSen == 3 && !MovementManager.IsMoving)
+            {
+                return await MySpells.PVP.MidareSetsugekka.Cast();
+            }
+            return false;
+        }
+
+        #endregion
+
         #region Custom
 
         private static bool GetsuActive => Resource.Sen.HasFlag(Resource.Iaijutsu.Getsu);
@@ -387,6 +458,22 @@ namespace ShinraCo.Rotations
         private static bool SetsuActive => Resource.Sen.HasFlag(Resource.Iaijutsu.Setsu);
         private static bool PoolKenki => Shinra.Settings.SamuraiGuren && ActionManager.HasSpell(7496) &&
                                          DataManager.GetSpellData(7496).Cooldown.TotalMilliseconds < 6000;
+
+        private static bool UseHiganbana => Shinra.Settings.SamuraiHiganbana && NumSen == 1 &&
+                                            !Core.Player.CurrentTarget.HasAura(1228, true, 8000) &&
+                                            (Core.Player.CurrentTarget.IsBoss() ||
+                                             Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.SamuraiHiganbanaHP);
+
+        private static bool UseTenka => NumSen == 2 && (Shinra.Settings.RotationMode == Modes.Multi ||
+                                                        Shinra.Settings.RotationMode == Modes.Smart &&
+                                                        Helpers.EnemiesNearTarget(5) >= Helpers.AoECount);
+
+        private static bool UseMidare => Shinra.Settings.SamuraiMidare && NumSen == 3 &&
+                                         (Core.Player.CurrentTarget.IsBoss() ||
+                                          Core.Player.CurrentTarget.CurrentHealth > Shinra.Settings.SamuraiMidareHP);
+
+        private static bool UseHagakure => Shinra.Settings.SamuraiHagakure && NumSen == 3 &&
+                                           DataManager.GetSpellData(7495).Cooldown == TimeSpan.Zero;
 
         private static int NumSen
         {

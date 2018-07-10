@@ -6,40 +6,25 @@ using ff14bot.Managers;
 using ShinraCo.Settings;
 using ShinraCo.Spells;
 using ShinraCo.Spells.Main;
-using ShinraCo.Spells.Opener;
 using Resource = ff14bot.Managers.ActionResourceManager.Bard;
+using static ShinraCo.Constants;
 
 namespace ShinraCo.Rotations
 {
     public sealed partial class Bard
     {
         private BardSpells MySpells { get; } = new BardSpells();
-        private BardOpener MyOpener { get; } = new BardOpener();
-
-        private int _heavyCount;
 
         #region Damage
 
         private async Task<bool> HeavyShot()
         {
-            if (await MySpells.HeavyShot.Cast())
-            {
-                if (BarrageCooldown < 500)
-                {
-                    _heavyCount++;
-                }
-                else
-                {
-                    _heavyCount = 0;
-                }
-                return true;
-            }
-            return false;
+            return await MySpells.HeavyShot.Cast();
         }
 
         private async Task<bool> StraightShotBuff()
         {
-            if (!Core.Player.HasAura(MySpells.StraightShot.Name, true, 4000))
+            if (!Core.Player.HasAura(MySpells.StraightShot.Name, true, 6000))
             {
                 return await MySpells.StraightShot.Cast();
             }
@@ -48,7 +33,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> StraightShot()
         {
-            if (Core.Player.HasAura("Straighter Shot"))
+            if (Core.Player.HasAura("Straighter Shot") && !ActionManager.HasSpell(MySpells.RefulgentArrow.Name))
             {
                 return await MySpells.StraightShot.Cast();
             }
@@ -67,31 +52,46 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> PitchPerfect()
         {
-            if (Shinra.Settings.BardPitchPerfect)
+            if (!Shinra.Settings.BardPitchPerfect) return false;
+
+            var critBonus = DotManager.Check(Target, true);
+
+            if (NumRepertoire >= Shinra.Settings.BardRepertoireCount || MinuetActive && SongTimer < 3000 ||
+                critBonus >= 20 && NumRepertoire >= 2)
             {
-                if (NumRepertoire >= Shinra.Settings.BardRepertoireCount || MinuetActive && SongTimer < 3000)
-                {
-                    return await MySpells.PitchPerfect.Cast();
-                }
+                return await MySpells.PitchPerfect.Cast();
             }
             return false;
         }
 
         private async Task<bool> RefulgentArrow()
         {
-            if (Shinra.Settings.BardBarrage && BarrageCooldown > 0 && BarrageCooldown < 5000 &&
-                Core.Player.HasAura(MySpells.StraightShot.Name, true, 8000))
+            if (Core.Player.HasAura(122) && (!Shinra.Settings.BardBarrage || MySpells.Barrage.Cooldown() > 7000 ||
+                                             !Core.Player.HasAura(MySpells.StraightShot.Name, true, 6000)))
             {
-                return false;
+                return await MySpells.RefulgentArrow.Cast();
             }
-            if (Shinra.Settings.BardBarrage && ActionManager.CanCast(MySpells.RefulgentArrow.Name, Core.Player.CurrentTarget))
+            return false;
+        }
+
+        private async Task<bool> BarrageActive()
+        {
+            if (Core.Player.HasAura(MySpells.Barrage.Name))
             {
-                if (await MySpells.Barrage.Cast(null, false))
+                if (await MySpells.RefulgentArrow.Cast())
                 {
-                    await Coroutine.Wait(3000, () => Core.Player.HasAura(MySpells.Barrage.Name));
+                    return true;
+                }
+                if (ActionManager.LastSpell.Name == MySpells.HeavyShot.Name)
+                {
+                    await Coroutine.Wait(400, () => Core.Player.HasAura(122));
+                }
+                if (!Core.Player.HasAura(122))
+                {
+                    return await MySpells.EmpyrealArrow.Cast(null, false);
                 }
             }
-            return await MySpells.RefulgentArrow.Cast();
+            return false;
         }
 
         #endregion
@@ -100,28 +100,67 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> VenomousBite()
         {
-            if (!Core.Player.CurrentTarget.HasAura(VenomDebuff, true, 4000))
-            {
-                return await MySpells.VenomousBite.Cast();
-            }
-            return false;
+            if (!Shinra.Settings.BardUseDots || Target.HasAura(VenomDebuff, true, 4000) || !await MySpells.VenomousBite.Cast())
+                return false;
+
+            DotManager.Add(Target);
+            return true;
         }
 
         private async Task<bool> Windbite()
         {
-            if (!Core.Player.CurrentTarget.HasAura(WindDebuff, true, 4000))
-            {
-                return await MySpells.Windbite.Cast();
-            }
-            return false;
+            if (!Shinra.Settings.BardUseDots || Target.HasAura(WindDebuff, true, 4000) || !await MySpells.Windbite.Cast())
+                return false;
+
+            DotManager.Add(Target);
+            return true;
         }
 
         private async Task<bool> IronJaws()
         {
-            if (Core.Player.CurrentTarget.HasAura(VenomDebuff, true) && !Core.Player.CurrentTarget.HasAura(VenomDebuff, true, 4000) ||
-                Core.Player.CurrentTarget.HasAura(WindDebuff, true) && !Core.Player.CurrentTarget.HasAura(WindDebuff, true, 4000))
+            if (!Target.HasAura(VenomDebuff, true) || !Target.HasAura(WindDebuff, true) ||
+                Target.HasAura(VenomDebuff, true, 5000) && Target.HasAura(WindDebuff, true, 5000) || !await MySpells.IronJaws.Cast())
             {
-                return await MySpells.IronJaws.Cast();
+                return false;
+            }
+
+            DotManager.Add(Target);
+            return true;
+        }
+
+        private async Task<bool> DotSnapshot()
+        {
+            if (!Shinra.Settings.BardDotSnapshot ||
+                !Core.Player.CurrentTarget.HasAura(VenomDebuff, true) ||
+                !Core.Player.CurrentTarget.HasAura(WindDebuff, true) ||
+                DotManager.Recent(Target))
+            {
+                return false;
+            }
+
+            var crit = DotManager.Difference(Target, true);
+            var damage = crit + DotManager.Difference(Target);
+
+            // Prioritise 30% crit buff
+            if (crit >= 30 || crit >= 0 && damage >= 0 && (DotManager.CritExpiring || DotManager.DamageExpiring))
+            {
+                if (await MySpells.IronJaws.Cast())
+                {
+                    DotManager.Add(Target);
+                    return true;
+                }
+            }
+
+            if (DotManager.Check(Target, true) >= 30) return false;
+
+            // Refresh during damage buffs
+            if (damage >= 20 || damage >= 10 && Target.AuraExpiring(WindDebuff, true, 10000) || damage >= 0 && DotManager.BuffExpiring)
+            {
+                if (await MySpells.IronJaws.Cast())
+                {
+                    DotManager.Add(Target);
+                    return true;
+                }
             }
             return false;
         }
@@ -132,6 +171,12 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> QuickNock()
         {
+            if (Shinra.Settings.BardUseDotsAoe && (!Core.Player.CurrentTarget.HasAura(VenomDebuff, true, 4000) ||
+                                                   !Core.Player.CurrentTarget.HasAura(WindDebuff, true, 4000)))
+            {
+                return false;
+            }
+
             if (Core.Player.CurrentTPPercent > 40)
             {
                 var count = Shinra.Settings.CustomAoE ? Shinra.Settings.CustomAoECount : 3;
@@ -190,15 +235,11 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> EmpyrealArrow()
         {
-            if (Shinra.Settings.BardBarrage && ActionManager.CanCast(MySpells.EmpyrealArrow.Name, Core.Player.CurrentTarget) &&
-                (!ActionManager.HasSpell(MySpells.RefulgentArrow.Name) || _heavyCount > 3))
+            if (Shinra.Settings.BardEmpyrealArrow)
             {
-                if (await MySpells.Barrage.Cast(null, false))
-                {
-                    await Coroutine.Wait(3000, () => Core.Player.HasAura(MySpells.Barrage.Name));
-                }
+                return await MySpells.EmpyrealArrow.Cast();
             }
-            return await MySpells.EmpyrealArrow.Cast(null, !Core.Player.HasAura(MySpells.Barrage.Name));
+            return false;
         }
 
         private async Task<bool> Sidewinder()
@@ -219,16 +260,37 @@ namespace ShinraCo.Rotations
         {
             if (Shinra.Settings.BardRagingStrikes)
             {
-                return await MySpells.RagingStrikes.Cast();
+                if (MinuetActive || !ActionManager.HasSpell(MySpells.WanderersMinuet.ID))
+                {
+                    return await MySpells.RagingStrikes.Cast();
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> FoeRequiem()
+        {
+            if (Shinra.Settings.BardFoeRequiem && !Core.Player.HasAura(MySpells.FoeRequiem.Name) &&
+                Core.Player.CurrentManaPercent >= Shinra.Settings.BardFoeRequiemPct)
+            {
+                return await MySpells.FoeRequiem.Cast();
             }
             return false;
         }
 
         private async Task<bool> Barrage()
         {
-            if (Shinra.Settings.BardBarrage && !ActionManager.HasSpell(MySpells.EmpyrealArrow.Name))
+            if (Shinra.Settings.BardBarrage)
             {
-                return await MySpells.Barrage.Cast();
+                if (MySpells.EmpyrealArrow.Cooldown() == 0 ||
+                    Core.Player.HasAura(122) && ActionManager.HasSpell(MySpells.RefulgentArrow.Name) ||
+                    !ActionManager.HasSpell(MySpells.EmpyrealArrow.Name))
+                {
+                    if (await MySpells.Barrage.Cast())
+                    {
+                        return await Coroutine.Wait(1000, () => Core.Player.HasAura(MySpells.Barrage.Name));
+                    }
+                }
             }
             return false;
         }
@@ -240,48 +302,6 @@ namespace ShinraCo.Rotations
                 return await MySpells.BattleVoice.Cast();
             }
             return false;
-        }
-
-        #endregion
-
-        #region Opener
-
-        private async Task<bool> Opener()
-        {
-            if (!Shinra.Settings.BardOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
-            {
-                return false;
-            }
-
-            if (Shinra.Settings.BardPotion && Shinra.OpenerStep == 0)
-            {
-                if (await Helpers.UsePotion(Helpers.PotionIds.Dex))
-                {
-                    return true;
-                }
-            }
-
-            if (Resource.Repertoire == 3)
-            {
-                if (await MySpells.PitchPerfect.Cast(null, false))
-                {
-                    return true;
-                }
-            }
-
-            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
-            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
-            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0)
-            {
-                Shinra.OpenerStep++;
-            }
-
-            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
-            {
-                Helpers.Debug("Opener finished.");
-                Shinra.OpenerFinished = true;
-            }
-            return true;
         }
 
         #endregion
@@ -372,7 +392,8 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> StormbitePVP()
         {
-            if (!Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 4000) || !Core.Player.CurrentTarget.HasAura("Storm Bite", true, 4000))
+            if (!Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 4000) ||
+                !Core.Player.CurrentTarget.HasAura("Stormbite", true, 4000))
             {
                 return await MySpells.PVP.Stormbite.Cast();
             }
@@ -381,7 +402,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> SidewinderPVP()
         {
-            if (Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 1000) && Core.Player.CurrentTarget.HasAura("Storm Bite", true, 1000))
+            if (Core.Player.CurrentTarget.HasAura("Caustic Bite", true, 1000) && Core.Player.CurrentTarget.HasAura("Stormbite", true, 1000))
             {
                 return await MySpells.PVP.Sidewinder.Cast();
             }
@@ -444,13 +465,12 @@ namespace ShinraCo.Rotations
         #region Custom
 
         private static string VenomDebuff => Core.Player.ClassLevel < 64 ? "Venomous Bite" : "Caustic Bite";
-        private static string WindDebuff => Core.Player.ClassLevel < 64 ? "Windbite" : "Storm Bite";
+        private static string WindDebuff => Core.Player.ClassLevel < 64 ? "Windbite" : "Stormbite";
+        private static double SongTimer => Resource.Timer.TotalMilliseconds;
+        private static int NumRepertoire => Resource.Repertoire;
         private static bool NoSong => Resource.ActiveSong == Resource.BardSong.None;
         private static bool MinuetActive => Resource.ActiveSong == Resource.BardSong.WanderersMinuet;
         private static bool PaeonActive => Resource.ActiveSong == Resource.BardSong.ArmysPaeon;
-        private static double SongTimer => Resource.Timer.TotalMilliseconds;
-        private static double BarrageCooldown => DataManager.GetSpellData(107).Cooldown.TotalMilliseconds;
-        private static int NumRepertoire => Resource.Repertoire;
 
         private static bool RecentSong
         {

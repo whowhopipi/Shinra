@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ff14bot;
 using ff14bot.Managers;
 using ShinraCo.Settings;
 using ShinraCo.Spells.Main;
-using ShinraCo.Spells.Opener;
 using Resource = ff14bot.Managers.ActionResourceManager.Paladin;
 
 namespace ShinraCo.Rotations
@@ -12,7 +10,6 @@ namespace ShinraCo.Rotations
     public sealed partial class Paladin
     {
         private PaladinSpells MySpells { get; } = new PaladinSpells();
-        private PaladinOpener MyOpener { get; } = new PaladinOpener();
 
         #region Damage
 
@@ -74,12 +71,11 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> HolySpirit()
         {
-            if (Shinra.Settings.TankMode == TankModes.DPS)
+            if (Shinra.Settings.TankMode != TankModes.DPS || MovementManager.IsMoving) return false;
+
+            if (Shinra.LastSpell.Name == MySpells.Requiescat.Name || Core.Player.HasAura(MySpells.Requiescat.Name, true, 1000))
             {
-                if (!MovementManager.IsMoving && Core.Player.HasAura(MySpells.Requiescat.Name, true, 2000))
-                {
-                    return await MySpells.HolySpirit.Cast();
-                }
+                return await MySpells.HolySpirit.Cast();
             }
             return false;
         }
@@ -130,7 +126,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> SpiritsWithin()
         {
-            if (Shinra.Settings.PaladinSpiritsWithin)
+            if (Shinra.Settings.PaladinSpiritsWithin && Shinra.LastSpell.Name != MySpells.CircleOfScorn.Name)
             {
                 return await MySpells.SpiritsWithin.Cast();
             }
@@ -139,7 +135,7 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> CircleOfScorn()
         {
-            if (Shinra.Settings.PaladinCircleOfScorn)
+            if (Shinra.Settings.PaladinCircleOfScorn && Shinra.LastSpell.Name != MySpells.SpiritsWithin.Name)
             {
                 if (Core.Player.TargetDistance(5, false))
                 {
@@ -151,16 +147,18 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> Requiescat()
         {
-            if (Shinra.Settings.PaladinRequiescat)
+            if (!Shinra.Settings.PaladinRequiescat || !Core.Player.CurrentTarget.HasAura(MySpells.GoringBlade.Name, true, 12000) ||
+                MovementManager.IsMoving || Core.Player.CurrentManaPercent < 80 || Shinra.LastSpell.Name == MySpells.FightOrFlight.Name ||
+                Core.Player.HasAura(MySpells.FightOrFlight.Name))
             {
-                if (!MovementManager.IsMoving && Core.Player.CurrentManaPercent > 80 &&
-                    Core.Player.CurrentTarget.HasAura(MySpells.GoringBlade.Name, true, 4000) &&
-                    !Core.Player.HasAura(MySpells.FightOrFlight.Name))
-                {
-                    return await MySpells.Requiescat.Cast();
-                }
+                return false;
             }
-            return false;
+
+            var gcd = DataManager.GetSpellData(9).Cooldown.TotalMilliseconds;
+
+            if (gcd == 0 || gcd > 500) return false;
+
+            return await MySpells.Requiescat.Cast(null, false);
         }
 
         #endregion
@@ -169,14 +167,13 @@ namespace ShinraCo.Rotations
 
         private async Task<bool> FightOrFlight()
         {
-            if (Shinra.Settings.PaladinFightOrFlight)
+            if (!Shinra.Settings.PaladinFightOrFlight || Shinra.LastSpell.Name == MySpells.Requiescat.Name ||
+                Core.Player.HasAura(MySpells.Requiescat.Name) || !Core.Player.TargetDistance(5, false))
             {
-                if (!Core.Player.HasAura(MySpells.Requiescat.Name) && Core.Player.TargetDistance(5, false))
-                {
-                    return await MySpells.FightOrFlight.Cast();
-                }
+                return false;
             }
-            return false;
+
+            return await MySpells.FightOrFlight.Cast();
         }
 
         private async Task<bool> Sentinel()
@@ -275,40 +272,6 @@ namespace ShinraCo.Rotations
                 }
             }
             return false;
-        }
-
-        #endregion
-
-        #region Opener
-
-        private async Task<bool> Opener()
-        {
-            if (!Shinra.Settings.PaladinOpener || Shinra.OpenerFinished || Core.Player.ClassLevel < 70)
-            {
-                return false;
-            }
-
-            if (Shinra.Settings.PaladinPotion && Shinra.OpenerStep == 8)
-            {
-                if (await Helpers.UsePotion(Helpers.PotionIds.Str))
-                {
-                    return true;
-                }
-            }
-
-            var spell = MyOpener.Spells.ElementAt(Shinra.OpenerStep);
-            Helpers.Debug($"Executing opener step {Shinra.OpenerStep} >>> {spell.Name}");
-            if (await spell.Cast(null, false) || spell.Cooldown(true) > 2500 && spell.Cooldown() > 0 && !Core.Player.IsCasting)
-            {
-                Shinra.OpenerStep++;
-            }
-
-            if (Shinra.OpenerStep >= MyOpener.Spells.Count)
-            {
-                Helpers.Debug("Opener finished.");
-                Shinra.OpenerFinished = true;
-            }
-            return true;
         }
 
         #endregion

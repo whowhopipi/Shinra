@@ -43,9 +43,34 @@ namespace ShinraCo
 
             6085, // Zuiko-maru
             6087, // Dojun-maru
-            6089 // Yojimbo
+            6089, // Yojimbo
 
             #endregion
+
+            #endregion
+
+            #region Eureka
+
+            7143, // Pazuzu
+            7147, // Lamashtu
+            7148, // Simurgh's Strider
+            7149, // Serket
+            7150, // Fafnir
+            7151, // The Lord Of Anemos
+            7152, // King Hazmat
+            7157, // Callisto
+            7158, // Jahannam
+            7160, // Number
+            7165, // Judgmental Julika
+            7166, // The Emperor Of Anemos
+            7167, // Caym
+            7168, // Bombadeel
+            7169, // Sabotender Corrido
+            7170, // Teles
+            7171, // Amemet
+            7172, // Polyphemus
+            7173, // The White Rider
+            7177, // Amarok
 
             #endregion
         };
